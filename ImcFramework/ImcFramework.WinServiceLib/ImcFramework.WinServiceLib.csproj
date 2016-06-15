@@ -59,12 +59,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ImcFramework.Core\ImcFramework.Core.csproj">
-      <Project>{a2f7e65d-ea49-4044-b90e-bea777d7a344}</Project>
-      <Name>ImcFramework.Core</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
@@ -75,6 +69,12 @@
     <EmbeddedResource Include="ImcSvcInstallerBase.resx">
       <DependentUpon>ImcSvcInstallerBase.cs</DependentUpon>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ImcFramework.Core\ImcFramework.Core.csproj">
+      <Project>{3b88d842-79bc-4961-82bb-5bdb90cea9aa}</Project>
+      <Name>ImcFramework.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
