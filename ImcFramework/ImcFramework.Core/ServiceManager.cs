@@ -68,6 +68,9 @@ namespace ImcFramework.Core
                 if (scheduler == null || !scheduler.IsStarted)
                 {
                     scheduler = schedulerFactory.GetScheduler();
+                    scheduler.ListenerManager.AddJobListener(new GlobalJobListener());
+                    scheduler.ListenerManager.AddTriggerListener(new GlobalTriggerListener());
+
                     if (isolatedJob)
                     {
                         scheduler.JobFactory = new IsolatedJobFactory();

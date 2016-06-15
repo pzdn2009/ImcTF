@@ -72,6 +72,7 @@
     <Compile Include="Extensions\IServiceManager.cs" />
     <Compile Include="Extensions\SchedulerExtensions.cs" />
     <Compile Include="Extensions\ServiceHostExtension.cs" />
+    <Compile Include="GlobalJobListener.cs" />
     <Compile Include="IsolatedAd\IsolatedJob.cs" />
     <Compile Include="IsolatedAd\IsolatedJobFactory.cs" />
     <Compile Include="IsolatedAd\IsolateDomainLoader.cs" />
@@ -93,6 +94,7 @@
     <Compile Include="ModuleExtension\ServiceContext.cs" />
     <Compile Include="MQWapper.cs" />
     <Compile Include="MutilTaskPaging.cs" />
+    <Compile Include="GlobalTriggerListener.cs" />
     <Compile Include="Observers.cs" />
     <Compile Include="ProgressInfoManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
