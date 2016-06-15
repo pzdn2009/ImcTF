@@ -1,0 +1,205 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{F1D35520-1EEA-4141-803F-B334AB930138}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ImcFramework.Winform</RootNamespace>
+    <AssemblyName>ImcFramework.Winform</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration.Install" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.ServiceProcess" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Common\MainConnector.cs" />
+    <Compile Include="CronEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CronEditor.designer.cs">
+      <DependentUpon>CronEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="EventArgs\RequestLogArgs.cs" />
+    <Compile Include="FrmEditSvcList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmEditSvcList.designer.cs">
+      <DependentUpon>FrmEditSvcList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmMain.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmMain.designer.cs">
+      <DependentUpon>FrmMain.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Common\FrmMainConnector.cs" />
+    <Compile Include="IView.cs" />
+    <Compile Include="MyClients.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="ProgressSynchronous.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ResIcons.Designer.cs" />
+    <Compile Include="Service References\WcfClientConnector\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="uc\ucLog.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="uc\ucLog.Designer.cs">
+      <DependentUpon>ucLog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="uc\ucSellerProgressBar.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="uc\ucSellerProgressBar.Designer.cs">
+      <DependentUpon>ucSellerProgressBar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="uc\ucServiceConfig.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="uc\ucServiceConfig.Designer.cs">
+      <DependentUpon>ucServiceConfig.cs</DependentUpon>
+    </Compile>
+    <Compile Include="uc\ucWinServiceMgr.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="uc\ucWinServiceMgr.Designer.cs">
+      <DependentUpon>ucWinServiceMgr.cs</DependentUpon>
+    </Compile>
+    <Compile Include="WinServiceConfigReader.cs" />
+    <Compile Include="WinServiceControl.cs" />
+    <EmbeddedResource Include="CronEditor.resx">
+      <DependentUpon>CronEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmEditSvcList.resx">
+      <DependentUpon>FrmEditSvcList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmMain.resx">
+      <DependentUpon>FrmMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="ResIcons.resx" />
+    <EmbeddedResource Include="uc\ucLog.resx">
+      <DependentUpon>ucLog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="uc\ucSellerProgressBar.resx">
+      <DependentUpon>ucSellerProgressBar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="uc\ucServiceConfig.resx">
+      <DependentUpon>ucServiceConfig.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="uc\ucWinServiceMgr.resx">
+      <DependentUpon>ucWinServiceMgr.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="packages.config" />
+    <None Include="Properties\DataSources\ImcFramework.WcfInterface.EServiceType.datasource" />
+    <None Include="Properties\DataSources\ImcFramework.WcfInterface.LogInfo.datasource" />
+    <None Include="Properties\DataSources\ImcFramework.WcfInterface.ProgressItem.datasource" />
+    <None Include="Properties\DataSources\ImcFramework.WcfInterface.ProgressSummary.datasource" />
+    <None Include="Properties\DataSources\ImcFramework.WcfInterface.ServiceInfo.datasource" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <None Include="Service References\WcfClientConnector\ImcFramework.WcfInterface.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\WcfClientConnector\service.wsdl" />
+    <None Include="Service References\WcfClientConnector\service.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\WcfClientConnector\service1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\LogInfo.png" />
+    <None Include="Service References\WcfClientConnector\configuration91.svcinfo" />
+    <None Include="Service References\WcfClientConnector\configuration.svcinfo" />
+    <None Include="Service References\WcfClientConnector\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <Content Include="WinService.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ImcFramework.Infrastructure\ImcFramework.Infrastructure.csproj">
+      <Project>{365441e9-1338-42f2-b8fa-e79714f06d16}</Project>
+      <Name>ImcFramework.Infrastructure</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ImcFramework.WcfInterface\ImcFramework.WcfInterface.csproj">
+      <Project>{7077341f-a72d-4a7e-a443-04adf773ca01}</Project>
+      <Name>ImcFramework.WcfInterface</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Service References\WcfClientConnector\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
