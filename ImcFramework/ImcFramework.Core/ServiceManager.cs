@@ -81,20 +81,16 @@ namespace ImcFramework.Core
 
             }
 
-            MQWapper.StartRead();
+            ServiceContext serviceContext = new ServiceContext();
+            serviceContext.Scheduler = scheduler;
+            serviceContext.WcfHost = hostStub;
+            serviceContext.ProgressInfoManager = ProgressInfoManager.Instance;
 
-            return;
-            //
-            //ServiceContext serviceContext = new ServiceContext();
-            //serviceContext.Scheduler = scheduler;
-            //serviceContext.WcfHost = hostStub;
-            //serviceContext.ProgressInfoManager = ProgressInfoManager.Instance;
-
-            //modules = ModuleConfiguration.ReadConfig(serviceContext);
-            //foreach (var item in modules)
-            //{
-            //    item.Start();
-            //}
+            modules = ModuleConfiguration.ReadConfig(serviceContext);
+            foreach (var item in modules)
+            {
+                item.Start();
+            }
         }
 
         public static void Continue(string serviceName)
@@ -118,7 +114,7 @@ namespace ImcFramework.Core
 
             if (!Defaults.IsIsolatedJob)
             {
-                var cancel = job.JobInstance as ITaskCancle;
+                var cancel = job.JobInstance as ITaskCancel;
                 cancel.Cancel();
             }
             else
@@ -216,17 +212,13 @@ namespace ImcFramework.Core
 
             StopWcfHost();
 
-            MQWapper.WaitForMQClear();
-
-            return;
-
-            //if (modules != null)
-            //{
-            //    foreach (var item in modules)
-            //    {
-            //        item.Stop();
-            //    }
-            //}
+            if (modules != null)
+            {
+                foreach (var item in modules)
+                {
+                    item.Stop();
+                }
+            }
         }
     }
 }

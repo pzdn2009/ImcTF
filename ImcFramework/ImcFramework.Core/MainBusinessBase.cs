@@ -14,7 +14,7 @@ using System.Diagnostics;
 namespace ImcFramework.Core
 {
     [DisallowConcurrentExecution]
-    public abstract class MainBusinessBase : IJob, ITaskCancle
+    public abstract class MainBusinessBase : IJob, ITaskCancel
     {
         private Lazy<ISellerAccountProgress> sellerAccountProgressLazy;
         public ISellerAccountProgress SellerAccountProgress

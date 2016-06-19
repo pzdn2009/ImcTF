@@ -9,7 +9,7 @@ namespace ImcFramework.Core
     /// <summary>
     /// 取消任务
     /// </summary>
-    public interface ITaskCancle
+    public interface ITaskCancel
     {
         void Cancel();
     }

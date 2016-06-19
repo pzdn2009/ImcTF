@@ -9,22 +9,24 @@ namespace ImcFramework.Core
 {
     public abstract class ModuleExtensionBase : IModuleExtension
     {
-        public ModuleExtensionBase()
+        public ModuleExtensionBase(ServiceContext serviceContext)
         {
-            //创建
+            this.ServiceContext = serviceContext;
         }
 
         public ServiceContext ServiceContext { get; set; }
 
-
+        /// <summary>
+        /// 模块名称
+        /// </summary>
         public abstract string Name
         {
             get;
         }
 
+
         public virtual void Start()
         {
-            
         }
 
         public virtual void Stop()

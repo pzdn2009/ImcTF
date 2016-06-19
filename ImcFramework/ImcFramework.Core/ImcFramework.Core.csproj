@@ -94,6 +94,7 @@
     <Compile Include="ModuleExtension\ModuleConfiguration.cs" />
     <Compile Include="ModuleExtension\ModuleExtensionBase.cs" />
     <Compile Include="ModuleExtension\ServiceContext.cs" />
+    <Compile Include="MqModuleExtension\MqModule.cs" />
     <Compile Include="MQWapper.cs" />
     <Compile Include="MutilTaskPaging.cs" />
     <Compile Include="GlobalTriggerListener.cs" />

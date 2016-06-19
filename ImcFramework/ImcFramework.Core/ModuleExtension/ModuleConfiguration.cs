@@ -13,7 +13,14 @@ namespace ImcFramework.Core
     {
         public static IEnumerable<IModuleExtension> ReadConfig(ServiceContext serviceContext)
         {
-            return null;
+            var moduleExtensionList = new List<IModuleExtension>();
+
+            if (Defaults.IsIsolatedJob)
+            {
+                moduleExtensionList.Add(new MqModuleExtension.MqModule(serviceContext));
+            }
+
+            return moduleExtensionList;
         }
     }
 }
