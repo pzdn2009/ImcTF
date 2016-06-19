@@ -282,6 +282,8 @@ namespace ImcFramework.Winform
 
         private void 获取服务列表ToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            EnsureClientConnector();
+
             GetServiceList();
         }
 

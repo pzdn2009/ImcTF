@@ -245,8 +245,19 @@ namespace ImcFramework.Winform
         //立即运行
         private void btnRunRightNow_Click(object sender, EventArgs e)
         {
-            EnsureClient();
-            client.RequestSwitch(new FunctionSwitch() { ServiceType = serviceType, Command = ECommand.RunImmediately, ScheduleFormat = "" });
+            try
+            {
+                EnsureClient();
+                client.RequestSwitch(new FunctionSwitch() { ServiceType = serviceType, Command = ECommand.RunImmediately, ScheduleFormat = "" });
+            }
+            catch (FaultException fex)
+            {
+                MessageBox.Show(fex.Code.Name + ":" + fex.Action + ":" + fex.Reason.ToString());
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         //自动刷新状态

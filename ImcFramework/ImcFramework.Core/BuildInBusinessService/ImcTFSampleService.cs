@@ -20,7 +20,16 @@ namespace ImcFramework.Core.BuildInBusinessService
             }
         }
 
-        public override void Execute(IJobExecutionContext context)
+        //public override void Execute(IJobExecutionContext context)
+        //{
+        //    NotifyAndLog("开始！", LogLevel.Info);
+
+        //    Thread.Sleep(2000);
+
+        //    NotifyAndLog("结束！", LogLevel.Info);
+        //}
+
+        public override void ExecuteCore(IJobExecutionContext context)
         {
             NotifyAndLog("开始！", LogLevel.Info);
 

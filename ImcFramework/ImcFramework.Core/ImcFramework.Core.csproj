@@ -74,6 +74,7 @@
     <Compile Include="Extensions\SchedulerExtensions.cs" />
     <Compile Include="Extensions\ServiceHostExtension.cs" />
     <Compile Include="GlobalJobListener.cs" />
+    <Compile Include="Exceptions\ImcFrameworkException.cs" />
     <Compile Include="IsolatedAd\IsolatedJob.cs" />
     <Compile Include="IsolatedAd\IsolatedJobFactory.cs" />
     <Compile Include="IsolatedAd\IsolateDomainLoader.cs" />
@@ -99,7 +100,7 @@
     <Compile Include="Observers.cs" />
     <Compile Include="ProgressInfoManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RemoveLogFileEveryDay.cs" />
+    <Compile Include="BuildInBusinessService\RemoveLogFileEveryDay.cs" />
     <Compile Include="RunOnce.cs" />
     <Compile Include="SellerAccountProgress\DefaultSellerAccountProgress.cs" />
     <Compile Include="SellerAccountProgress\ISellerAccountProgress.cs" />

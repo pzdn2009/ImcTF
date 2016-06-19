@@ -30,7 +30,31 @@ namespace ImcFramework.Core
 
 
         public abstract EServiceType ServiceType { get; }
-        public abstract void Execute(IJobExecutionContext context);
+
+        public virtual void Execute(IJobExecutionContext context)
+        {
+            try
+            {
+                ExecuteCore(context);
+            }
+            catch(ImcFrameworkException ex)
+            {
+                throw ex;
+            }
+            catch(AggregateException ex)
+            {
+
+            }
+            catch (Exception ex)
+            {
+                
+            }
+        }
+
+        public virtual void ExecuteCore(IJobExecutionContext context)
+        {
+
+        }
 
         public virtual void ControlTaskConcurrent(List<Task> tasks, int maxRunTasks = 5)
         {

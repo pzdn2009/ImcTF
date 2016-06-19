@@ -62,35 +62,44 @@ namespace ImcFramework.Core
 
         public void RequestSwitch(FunctionSwitch singleSwitch)
         {
-            switch (singleSwitch.Command)
+            try
             {
-                case ECommand.Pause:
-                    ServiceManager.Pause(singleSwitch.ServiceType.ToString());
-                    LogHelper.Info(singleSwitch.ServiceType.ToString() + " Pause！");
-                    callback.Notify(MessageEntity.NormalInfo(singleSwitch.ServiceType, " Pause"));
-                    break;
-                case ECommand.RunImmediately:
-                    ServiceManager.RunRightNow(singleSwitch.ServiceType.ToString());
-                    LogHelper.Info(singleSwitch.ServiceType.ToString() + " RunImmediately！");
-                    callback.Notify(MessageEntity.NormalInfo(singleSwitch.ServiceType, " RunImmediately"));
-                    break;
-                case ECommand.Continue:
-                    ServiceManager.Continue(singleSwitch.ServiceType.ToString());
-                    LogHelper.Info(singleSwitch.ServiceType.ToString() + " Continue！");
-                    callback.Notify(MessageEntity.NormalInfo(singleSwitch.ServiceType, " Continue"));
-                    break;
-                case ECommand.ModifySchedule:
-                    ServiceManager.ModifySchedule(singleSwitch.ServiceType.ToString(), singleSwitch.ScheduleFormat);
-                    LogHelper.Info(singleSwitch.ServiceType.ToString() + " ModifySchedule！");
-                    callback.Notify(MessageEntity.NormalInfo(singleSwitch.ServiceType, " ModifySchedule"));
-                    break;
-                case ECommand.Cancle:
-                    ServiceManager.Cancle(singleSwitch.ServiceType.ToString());
-                    LogHelper.Info(singleSwitch.ServiceType.ToString() + " Cancle！");
-                    callback.Notify(MessageEntity.NormalInfo(singleSwitch.ServiceType, " Cancle"));
-                    break;
-                default:
-                    break;
+                switch (singleSwitch.Command)
+                {
+                    case ECommand.Pause:
+                        ServiceManager.Pause(singleSwitch.ServiceType.ToString());
+                        LogHelper.Info(singleSwitch.ServiceType.ToString() + " Pause！");
+                        callback.Notify(MessageEntity.NormalInfo(singleSwitch.ServiceType, " Pause"));
+                        break;
+                    case ECommand.RunImmediately:
+                        ServiceManager.RunRightNow(singleSwitch.ServiceType.ToString());
+                        LogHelper.Info(singleSwitch.ServiceType.ToString() + " RunImmediately！");
+                        callback.Notify(MessageEntity.NormalInfo(singleSwitch.ServiceType, " RunImmediately"));
+                        break;
+                    case ECommand.Continue:
+                        ServiceManager.Continue(singleSwitch.ServiceType.ToString());
+                        LogHelper.Info(singleSwitch.ServiceType.ToString() + " Continue！");
+                        callback.Notify(MessageEntity.NormalInfo(singleSwitch.ServiceType, " Continue"));
+                        break;
+                    case ECommand.ModifySchedule:
+                        ServiceManager.ModifySchedule(singleSwitch.ServiceType.ToString(), singleSwitch.ScheduleFormat);
+                        LogHelper.Info(singleSwitch.ServiceType.ToString() + " ModifySchedule！");
+                        callback.Notify(MessageEntity.NormalInfo(singleSwitch.ServiceType, " ModifySchedule"));
+                        break;
+                    case ECommand.Cancle:
+                        ServiceManager.Cancle(singleSwitch.ServiceType.ToString());
+                        LogHelper.Info(singleSwitch.ServiceType.ToString() + " Cancle！");
+                        callback.Notify(MessageEntity.NormalInfo(singleSwitch.ServiceType, " Cancle"));
+                        break;
+                    default:
+                        break;
+                }
+            }
+            catch (Exception ex)
+            {
+                var fex = new FaultException(new FaultReason(ex.Message), new FaultCode("001"), "GetServiceList");
+                LogHelper.Error(fex);
+                throw fex;
             }
         }
 

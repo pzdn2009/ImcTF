@@ -34,7 +34,7 @@ namespace ImcFramework.Core
 
         public void SendMessageEntity(MessageEntity msgMQEntity)
         {
-            m_msmqHelper.SendMessage<MessageEntity>(msgMQEntity);
+            m_msmqHelper.SendMessage(msgMQEntity);
         }
 
         public List<MessageEntity> ReceiveMessageEntitys(string processName, int count = 10)
