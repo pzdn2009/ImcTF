@@ -31,6 +31,15 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <TargetZone>LocalIntranet</TargetZone>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>false</GenerateManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Configuration.Install" />
@@ -138,6 +147,7 @@
       <DependentUpon>ucWinServiceMgr.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
+    <None Include="Properties\app.manifest" />
     <None Include="Properties\DataSources\ImcFramework.WcfInterface.EServiceType.datasource" />
     <None Include="Properties\DataSources\ImcFramework.WcfInterface.LogInfo.datasource" />
     <None Include="Properties\DataSources\ImcFramework.WcfInterface.ProgressItem.datasource" />
@@ -175,7 +185,7 @@
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
     <Content Include="WinService.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
   <ItemGroup>

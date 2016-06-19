@@ -64,8 +64,8 @@
             // splitContainer1
             // 
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer1.Location = new System.Drawing.Point(0, 74);
-            this.splitContainer1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.splitContainer1.Location = new System.Drawing.Point(0, 62);
+            this.splitContainer1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.splitContainer1.Name = "splitContainer1";
             // 
             // splitContainer1.Panel1
@@ -78,8 +78,9 @@
             // 
             this.splitContainer1.Panel2.Controls.Add(this.tabControlMain);
             this.splitContainer1.Panel2.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.splitContainer1.Size = new System.Drawing.Size(1155, 583);
-            this.splitContainer1.SplitterDistance = 244;
+            this.splitContainer1.Size = new System.Drawing.Size(866, 464);
+            this.splitContainer1.SplitterDistance = 182;
+            this.splitContainer1.SplitterWidth = 3;
             this.splitContainer1.TabIndex = 1;
             // 
             // btnSample
@@ -88,9 +89,9 @@
             this.btnSample.Image = ((System.Drawing.Image)(resources.GetObject("btnSample.Image")));
             this.btnSample.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnSample.Location = new System.Drawing.Point(0, 0);
-            this.btnSample.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnSample.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnSample.Name = "btnSample";
-            this.btnSample.Size = new System.Drawing.Size(244, 51);
+            this.btnSample.Size = new System.Drawing.Size(182, 41);
             this.btnSample.TabIndex = 2;
             this.btnSample.Text = "样例按钮";
             this.btnSample.UseVisualStyleBackColor = true;
@@ -100,19 +101,19 @@
             this.tabControlMain.Controls.Add(this.tabWinServiceMgr);
             this.tabControlMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControlMain.Location = new System.Drawing.Point(0, 0);
-            this.tabControlMain.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.tabControlMain.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.tabControlMain.Name = "tabControlMain";
             this.tabControlMain.SelectedIndex = 0;
-            this.tabControlMain.Size = new System.Drawing.Size(907, 583);
+            this.tabControlMain.Size = new System.Drawing.Size(681, 464);
             this.tabControlMain.TabIndex = 1;
             // 
             // tabWinServiceMgr
             // 
-            this.tabWinServiceMgr.Location = new System.Drawing.Point(4, 25);
-            this.tabWinServiceMgr.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.tabWinServiceMgr.Location = new System.Drawing.Point(4, 22);
+            this.tabWinServiceMgr.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.tabWinServiceMgr.Name = "tabWinServiceMgr";
-            this.tabWinServiceMgr.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.tabWinServiceMgr.Size = new System.Drawing.Size(899, 554);
+            this.tabWinServiceMgr.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tabWinServiceMgr.Size = new System.Drawing.Size(673, 438);
             this.tabWinServiceMgr.TabIndex = 2;
             this.tabWinServiceMgr.Text = "window 服务管理";
             this.tabWinServiceMgr.UseVisualStyleBackColor = true;
@@ -120,7 +121,7 @@
             // notifyIconMain
             // 
             this.notifyIconMain.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIconMain.Icon")));
-            this.notifyIconMain.Text = "EbayAPI 管理";
+            this.notifyIconMain.Text = "ImcTF Client";
             this.notifyIconMain.Visible = true;
             this.notifyIconMain.MouseClick += new System.Windows.Forms.MouseEventHandler(this.notifyIconMain_MouseClick);
             // 
@@ -132,26 +133,26 @@
             this.tsmCloseAllButThis,
             this.tsmCloseAll});
             this.contextMenuStripForTabpage.Name = "tabCtrContextMenuStrip";
-            this.contextMenuStripForTabpage.Size = new System.Drawing.Size(205, 82);
+            this.contextMenuStripForTabpage.Size = new System.Drawing.Size(173, 70);
             // 
             // tsmClose
             // 
             this.tsmClose.Name = "tsmClose";
-            this.tsmClose.Size = new System.Drawing.Size(204, 26);
+            this.tsmClose.Size = new System.Drawing.Size(172, 22);
             this.tsmClose.Text = "关闭";
             this.tsmClose.Click += new System.EventHandler(this.tsmClose_Click);
             // 
             // tsmCloseAllButThis
             // 
             this.tsmCloseAllButThis.Name = "tsmCloseAllButThis";
-            this.tsmCloseAllButThis.Size = new System.Drawing.Size(204, 26);
+            this.tsmCloseAllButThis.Size = new System.Drawing.Size(172, 22);
             this.tsmCloseAllButThis.Text = "除此之外全部关闭";
             this.tsmCloseAllButThis.Click += new System.EventHandler(this.tsmCloseAllButThis_Click);
             // 
             // tsmCloseAll
             // 
             this.tsmCloseAll.Name = "tsmCloseAll";
-            this.tsmCloseAll.Size = new System.Drawing.Size(204, 26);
+            this.tsmCloseAll.Size = new System.Drawing.Size(172, 22);
             this.tsmCloseAll.Text = "全部关闭";
             this.tsmCloseAll.Click += new System.EventHandler(this.tsmCloseAll_Click);
             // 
@@ -162,7 +163,8 @@
             this.系统管理ToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1155, 28);
+            this.menuStrip1.Padding = new System.Windows.Forms.Padding(4, 2, 0, 2);
+            this.menuStrip1.Size = new System.Drawing.Size(866, 25);
             this.menuStrip1.TabIndex = 2;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -172,20 +174,20 @@
             this.window服务ToolStripMenuItem,
             this.getServiceListToolStripMenuItem});
             this.系统管理ToolStripMenuItem.Name = "系统管理ToolStripMenuItem";
-            this.系统管理ToolStripMenuItem.Size = new System.Drawing.Size(81, 24);
+            this.系统管理ToolStripMenuItem.Size = new System.Drawing.Size(68, 21);
             this.系统管理ToolStripMenuItem.Text = "系统管理";
             // 
             // window服务ToolStripMenuItem
             // 
             this.window服务ToolStripMenuItem.Name = "window服务ToolStripMenuItem";
-            this.window服务ToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
+            this.window服务ToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
             this.window服务ToolStripMenuItem.Text = "Window 服务";
             this.window服务ToolStripMenuItem.Click += new System.EventHandler(this.window服务ToolStripMenuItem_Click);
             // 
             // getServiceListToolStripMenuItem
             // 
             this.getServiceListToolStripMenuItem.Name = "getServiceListToolStripMenuItem";
-            this.getServiceListToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
+            this.getServiceListToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
             this.getServiceListToolStripMenuItem.Text = "获取服务列表";
             this.getServiceListToolStripMenuItem.Click += new System.EventHandler(this.获取服务列表ToolStripMenuItem_Click);
             // 
@@ -207,9 +209,11 @@
             this.grbServiceStatus.Controls.Add(this.rdbNormal);
             this.grbServiceStatus.Controls.Add(this.rdbRun);
             this.grbServiceStatus.Dock = System.Windows.Forms.DockStyle.Top;
-            this.grbServiceStatus.Location = new System.Drawing.Point(0, 28);
+            this.grbServiceStatus.Location = new System.Drawing.Point(0, 25);
+            this.grbServiceStatus.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.grbServiceStatus.Name = "grbServiceStatus";
-            this.grbServiceStatus.Size = new System.Drawing.Size(1155, 46);
+            this.grbServiceStatus.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.grbServiceStatus.Size = new System.Drawing.Size(866, 37);
             this.grbServiceStatus.TabIndex = 4;
             this.grbServiceStatus.TabStop = false;
             // 
@@ -217,9 +221,10 @@
             // 
             this.labUserName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.labUserName.AutoSize = true;
-            this.labUserName.Location = new System.Drawing.Point(1036, 17);
+            this.labUserName.Location = new System.Drawing.Point(777, 14);
+            this.labUserName.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.labUserName.Name = "labUserName";
-            this.labUserName.Size = new System.Drawing.Size(47, 15);
+            this.labUserName.Size = new System.Drawing.Size(35, 12);
             this.labUserName.TabIndex = 5;
             this.labUserName.TabStop = true;
             this.labUserName.Text = "Login";
@@ -227,9 +232,10 @@
             // rdbInvalid
             // 
             this.rdbInvalid.AutoSize = true;
-            this.rdbInvalid.Location = new System.Drawing.Point(351, 15);
+            this.rdbInvalid.Location = new System.Drawing.Point(263, 12);
+            this.rdbInvalid.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.rdbInvalid.Name = "rdbInvalid";
-            this.rdbInvalid.Size = new System.Drawing.Size(84, 19);
+            this.rdbInvalid.Size = new System.Drawing.Size(65, 16);
             this.rdbInvalid.TabIndex = 4;
             this.rdbInvalid.Text = "Invalid";
             this.rdbInvalid.UseVisualStyleBackColor = true;
@@ -238,9 +244,10 @@
             // rdbPause
             // 
             this.rdbPause.AutoSize = true;
-            this.rdbPause.Location = new System.Drawing.Point(176, 15);
+            this.rdbPause.Location = new System.Drawing.Point(132, 12);
+            this.rdbPause.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.rdbPause.Name = "rdbPause";
-            this.rdbPause.Size = new System.Drawing.Size(68, 19);
+            this.rdbPause.Size = new System.Drawing.Size(53, 16);
             this.rdbPause.TabIndex = 1;
             this.rdbPause.Text = "Pause";
             this.rdbPause.UseVisualStyleBackColor = true;
@@ -250,9 +257,10 @@
             // 
             this.rdbAll.AutoSize = true;
             this.rdbAll.Checked = true;
-            this.rdbAll.Location = new System.Drawing.Point(22, 15);
+            this.rdbAll.Location = new System.Drawing.Point(16, 12);
+            this.rdbAll.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.rdbAll.Name = "rdbAll";
-            this.rdbAll.Size = new System.Drawing.Size(52, 19);
+            this.rdbAll.Size = new System.Drawing.Size(41, 16);
             this.rdbAll.TabIndex = 3;
             this.rdbAll.TabStop = true;
             this.rdbAll.Text = "All";
@@ -262,9 +270,10 @@
             // rdbNormal
             // 
             this.rdbNormal.AutoSize = true;
-            this.rdbNormal.Location = new System.Drawing.Point(260, 15);
+            this.rdbNormal.Location = new System.Drawing.Point(195, 12);
+            this.rdbNormal.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.rdbNormal.Name = "rdbNormal";
-            this.rdbNormal.Size = new System.Drawing.Size(76, 19);
+            this.rdbNormal.Size = new System.Drawing.Size(59, 16);
             this.rdbNormal.TabIndex = 2;
             this.rdbNormal.Text = "Normal";
             this.rdbNormal.UseVisualStyleBackColor = true;
@@ -273,9 +282,10 @@
             // rdbRun
             // 
             this.rdbRun.AutoSize = true;
-            this.rdbRun.Location = new System.Drawing.Point(104, 15);
+            this.rdbRun.Location = new System.Drawing.Point(78, 12);
+            this.rdbRun.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.rdbRun.Name = "rdbRun";
-            this.rdbRun.Size = new System.Drawing.Size(52, 19);
+            this.rdbRun.Size = new System.Drawing.Size(41, 16);
             this.rdbRun.TabIndex = 0;
             this.rdbRun.Text = "Run";
             this.rdbRun.UseVisualStyleBackColor = true;
@@ -283,19 +293,19 @@
             // 
             // FrmMain
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1155, 657);
+            this.ClientSize = new System.Drawing.Size(866, 526);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.grbServiceStatus);
             this.Controls.Add(this.menuStrip1);
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "FrmMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "公共定时服务";
+            this.Text = "ImcTF Client";
             this.Load += new System.EventHandler(this.FrmMain_Load);
             this.SizeChanged += new System.EventHandler(this.FrmMain_SizeChanged);
             this.splitContainer1.Panel1.ResumeLayout(false);

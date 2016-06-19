@@ -28,6 +28,8 @@ namespace ImcFramework.Winform
         public FrmMain()
         {
             InitializeComponent();
+
+            this.notifyIconMain.Icon = this.Icon;
         }
 
         private void FrmMain_Load(object sender, EventArgs e)
@@ -38,8 +40,6 @@ namespace ImcFramework.Winform
             UserControl ctr = new ucWinServiceMgr();
             tabWinServiceMgr.Controls.Add(ctr);
 
-            GetServiceList();
-
             Task.Factory.StartNew(LoopToReadServiceStatus);
         }
 
@@ -48,34 +48,42 @@ namespace ImcFramework.Winform
             this.splitContainer1.FixedPanel = FixedPanel.Panel1;
             this.splitContainer1.Panel1.Controls.Clear();
 
-            var client = new WcfClientConnector.ClientConnectorClient(new InstanceContext(new FrmMainConnector()), MyClients.CurrentBinding);
-            var serviceList = client.GetServiceList();
-
-            int cnt = 0;
-            foreach (var en in serviceList)
+            try
             {
-                var btn = new Button();
-                btn.Size = btnSample.Size;
-                btn.Width = this.splitContainer1.Panel1.Width - 2;
-                btn.Click += btnSample_Click;
-                btn.Text = en.ServiceName;
-                btn.Tag = en;
-                btn.Dock = DockStyle.Top;
-                btn.TabIndex = 1000 - cnt;
-                btn.Location = new Point(0, 20 + btnSample.Height * (cnt++) + 8);
-                btn.Name = string.Format("btn{0}", en.ToString());
-                btn.ImageList = imgListServiceStatus;
-                btn.ImageIndex = 0;
-                btn.ImageAlign = ContentAlignment.MiddleRight;
-                this.splitContainer1.Panel1.Controls.Add(btn);
+                var client = new WcfClientConnector.ClientConnectorClient(new InstanceContext(new FrmMainConnector()), MyClients.CurrentBinding);
+                var serviceList = client.GetServiceList();
 
-                this.splitContainer1.Panel1.Controls.Add(btn);
+                int cnt = 0;
+                foreach (var en in serviceList)
+                {
+                    var btn = new Button();
+                    btn.Size = btnSample.Size;
+                    btn.Width = this.splitContainer1.Panel1.Width - 2;
+                    btn.Click += btnSample_Click;
+                    btn.Text = en.ServiceName;
+                    btn.Tag = en;
+                    btn.Dock = DockStyle.Top;
+                    btn.TabIndex = 1000 - cnt;
+                    btn.Location = new Point(0, 20 + btnSample.Height * (cnt++) + 8);
+                    btn.Name = string.Format("btn{0}", en.ToString());
+                    btn.ImageList = imgListServiceStatus;
+                    btn.ImageIndex = 0;
+                    btn.ImageAlign = ContentAlignment.MiddleRight;
+                    this.splitContainer1.Panel1.Controls.Add(btn);
+
+                    this.splitContainer1.Panel1.Controls.Add(btn);
+                }
+                this.splitContainer1.Panel1.Controls.Remove(btnSample);
+
+                this.SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.DoubleBuffer, true);
+
+                this.tabControlMain.ContextMenuStrip = this.contextMenuStripForTabpage;
             }
-            this.splitContainer1.Panel1.Controls.Remove(btnSample);
-
-            this.SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.DoubleBuffer, true);
-
-            this.tabControlMain.ContextMenuStrip = this.contextMenuStripForTabpage;
+            catch (Exception ex)
+            {
+                var connectionMsg = "Win服务没安装或未启动，或者WCF配置不正确！\n\nError详情：" + ex.Message;
+                MessageBox.Show(connectionMsg);
+            }
         }
         private void EnsureClientConnector()
         {

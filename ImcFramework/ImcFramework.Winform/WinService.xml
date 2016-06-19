@@ -1,4 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <services>
   <service binding="WSDualHttpBinding_IClientConnector">ImcFramework.WinService</service>
+  <service binding="WSDualHttpBinding_IClientConnector">MyService</service>
 </services>
