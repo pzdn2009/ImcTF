@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ImcFramework.WcfInterface.TransferMessage;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -7,7 +8,7 @@ using System.Text;
 namespace ImcFramework.WcfInterface
 {
     [DataContract]
-    public class MessageEntity
+    public class MessageEntity : ITransferMessage
     {
         /// <summary>
         /// 业务服务类型

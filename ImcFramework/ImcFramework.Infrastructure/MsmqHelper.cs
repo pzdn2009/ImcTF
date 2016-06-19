@@ -81,7 +81,7 @@ namespace ImcFramework.Infrastructure
 
         public void SendMessage<T>(T obj)
         {
-            var message = new System.Messaging.Message();
+            var message = new Message();
             message.Body = obj;
 
             m_mq.Send(message);
@@ -95,7 +95,7 @@ namespace ImcFramework.Infrastructure
                 var message = m_mq.Receive(TimeSpan.FromSeconds(5));
                 if (message != null)
                 {
-                    message.Formatter = new System.Messaging.XmlMessageFormatter(new Type[] { typeof(T) });//消息类型转换  
+                    message.Formatter = new XmlMessageFormatter(new Type[] { typeof(T) });//消息类型转换  
                     msg = (T)message.Body;
                 }
             }
@@ -113,7 +113,7 @@ namespace ImcFramework.Infrastructure
                 var message = m_mq.Receive(TimeSpan.FromSeconds(5));
                 if (message != null)
                 {
-                    message.Formatter = new System.Messaging.XmlMessageFormatter(new Type[] { typeof(T) });//消息类型转换  
+                    message.Formatter = new XmlMessageFormatter(new Type[] { typeof(T) });//消息类型转换  
                     T msg = (T)message.Body;
                     result.Add(msg);
                 }

@@ -2,6 +2,7 @@
 using ImcFramework.Core.LogModule;
 using ImcFramework.Infrastructure;
 using ImcFramework.WcfInterface;
+using ImcFramework.WcfInterface.TransferMessage;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -89,7 +90,7 @@ namespace ImcFramework.Core
 
                 if (Defaults.IsIsolatedJob)
                 {
-                    MQWapper.Add(messageEntity);
+                    DistributionFacilityFactory.GetDistributionFacility(messageEntity).Push(messageEntity);
                 }
                 else
                 {
@@ -172,7 +173,7 @@ namespace ImcFramework.Core
                         .WithTotalType(totalType)
                         .Build();
 
-                    MQWapper.Add(msgEntity);
+                    DistributionFacilityFactory.GetDistributionFacility(msgEntity).Push(msgEntity);
                 }
                 else
                 {
@@ -204,7 +205,7 @@ namespace ImcFramework.Core
                         .WithSellerAccount(sellerAccount)
                         .Build();
 
-                    MQWapper.Add(msgEntity);
+                    DistributionFacilityFactory.GetDistributionFacility(msgEntity).Push(msgEntity);
                 }
                 else
                 {
@@ -235,7 +236,7 @@ namespace ImcFramework.Core
                         .WithValue(value)
                         .Build();
 
-                    MQWapper.Add(msgEntity);
+                    DistributionFacilityFactory.GetDistributionFacility(msgEntity).Push(msgEntity);
                 }
                 else
                 {
@@ -267,7 +268,7 @@ namespace ImcFramework.Core
                         .WithSellerAccount(sellerAccount)
                         .Build();
 
-                    MQWapper.Add(msgEntity);
+                    DistributionFacilityFactory.GetDistributionFacility(msgEntity).Push(msgEntity);
                 }
                 else
                 {
@@ -296,7 +297,7 @@ namespace ImcFramework.Core
                         .WithServiceType(serviceType)
                         .Build();
 
-                    MQWapper.Add(msgEntity);
+                    DistributionFacilityFactory.GetDistributionFacility(msgEntity).Push(msgEntity);
                 }
                 else
                 {

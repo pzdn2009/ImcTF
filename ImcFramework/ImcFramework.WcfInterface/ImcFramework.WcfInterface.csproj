@@ -52,6 +52,9 @@
     <Compile Include="ProgressInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServiceInfo.cs" />
+    <Compile Include="TransferMessage\ITransferMessage.cs" />
+    <Compile Include="TransferMessage\LogMessage.cs" />
+    <Compile Include="TransferMessage\ProgressInfoMessage.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
