@@ -1,21 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Windows.Forms;
+﻿using ImcFramework.Infrastructure;
 using ImcFramework.WcfInterface;
-using ImcFramework.Infrastructure;
+using ImcFramework.Winform.Common;
+using System;
+using System.Drawing;
+using System.Linq;
 using System.ServiceModel;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace ImcFramework.Winform
 {
     [CallbackBehavior(UseSynchronizationContext = false, AutomaticSessionShutdown = false)]
-    public partial class ucServiceConfig : UserControl, IView, ImcFramework.Winform.WcfClientConnector.IClientConnectorCallback
+    public partial class ucServiceConfig : UserControl, IView, IMessageCallback
     {
         private EServiceType serviceType;
         public EServiceType ServiceType
@@ -24,7 +21,9 @@ namespace ImcFramework.Winform
         }
 
         private SynchronizationContext uiSyncContext = null;
-        WcfClientConnector.ClientConnectorClient client = null;
+        
+        WsDualClient m_WsDualClient;
+        IClientConnector client = null;
 
         private ProgressSynchronous progressSynchronous;
 
@@ -49,7 +48,7 @@ namespace ImcFramework.Winform
             Connect();
 
             var listLogDays = client.GetLogInfoDates(serviceType);
-            this.ucLog1.AddLogDateNode(listLogDays);
+            this.ucLog1.AddLogDateNode(listLogDays.ToArray());
 
             this.flowLayoutPanel1.Controls.Clear();
             this.taskProgressBar.Maximum = 0;
@@ -68,9 +67,10 @@ namespace ImcFramework.Winform
 
         private void EnsureClient()
         {
-            if (client.State == CommunicationState.Faulted)
+            if (m_WsDualClient == null || m_WsDualClient.Factory.State != CommunicationState.Opened)
             {
-                Connect();  //显示一个重连的进度。。。
+                m_WsDualClient = new WsDualClient(MyClients.CurrentBinding, this);
+                client = m_WsDualClient.ClientConnector;
             }
         }
 
@@ -85,12 +85,10 @@ namespace ImcFramework.Winform
             {
                 Retry.Execute(() =>
                 {
-                    client = new WcfClientConnector.ClientConnectorClient(new InstanceContext(this), MyClients.CurrentBinding);
-                    client.Open();
-                    client.Register(serviceType);
-                    client.InnerChannel.Faulted += InnerChannel_Faulted;
+                    EnsureClient();
 
-                    MyClients.Add(serviceType, client);
+                    MyClients.Add(serviceType, m_WsDualClient);
+                    client.Register(serviceType);
 
                     Initialize();
 
@@ -271,7 +269,7 @@ namespace ImcFramework.Winform
         public void Notify(MessageEntity msgEntity)
         {
             SendOrPostCallback callback =
-             delegate(object state)
+             delegate (object state)
              {
                  if (this.rtxRealTimeLog != null && !this.rtxRealTimeLog.IsDisposed)
                  {
@@ -307,7 +305,7 @@ namespace ImcFramework.Winform
         public void NotifyLogInfo(string message)
         {
             SendOrPostCallback callback =
-             delegate(object state)
+             delegate (object state)
              {
                  message = ">> " + message + "\n";
                  this.ucLog1.AppendRtxLog(message);
@@ -324,7 +322,7 @@ namespace ImcFramework.Winform
 
         public void NotifyTaskProgressTotal(ProgressSummary summary)
         {
-            SendOrPostCallback callback = delegate(object state)
+            SendOrPostCallback callback = delegate (object state)
             {
                 setTotalCount(summary);
             };
@@ -346,7 +344,7 @@ namespace ImcFramework.Winform
 
         public void NotifyTaskProgressItemTotal(string sellerAccount, int total)
         {
-            SendOrPostCallback callback = delegate(object state)
+            SendOrPostCallback callback = delegate (object state)
             {
                 lock (lockObject)
                 {
@@ -365,7 +363,7 @@ namespace ImcFramework.Winform
 
         public void NotifyTaskProgressItemValueAndTotal(string sellerAccount, ProgressItem sellerAccountProgress)
         {
-            SendOrPostCallback callback = delegate(object state)
+            SendOrPostCallback callback = delegate (object state)
             {
                 lock (lockObject)
                 {
@@ -412,7 +410,7 @@ namespace ImcFramework.Winform
 
         public void NotifyTaskProgressForceFinish(string sellerAccount)
         {
-            SendOrPostCallback callback = delegate(object state)
+            SendOrPostCallback callback = delegate (object state)
             {
                 lock (lockObject)
                 {
@@ -445,7 +443,7 @@ namespace ImcFramework.Winform
 
         public void NotifyTaskProgressFinishAll()
         {
-            SendOrPostCallback callback = delegate(object state)
+            SendOrPostCallback callback = delegate (object state)
             {
                 MessageBox.Show("运行完成！");
                 this.taskProgressBar.Value = 0;

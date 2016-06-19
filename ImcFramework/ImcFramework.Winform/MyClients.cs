@@ -1,4 +1,5 @@
 ﻿using ImcFramework.WcfInterface;
+using ImcFramework.Winform.Common;
 using ImcFramework.Winform.WcfClientConnector;
 using System;
 using System.Collections.Generic;
@@ -20,7 +21,7 @@ namespace ImcFramework.Winform
         /// <summary>
         /// 服务字典
         /// </summary>
-        private static Dictionary<EServiceType, ClientConnectorClient> dictWcfClients = new Dictionary<EServiceType, ClientConnectorClient>();
+        private static Dictionary<EServiceType, WsDualClient> dictWcfClients = new Dictionary<EServiceType, WsDualClient>();
 
         /// <summary>
         /// Tab字典
@@ -83,7 +84,7 @@ namespace ImcFramework.Winform
         /// </summary>
         /// <param name="serviceType">服务</param>
         /// <param name="client">Wcf客户</param>
-        public static void Add(EServiceType serviceType, ClientConnectorClient client)
+        public static void Add(EServiceType serviceType, WsDualClient client)
         {
             dictWcfClients[serviceType] = client;
         }
@@ -184,8 +185,8 @@ namespace ImcFramework.Winform
             {
                 if (dictWcfClients.ContainsKey(serviceType))
                 {
-                    if (dictWcfClients[serviceType].State != System.ServiceModel.CommunicationState.Faulted)
-                        dictWcfClients[serviceType].UnRegister(serviceType);
+                    if (dictWcfClients[serviceType].Factory.State != System.ServiceModel.CommunicationState.Faulted)
+                        dictWcfClients[serviceType].ClientConnector.UnRegister(serviceType);
                     return true;
                 }
             }
@@ -197,7 +198,7 @@ namespace ImcFramework.Winform
             {
                 if (dictWcfClients.ContainsKey(serviceType))
                 {
-                    dictWcfClients[serviceType].Abort();
+                    dictWcfClients[serviceType].Factory.Abort();
                     dictWcfClients.Remove(serviceType);
                 }
             }

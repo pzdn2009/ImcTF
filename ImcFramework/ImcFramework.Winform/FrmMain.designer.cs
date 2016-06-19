@@ -65,7 +65,7 @@
             // 
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitContainer1.Location = new System.Drawing.Point(0, 62);
-            this.splitContainer1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.splitContainer1.Margin = new System.Windows.Forms.Padding(2);
             this.splitContainer1.Name = "splitContainer1";
             // 
             // splitContainer1.Panel1
@@ -89,7 +89,7 @@
             this.btnSample.Image = ((System.Drawing.Image)(resources.GetObject("btnSample.Image")));
             this.btnSample.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnSample.Location = new System.Drawing.Point(0, 0);
-            this.btnSample.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnSample.Margin = new System.Windows.Forms.Padding(2);
             this.btnSample.Name = "btnSample";
             this.btnSample.Size = new System.Drawing.Size(182, 41);
             this.btnSample.TabIndex = 2;
@@ -101,7 +101,7 @@
             this.tabControlMain.Controls.Add(this.tabWinServiceMgr);
             this.tabControlMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControlMain.Location = new System.Drawing.Point(0, 0);
-            this.tabControlMain.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tabControlMain.Margin = new System.Windows.Forms.Padding(2);
             this.tabControlMain.Name = "tabControlMain";
             this.tabControlMain.SelectedIndex = 0;
             this.tabControlMain.Size = new System.Drawing.Size(681, 464);
@@ -110,9 +110,9 @@
             // tabWinServiceMgr
             // 
             this.tabWinServiceMgr.Location = new System.Drawing.Point(4, 22);
-            this.tabWinServiceMgr.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tabWinServiceMgr.Margin = new System.Windows.Forms.Padding(2);
             this.tabWinServiceMgr.Name = "tabWinServiceMgr";
-            this.tabWinServiceMgr.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tabWinServiceMgr.Padding = new System.Windows.Forms.Padding(2);
             this.tabWinServiceMgr.Size = new System.Drawing.Size(673, 438);
             this.tabWinServiceMgr.TabIndex = 2;
             this.tabWinServiceMgr.Text = "window 服务管理";
@@ -210,9 +210,9 @@
             this.grbServiceStatus.Controls.Add(this.rdbRun);
             this.grbServiceStatus.Dock = System.Windows.Forms.DockStyle.Top;
             this.grbServiceStatus.Location = new System.Drawing.Point(0, 25);
-            this.grbServiceStatus.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.grbServiceStatus.Margin = new System.Windows.Forms.Padding(2);
             this.grbServiceStatus.Name = "grbServiceStatus";
-            this.grbServiceStatus.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.grbServiceStatus.Padding = new System.Windows.Forms.Padding(2);
             this.grbServiceStatus.Size = new System.Drawing.Size(866, 37);
             this.grbServiceStatus.TabIndex = 4;
             this.grbServiceStatus.TabStop = false;
@@ -233,7 +233,7 @@
             // 
             this.rdbInvalid.AutoSize = true;
             this.rdbInvalid.Location = new System.Drawing.Point(263, 12);
-            this.rdbInvalid.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.rdbInvalid.Margin = new System.Windows.Forms.Padding(2);
             this.rdbInvalid.Name = "rdbInvalid";
             this.rdbInvalid.Size = new System.Drawing.Size(65, 16);
             this.rdbInvalid.TabIndex = 4;
@@ -245,7 +245,7 @@
             // 
             this.rdbPause.AutoSize = true;
             this.rdbPause.Location = new System.Drawing.Point(132, 12);
-            this.rdbPause.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.rdbPause.Margin = new System.Windows.Forms.Padding(2);
             this.rdbPause.Name = "rdbPause";
             this.rdbPause.Size = new System.Drawing.Size(53, 16);
             this.rdbPause.TabIndex = 1;
@@ -258,7 +258,7 @@
             this.rdbAll.AutoSize = true;
             this.rdbAll.Checked = true;
             this.rdbAll.Location = new System.Drawing.Point(16, 12);
-            this.rdbAll.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.rdbAll.Margin = new System.Windows.Forms.Padding(2);
             this.rdbAll.Name = "rdbAll";
             this.rdbAll.Size = new System.Drawing.Size(41, 16);
             this.rdbAll.TabIndex = 3;
@@ -271,7 +271,7 @@
             // 
             this.rdbNormal.AutoSize = true;
             this.rdbNormal.Location = new System.Drawing.Point(195, 12);
-            this.rdbNormal.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.rdbNormal.Margin = new System.Windows.Forms.Padding(2);
             this.rdbNormal.Name = "rdbNormal";
             this.rdbNormal.Size = new System.Drawing.Size(59, 16);
             this.rdbNormal.TabIndex = 2;
@@ -283,7 +283,7 @@
             // 
             this.rdbRun.AutoSize = true;
             this.rdbRun.Location = new System.Drawing.Point(78, 12);
-            this.rdbRun.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.rdbRun.Margin = new System.Windows.Forms.Padding(2);
             this.rdbRun.Name = "rdbRun";
             this.rdbRun.Size = new System.Drawing.Size(41, 16);
             this.rdbRun.TabIndex = 0;
@@ -302,7 +302,7 @@
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "FrmMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ImcTF Client";

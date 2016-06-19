@@ -1,8 +1,11 @@
 ﻿using ImcFramework.WcfInterface;
-using ImcFramework.Winform.WcfClientConnector;
+using System.ServiceModel;
 using System;
+using System.Windows.Forms;
+
 namespace ImcFramework.Winform
 {
+    [CallbackBehavior(UseSynchronizationContext = false, AutomaticSessionShutdown = false)]
     public class MainConnectorCallback : IMessageCallback
     {
         public void Notify(WcfInterface.MessageEntity msgEntity)

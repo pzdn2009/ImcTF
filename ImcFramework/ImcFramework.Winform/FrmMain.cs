@@ -50,10 +50,7 @@ namespace ImcFramework.Winform
 
             try
             {
-                if (m_WsDualClient == null)
-                {
-                    m_WsDualClient = new WsDualClient(MyClients.CurrentBinding);
-                }
+                EnsureClientConnector();
 
                 //var client = new WcfClientConnector.ClientConnectorClient(new InstanceContext(new FrmMainConnector()), MyClients.CurrentBinding);
                 var serviceList = m_WsDualClient.ClientConnector.GetServiceList();// client.GetServiceList();
