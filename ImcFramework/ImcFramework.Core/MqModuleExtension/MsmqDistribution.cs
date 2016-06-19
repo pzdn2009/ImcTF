@@ -42,7 +42,7 @@ namespace ImcFramework.Core
 
         #region IDistributionFacility
 
-        public override void Push(T message)
+        public override void Push(object message)
         {
             m_MsmqHelper.SendMessage(message);
         }

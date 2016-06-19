@@ -16,10 +16,6 @@ namespace ImcFramework.Core
         private string className;
         private string methodName;
 
-        private bool isProgressMsg;
-        private int total;
-        private TotalType totalType;
-        private int value;
         private string callbackMethodName;
 
         protected MessageEntityBuilder() { }
@@ -70,28 +66,7 @@ namespace ImcFramework.Core
             this.methodName = methodName;
             return this;
         }
-
-
-        public MessageEntityBuilder WithIsProgressMsg(bool isProgressMsg)
-        {
-            this.isProgressMsg = isProgressMsg;
-            return this;
-        }
-        public MessageEntityBuilder WithTotal(int total)
-        {
-            this.total = total;
-            return this;
-        }
-        public MessageEntityBuilder WithTotalType(TotalType totalType)
-        {
-            this.totalType = totalType;
-            return this;
-        }
-        public MessageEntityBuilder WithValue(int value)
-        {
-            this.value = value;
-            return this;
-        }
+        
         public MessageEntityBuilder WithCallbackMethodName(string callbackMethodName)
         {
             this.callbackMethodName = callbackMethodName;
@@ -110,10 +85,6 @@ namespace ImcFramework.Core
             entity.ClassName = className;
             entity.MethodName = methodName;
 
-            entity.IsProgressMsg = isProgressMsg;
-            entity.Total = total;
-            entity.TotalType = totalType;
-            entity.Value = value;
             entity.CallbackMethodName = callbackMethodName;
 
             return entity;

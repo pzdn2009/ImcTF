@@ -78,7 +78,6 @@ namespace ImcFramework.Core
             lock (lockObject)
             {
                 var messageEntity = MessageEntityBuilder.Create()
-                       .WithIsProgressMsg(false)
                        .WithServiceType(serviceType)
                        .WithMsgContent(message)
                        .WithMessageType(EMessageType.Info)
@@ -165,8 +164,7 @@ namespace ImcFramework.Core
                     var sf = new StackFrame();
                     var mn = sf.GetMethod().Name;
 
-                    MessageEntity msgEntity = MessageEntityBuilder.Create()
-                        .WithIsProgressMsg(true)  //表示进度消息
+                    ProgressInfoMessage msgEntity = ProgressInfoMessageBuilder.Create()
                         .WithCallbackMethodName(mn)
                         .WithServiceType(serviceType)
                         .WithTotal(total)
@@ -197,8 +195,7 @@ namespace ImcFramework.Core
                     var sf = new StackFrame();
                     var mn = sf.GetMethod().Name;
 
-                    MessageEntity msgEntity = MessageEntityBuilder.Create()
-                        .WithIsProgressMsg(true)  //表示进度消息
+                    ProgressInfoMessage msgEntity = ProgressInfoMessageBuilder.Create()
                         .WithCallbackMethodName(mn)
                         .WithServiceType(serviceType)
                         .WithTotal(total)
@@ -228,8 +225,7 @@ namespace ImcFramework.Core
                     var sf = new StackFrame();
                     var mn = sf.GetMethod().Name;
 
-                    MessageEntity msgEntity = MessageEntityBuilder.Create()
-                        .WithIsProgressMsg(true)  //表示进度消息
+                    ProgressInfoMessage msgEntity = ProgressInfoMessageBuilder.Create()
                         .WithCallbackMethodName(mn)
                         .WithServiceType(serviceType)
                         .WithSellerAccount(sellerAccount)
@@ -261,8 +257,7 @@ namespace ImcFramework.Core
                     var sf = new StackFrame();
                     var mn = sf.GetMethod().Name;
 
-                    MessageEntity msgEntity = MessageEntityBuilder.Create()
-                        .WithIsProgressMsg(true)  //表示进度消息
+                    ProgressInfoMessage msgEntity = ProgressInfoMessageBuilder.Create()
                         .WithCallbackMethodName(mn)
                         .WithServiceType(serviceType)
                         .WithSellerAccount(sellerAccount)
@@ -291,8 +286,7 @@ namespace ImcFramework.Core
                     var sf = new StackFrame();
                     var mn = sf.GetMethod().Name;
 
-                    MessageEntity msgEntity = MessageEntityBuilder.Create()
-                        .WithIsProgressMsg(true)  //表示进度消息
+                    ProgressInfoMessage msgEntity = ProgressInfoMessageBuilder.Create()
                         .WithCallbackMethodName(mn)
                         .WithServiceType(serviceType)
                         .Build();

@@ -11,6 +11,19 @@ namespace ImcFramework.WcfInterface.TransferMessage
     /// </summary>
     public interface ITransferMessage
     {
+        /// <summary>
+        /// 服务类型
+        /// </summary>
+        EServiceType ServiceType { get; set; }
 
+        /// <summary>
+        /// 账号
+        /// </summary>
+        string SellerAccount { get; set; }
+
+        /// <summary>
+        /// 回调方法名
+        /// </summary>
+        string CallbackMethodName { get; set; }
     }
 }

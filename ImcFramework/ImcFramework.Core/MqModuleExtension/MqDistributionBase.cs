@@ -20,7 +20,7 @@ namespace ImcFramework.Core.MqModuleExtension
 
         public abstract string MQPathFormat { get; set; }
 
-        public virtual void Push(T message)
+        public virtual void Push(object message)
         {
         }
 

@@ -10,13 +10,13 @@ namespace ImcFramework.Core
     /// <summary>
     /// 分布式设施
     /// </summary>
-    public interface IDistributionFacility<T> where T : ITransferMessage
+    public interface IDistributionFacility<out T>  where T :ITransferMessage
     {
         /// <summary>
         /// store a message
         /// </summary>
         /// <param name="message"></param>
-        void Push(T message);
+        void Push(object message);
 
         /// <summary>
         /// retrive some messages

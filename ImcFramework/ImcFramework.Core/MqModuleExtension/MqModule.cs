@@ -11,31 +11,15 @@ namespace ImcFramework.Core.MqModuleExtension
 {
     public class MqModule : ModuleExtensionBase
     {
-        private IDistributionFacility<MessageEntity> m_MqDistribution;
-        private List<Type> m_TypeList;
+        private IList<IDistributionFacility<ITransferMessage>> m_MqDistributions;
 
         public MqModule(ServiceContext serviceContext)
             : base(serviceContext)
         {
-            m_MqDistribution = DistributionFacilityFactory.GetDistributionFacility<MessageEntity>();
-
-            m_TypeList = new List<Type>();
+            m_MqDistributions = new List<IDistributionFacility<ITransferMessage>>();
         }
 
         private readonly string MQ_MODULE = "MQ_MODULE";
-
-        public void RegisterType(Type type)
-        {
-            if (!m_TypeList.Contains(type))
-            {
-                m_TypeList.Add(type);
-            }
-        }
-
-        public void UnRegisterType(Type type)
-        {
-            m_TypeList.Remove(type);
-        }
 
         public override string Name
         {
@@ -47,49 +31,53 @@ namespace ImcFramework.Core.MqModuleExtension
 
         public override void Start()
         {
+            m_MqDistributions.Add(DistributionFacilityFactory.GetDistributionFacility<MessageEntity>());
+            m_MqDistributions.Add(DistributionFacilityFactory.GetDistributionFacility<ProgressInfoMessage>());
+
+            var fisrt = m_MqDistributions.First();
+            var last = m_MqDistributions.Last();
+
             Task.Factory.StartNew(() =>
             {
                 while (Defaults.IsIsolatedJob)
                 {
                     System.Threading.Thread.Sleep(1);
 
-                    var msgs = m_MqDistribution.ReadMessages() as IEnumerable<MessageEntity>;
-
+                    var msgs = fisrt.ReadMessages() as IEnumerable<MessageEntity>;
                     foreach (var msg in msgs.OrderBy(zw => zw.Timestamp))
                     {
-                        if (!msg.IsProgressMsg)
+                        Observers.BroadCastMessageWithMQ(msg);
+                    }
+
+                    var msgs2 = last.ReadMessages() as IEnumerable<ProgressInfoMessage>;
+                    foreach (var msg in msgs2)
+                    {
+                        try
                         {
-                            Observers.BroadCastMessageWithMQ(msg);
+                            switch (msg.CallbackMethodName)
+                            {
+                                case "SendTaskProgressTotal":
+                                    Observers.SendTaskProgressTotal(msg.ServiceType, msg.Total, msg.TotalType, true);
+                                    break;
+                                case "SendTaskProgressItemTotal":
+                                    Observers.SendTaskProgressItemTotal(msg.ServiceType, msg.SellerAccount, msg.Total, true);
+                                    break;
+                                case "SendTaskProgressIncrease":
+                                    Observers.SendTaskProgressIncrease(msg.ServiceType, msg.SellerAccount, msg.Value, true);
+                                    break;
+                                case "SendTaskProgressForceFinish":
+                                    Observers.SendTaskProgressForceFinish(msg.ServiceType, msg.SellerAccount, true);
+                                    break;
+                                case "SendTaskProgressFinishAll":
+                                    Observers.SendTaskProgressFinishAll(msg.ServiceType, true);
+                                    break;
+                                default:
+                                    break;
+                            }
                         }
-                        else
+                        catch (Exception ex)
                         {
-                            try
-                            {
-                                switch (msg.CallbackMethodName)
-                                {
-                                    case "SendTaskProgressTotal":
-                                        Observers.SendTaskProgressTotal(msg.ServiceType, msg.Total, msg.TotalType, true);
-                                        break;
-                                    case "SendTaskProgressItemTotal":
-                                        Observers.SendTaskProgressItemTotal(msg.ServiceType, msg.SellerAccount, msg.Total, true);
-                                        break;
-                                    case "SendTaskProgressIncrease":
-                                        Observers.SendTaskProgressIncrease(msg.ServiceType, msg.SellerAccount, msg.Value, true);
-                                        break;
-                                    case "SendTaskProgressForceFinish":
-                                        Observers.SendTaskProgressForceFinish(msg.ServiceType, msg.SellerAccount, true);
-                                        break;
-                                    case "SendTaskProgressFinishAll":
-                                        Observers.SendTaskProgressFinishAll(msg.ServiceType, true);
-                                        break;
-                                    default:
-                                        break;
-                                }
-                            }
-                            catch (Exception ex)
-                            {
-                                LogHelper.Error("我去，出大事了:" + ex.Message + ex.StackTrace);
-                            }
+                            LogHelper.Error("我去，出大事了:" + ex.Message + ex.StackTrace);
                         }
                     }
                 }

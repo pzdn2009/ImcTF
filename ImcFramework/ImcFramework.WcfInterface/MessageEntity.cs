@@ -50,34 +50,10 @@ namespace ImcFramework.WcfInterface
 
         #endregion
 
-        #region 进度消息
-
-        /// <summary>
-        /// 是否为进度消息
-        /// </summary>
-        public bool IsProgressMsg { get; set; }
-
-        /// <summary>
-        /// 总数
-        /// </summary>
-        public int Total { get; set; }
-
-        /// <summary>
-        /// 总数类型
-        /// </summary>
-        public TotalType TotalType { get; set; }
-
-        /// <summary>
-        /// 值
-        /// </summary>
-        public int Value { get; set; }
-
         /// <summary>
         /// 回调方法名
         /// </summary>
         public string CallbackMethodName { get; set; }
-
-        #endregion
 
         public static MessageEntity NormalInfo(EServiceType serviceType, string msgContent = "")
         {
