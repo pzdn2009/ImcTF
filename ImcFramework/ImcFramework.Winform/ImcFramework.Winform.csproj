@@ -84,11 +84,6 @@
     <Compile Include="ProgressSynchronous.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ResIcons.Designer.cs" />
-    <Compile Include="Service References\WcfClientConnector\Reference.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Compile>
     <Compile Include="uc\ucLog.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -162,16 +157,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <None Include="Service References\WcfClientConnector\ImcFramework.WcfInterface.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\WcfClientConnector\service.wsdl" />
-    <None Include="Service References\WcfClientConnector\service.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\WcfClientConnector\service1.xsd">
-      <SubType>Designer</SubType>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">
@@ -180,12 +165,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\LogInfo.png" />
-    <None Include="Service References\WcfClientConnector\configuration91.svcinfo" />
-    <None Include="Service References\WcfClientConnector\configuration.svcinfo" />
-    <None Include="Service References\WcfClientConnector\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
     <Content Include="WinService.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -199,12 +178,6 @@
       <Project>{7077341f-a72d-4a7e-a443-04adf773ca01}</Project>
       <Name>ImcFramework.WcfInterface</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadata Include="Service References\" />
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadataStorage Include="Service References\WcfClientConnector\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

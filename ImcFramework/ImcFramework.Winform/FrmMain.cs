@@ -1,16 +1,10 @@
-﻿using ImcFramework.Infrastructure;
-using ImcFramework.WcfInterface;
+﻿using ImcFramework.WcfInterface;
 using ImcFramework.Winform.Common;
-using ImcFramework.Winform.WcfClientConnector;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.ServiceModel;
-using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -52,8 +46,7 @@ namespace ImcFramework.Winform
             {
                 EnsureClientConnector();
 
-                //var client = new WcfClientConnector.ClientConnectorClient(new InstanceContext(new FrmMainConnector()), MyClients.CurrentBinding);
-                var serviceList = m_WsDualClient.ClientConnector.GetServiceList();// client.GetServiceList();
+                var serviceList = m_WsDualClient.ClientConnector.GetServiceList();
 
                 int cnt = 0;
                 foreach (var en in serviceList)
