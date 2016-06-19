@@ -101,7 +101,7 @@ namespace ImcFramework.Core
             }
         }
 
-        public static void Cancle(string serviceName)
+        public static void Cancel(string serviceName)
         {
             if (GetStatus(serviceName) != EServiceStatus.Running)
                 return;

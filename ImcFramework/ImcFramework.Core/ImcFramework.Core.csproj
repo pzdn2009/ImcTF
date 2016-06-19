@@ -85,6 +85,7 @@
     <Compile Include="JobCronExpressionConfig.cs" />
     <Compile Include="LogModule\DefaultLoggerPool.cs" />
     <Compile Include="LogModule\ILoggerPool.cs" />
+    <Compile Include="LogModule\LogCascade.cs" />
     <Compile Include="LogModule\LogContentEntity.cs" />
     <Compile Include="LogModule\LoggerPoolFactory.cs" />
     <Compile Include="LogModule\MainBusinessLayout.cs" />
@@ -130,7 +131,11 @@
       <Name>ImcFramework.WcfInterface</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="ServiceTypeConfig.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <VSToolsPath Condition="'$(VSToolsPath)' == '' and '$(VisualStudioVersion)' != '' and '$(VisualStudioVersion)' != '11.0'">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

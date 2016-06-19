@@ -87,7 +87,7 @@ namespace ImcFramework.Core
                         callback.Notify(MessageEntity.NormalInfo(singleSwitch.ServiceType, " ModifySchedule"));
                         break;
                     case ECommand.Cancle:
-                        ServiceManager.Cancle(singleSwitch.ServiceType.ToString());
+                        ServiceManager.Cancel(singleSwitch.ServiceType.ToString());
                         LogHelper.Info(singleSwitch.ServiceType.ToString() + " Cancle！");
                         callback.Notify(MessageEntity.NormalInfo(singleSwitch.ServiceType, " Cancle"));
                         break;
