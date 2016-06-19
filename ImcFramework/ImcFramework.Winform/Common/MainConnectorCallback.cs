@@ -1,47 +1,43 @@
-﻿using ImcFramework.Winform.WcfClientConnector;
+﻿using ImcFramework.WcfInterface;
+using ImcFramework.Winform.WcfClientConnector;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ImcFramework.Winform.Common
+namespace ImcFramework.Winform
 {
-    public class MainConnector : IClientConnectorCallback
+    public class MainConnectorCallback : IMessageCallback
     {
         public void Notify(WcfInterface.MessageEntity msgEntity)
         {
-            throw new NotImplementedException();
+            Console.WriteLine(msgEntity.ServiceType.ServiceType);
         }
 
         public void NotifyLogInfo(string message)
         {
-            throw new NotImplementedException();
+            Console.WriteLine();
         }
 
         public void NotifyTaskProgressTotal(WcfInterface.ProgressSummary totalInfo)
         {
-            throw new NotImplementedException();
+            Console.WriteLine();
         }
 
         public void NotifyTaskProgressItemTotal(string sellerAccount, int total)
         {
-            throw new NotImplementedException();
+            Console.WriteLine();
         }
 
         public void NotifyTaskProgressItemValueAndTotal(string sellerAccount, WcfInterface.ProgressItem sellerAccountProgress)
         {
-            throw new NotImplementedException();
+            Console.WriteLine();
         }
 
         public void NotifyTaskProgressForceFinish(string sellerAccount)
         {
-            throw new NotImplementedException();
+            Console.WriteLine();
         }
 
         public void NotifyTaskProgressFinishAll()
         {
-            throw new NotImplementedException();
+            Console.WriteLine();
         }
     }
 }

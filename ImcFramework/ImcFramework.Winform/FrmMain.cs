@@ -18,7 +18,7 @@ namespace ImcFramework.Winform
 {
     public partial class FrmMain : Form
     {
-        private ClientConnectorClient m_Client;
+        private WsDualClient m_WsDualClient;
 
         /// <summary>
         /// 是否需要刷新
@@ -50,8 +50,13 @@ namespace ImcFramework.Winform
 
             try
             {
-                var client = new WcfClientConnector.ClientConnectorClient(new InstanceContext(new FrmMainConnector()), MyClients.CurrentBinding);
-                var serviceList = client.GetServiceList();
+                if (m_WsDualClient == null)
+                {
+                    m_WsDualClient = new WsDualClient(MyClients.CurrentBinding);
+                }
+
+                //var client = new WcfClientConnector.ClientConnectorClient(new InstanceContext(new FrmMainConnector()), MyClients.CurrentBinding);
+                var serviceList = m_WsDualClient.ClientConnector.GetServiceList();// client.GetServiceList();
 
                 int cnt = 0;
                 foreach (var en in serviceList)
@@ -79,6 +84,10 @@ namespace ImcFramework.Winform
 
                 this.tabControlMain.ContextMenuStrip = this.contextMenuStripForTabpage;
             }
+            catch (FaultException fex)
+            {
+                MessageBox.Show(fex.Code.Name + ":" + fex.Action + ":" + fex.Reason.ToString());
+            }
             catch (Exception ex)
             {
                 var connectionMsg = "Win服务没安装或未启动，或者WCF配置不正确！\n\nError详情：" + ex.Message;
@@ -87,10 +96,10 @@ namespace ImcFramework.Winform
         }
         private void EnsureClientConnector()
         {
-            if (NeedRefresh || m_Client == null || m_Client.State != CommunicationState.Opened)
+            if (NeedRefresh || m_WsDualClient == null || m_WsDualClient.Factory.State != CommunicationState.Opened)
             {
                 NeedRefresh = false;
-                m_Client = new ClientConnectorClient(new InstanceContext(new MainConnector()), MyClients.CurrentBinding);
+                m_WsDualClient = new WsDualClient(MyClients.CurrentBinding);
             }
         }
 
@@ -108,7 +117,7 @@ namespace ImcFramework.Winform
                 {
                     try
                     {
-                        var serviceInfo = m_Client.GetServiceInfo(((EServiceType)btn.Tag));
+                        var serviceInfo = m_WsDualClient.ClientConnector.GetServiceInfo(((EServiceType)btn.Tag));
                         switch (serviceInfo.EServiceStatus)
                         {
                             case EServiceStatus.Normal:

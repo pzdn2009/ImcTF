@@ -195,9 +195,16 @@ namespace ImcFramework.Core
 
         public List<EServiceType> GetServiceList()
         {
-            LogHelper.Info("Get service list");
-
-            return EServiceTypeReader.GetEServiceTypes();
+            try
+            {
+                return EServiceTypeReader.GetEServiceTypes();
+            }
+            catch (Exception ex)
+            {
+                var fex = new FaultException(new FaultReason(ex.Message), new FaultCode("001"), "GetServiceList");
+                LogHelper.Error(fex);
+                throw fex;
+            }
         }
     }
 }
