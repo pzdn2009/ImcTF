@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace ImcFramework.WinServiceLib
 {
     [RunInstaller(true)]
-    public partial class ImcSvcInstallerBase : System.Configuration.Install.Installer
+    public abstract partial class ImcSvcInstallerBase : System.Configuration.Install.Installer
     {
         public ImcSvcInstallerBase()
         {
@@ -45,22 +45,16 @@ namespace ImcFramework.WinServiceLib
         /// 子类重写服务名称
         /// </summary>
         /// <returns></returns>
-        protected virtual string GetSerivceName()
-        {
-            return "ImcFramework.WinService";
-        }
+        protected abstract string GetSerivceName();
 
         /// <summary>
         /// 子类重写 服务描述
         /// </summary>
         /// <returns></returns>
-        protected virtual string GetDescription()
-        {
-            return string.Empty;
-        }
+        protected abstract string GetDescription();
 
         /// <summary>
-        /// 子类重写启动模式
+        /// 默认启动模式
         /// </summary>
         /// <returns></returns>
         protected virtual ServiceStartMode GetServiceStartMode()
