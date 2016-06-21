@@ -24,48 +24,29 @@ namespace ImcFramework.Core
 
         private IFileAppender fileAppender;
 
-        public DefaultLoggerPool(string serviceType)
+        public DefaultLoggerPool(string loggerPoolName)
         {
-            this.ServiceType = serviceType;
-            fileAppender = new DefaultFileAppender(serviceType);
+            LoggerPoolName = loggerPoolName;
+            fileAppender = new DefaultFileAppender(loggerPoolName);
         }
 
-        public string ServiceType
+        public string LoggerPoolName
         {
             get;
             private set;
         }
+        
+        #region interfaces
 
-        //ServiceType/AllLog__Level__Date.txt
-        //ServiceType/SellerAccount__Level__Date.txt
-        public string GetAppenderName(string sellerAccount, ComonLog.LogLevel logLevel)
+        public ComonLog.ILog GetLogger(string user, ComonLog.LogLevel logLevel = ComonLog.LogLevel.Info)
         {
-            var appenderName = fileAppender.GetAppenderName(sellerAccount, logLevel);
-
-            lock (lockObject)
-            {
-                var tuple = Tuple.Create(sellerAccount, logLevel);
-                if (!hashLogFile.Contains(tuple) || !LogFileExist(GetLogFileName(appenderName)))
-                {
-                    InitMainBusinessLogger(appenderName, logLevel);
-                    hashLogFile.Add(tuple);
-                }
-            }
-
-            return appenderName;
-        }
-
-        #region Get Logger's
-
-        public ComonLog.ILog GetLogger(string sellerAccount, ComonLog.LogLevel logLevel = ComonLog.LogLevel.Info)
-        {
-            var appenderName = GetAppenderName(sellerAccount, logLevel);
+            var appenderName = GetAppenderName(user, logLevel);
             return ComonLog.LogManager.GetLogger(appenderName);
         }
 
-        public void Log(string sellerAccount, LogContentEntity logContentEntity)
+        public void Log(string user, LogContentEntity logContentEntity)
         {
-            var appenderName = GetAppenderName(sellerAccount, FileAppenderHelper.ConvertLogLevel(logContentEntity.Level));
+            var appenderName = GetAppenderName(user, FileAppenderHelper.ConvertLogLevel(logContentEntity.Level));
             Common.Logging.ILog log = Common.Logging.LogManager.GetLogger(appenderName);
 
             if (log.IsDebugEnabled)
@@ -85,6 +66,25 @@ namespace ImcFramework.Core
         #endregion
 
         #region 初始化
+
+        //LoggerPoolName/AllLog__Level__Date.txt
+        //LoggerPoolName/SellerAccount__Level__Date.txt
+        private string GetAppenderName(string user, ComonLog.LogLevel logLevel)
+        {
+            var appenderName = fileAppender.GetAppenderName(user, logLevel);
+
+            lock (lockObject)
+            {
+                var tuple = Tuple.Create(user, logLevel);
+                if (!hashLogFile.Contains(tuple) || !LogFileExist(GetLogFileName(appenderName)))
+                {
+                    InitMainBusinessLogger(appenderName, logLevel);
+                    hashLogFile.Add(tuple);
+                }
+            }
+
+            return appenderName;
+        }
 
         private void InitMainBusinessLogger(string appenderName, ComonLog.LogLevel logLevel)
         {

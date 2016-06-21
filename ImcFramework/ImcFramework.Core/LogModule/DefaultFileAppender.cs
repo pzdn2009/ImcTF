@@ -23,14 +23,14 @@ namespace ImcFramework.Core.LogModule
 
     public class DefaultFileAppender : IFileAppender
     {
-        private string serviceType;
+        private string loggerPoolName;
         private Dictionary<AppenderKey, string> appendNameDict;
 
-        public DefaultFileAppender(string serviceType)
+        public DefaultFileAppender(string loggerPoolName)
         {
-            Guard.IsNull(serviceType);
+            Guard.IsNull(loggerPoolName);
 
-            this.serviceType = serviceType;
+            this.loggerPoolName = loggerPoolName;
 
             appendNameDict = new Dictionary<AppenderKey, string>();
         }
@@ -39,7 +39,7 @@ namespace ImcFramework.Core.LogModule
         {
             if (!appendNameDict.ContainsKey(key))
             {
-                string f = serviceType.ToString() + "/" + "{0}__{1}";
+                string f = loggerPoolName.ToString() + "/" + "{0}__{1}";
                 var appenderName = string.Empty;
 
                 if (string.IsNullOrEmpty(key.SellerAccount))

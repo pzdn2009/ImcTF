@@ -88,11 +88,8 @@
     <Compile Include="LogModule\FileAppenderHelper.cs" />
     <Compile Include="LogModule\IFileAppender.cs" />
     <Compile Include="LogModule\ILoggerPool.cs" />
-    <Compile Include="LogModule\LogCascade.cs" />
     <Compile Include="LogModule\LogContentEntity.cs" />
     <Compile Include="LogModule\LoggerPoolFactory.cs" />
-    <Compile Include="LogModule\MainBusinessLayout.cs" />
-    <Compile Include="LogModule\MainBusinessPatternConverter.cs" />
     <Compile Include="MainBusinessBase.cs" />
     <Compile Include="MessageEntityBuilder.cs" />
     <Compile Include="MqModuleExtension\MsmqDistribution.cs" />

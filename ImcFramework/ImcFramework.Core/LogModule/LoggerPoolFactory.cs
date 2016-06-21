@@ -11,16 +11,16 @@ namespace ImcFramework.Core.LogModule
     {
         private static Dictionary<string, ILoggerPool> m_LoggerDict = new Dictionary<string, ILoggerPool>();
         private static object lockObject = new object();
-        public static ILoggerPool GetLoggerPool(string serviceType)
+        public static ILoggerPool GetLoggerPool(string loggerPoolName)
         {
             lock (lockObject)
             {
-                if(!m_LoggerDict.ContainsKey(serviceType))
+                if(!m_LoggerDict.ContainsKey(loggerPoolName))
                 {
-                    m_LoggerDict[serviceType] = new DefaultLoggerPool(serviceType);
+                    m_LoggerDict[loggerPoolName] = new DefaultLoggerPool(loggerPoolName);
                 }
 
-                return m_LoggerDict[serviceType];
+                return m_LoggerDict[loggerPoolName];
             }
         }
     }
