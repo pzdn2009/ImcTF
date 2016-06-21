@@ -67,6 +67,10 @@
       <Project>{7077341f-a72d-4a7e-a443-04adf773ca01}</Project>
       <Name>ImcFramework.WcfInterface</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ImcFramework\ImcFramework.csproj">
+      <Project>{f104ba9c-d14c-459f-9b5d-a0b3706b5f22}</Project>
+      <Name>ImcFramework</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

@@ -4,15 +4,16 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{2A472398-DFC6-4F59-93FD-1E8915F0E44E}</ProjectGuid>
+    <ProjectGuid>{F104BA9C-D14C-459F-9B5D-A0B3706B5F22}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ImcFramework.Core.RedisExt</RootNamespace>
-    <AssemblyName>ImcFramework.Core.RedisExt</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <RootNamespace>ImcFramework</RootNamespace>
+    <AssemblyName>ImcFramework</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -22,12 +23,16 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -37,28 +42,12 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
+    <Reference Include="System.ServiceProcess" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ImcFrameworkConstants.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\ImcFramework.Core\ImcFramework.Core.csproj">
-      <Project>{3b88d842-79bc-4961-82bb-5bdb90cea9aa}</Project>
-      <Name>ImcFramework.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ImcFramework.Infrastructure\ImcFramework.Infrastructure.csproj">
-      <Project>{365441e9-1338-42f2-b8fa-e79714f06d16}</Project>
-      <Name>ImcFramework.Infrastructure</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ImcFramework.WcfInterface\ImcFramework.WcfInterface.csproj">
-      <Project>{7077341f-a72d-4a7e-a443-04adf773ca01}</Project>
-      <Name>ImcFramework.WcfInterface</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ImcFramework\ImcFramework.csproj">
-      <Project>{f104ba9c-d14c-459f-9b5d-a0b3706b5f22}</Project>
-      <Name>ImcFramework</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -1,17 +1,16 @@
-﻿using ImcFramework;
-using System.Reflection;
+﻿using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 // 有关程序集的一般信息由以下
 // 控制。更改这些特性值可修改
 // 与程序集关联的信息。
-[assembly: AssemblyTitle("ImcFramework.Core.LuceneNetExt")]
+[assembly: AssemblyTitle("ImcFramework")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("ImcFramework.Core.LuceneNetExt")]
-[assembly: AssemblyCopyright("Copyright ©  2016")]
+[assembly: AssemblyCompany("Microsoft")]
+[assembly: AssemblyProduct("ImcFramework")]
+[assembly: AssemblyCopyright("Copyright © Microsoft 2016")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -21,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // 如果此项目向 COM 公开，则下列 GUID 用于类型库的 ID
-[assembly: Guid("dead616b-c30f-49a6-8f9d-c6105001a31c")]
+[assembly: Guid("f104ba9c-d14c-459f-9b5d-a0b3706b5f22")]
 
 // 程序集的版本信息由下列四个值组成: 
 //
@@ -33,5 +32,5 @@ using System.Runtime.InteropServices;
 //可以指定所有这些值，也可以使用“生成号”和“修订号”的默认值，
 // 方法是按如下所示使用“*”: :
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion(ImcFrameworkConstants.CurrentVersion)]
-[assembly: AssemblyFileVersion(ImcFrameworkConstants.CurrentVersion)]
+[assembly: AssemblyVersion(ImcFramework.ImcFrameworkConstants.CurrentVersion)]
+[assembly: AssemblyFileVersion(ImcFramework.ImcFrameworkConstants.CurrentVersion)]
