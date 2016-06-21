@@ -83,7 +83,9 @@
     <Compile Include="IsolatedAd\RemoteObject.cs" />
     <Compile Include="ITaskCancle.cs" />
     <Compile Include="JobCronExpressionConfig.cs" />
+    <Compile Include="LogModule\DefaultFileAppender.cs" />
     <Compile Include="LogModule\DefaultLoggerPool.cs" />
+    <Compile Include="LogModule\IFileAppender.cs" />
     <Compile Include="LogModule\ILoggerPool.cs" />
     <Compile Include="LogModule\LogCascade.cs" />
     <Compile Include="LogModule\LogContentEntity.cs" />

@@ -205,13 +205,6 @@ namespace ImcFramework.Core
 
         public static void StopAll()
         {
-            if (scheduler != null)
-            {
-                scheduler.Shutdown(true);
-            }
-
-            StopWcfHost();
-
             if (modules != null)
             {
                 foreach (var item in modules)
@@ -219,6 +212,13 @@ namespace ImcFramework.Core
                     item.Stop();
                 }
             }
+
+            if (scheduler != null)
+            {
+                scheduler.Shutdown(true);
+            }
+
+            StopWcfHost();
         }
     }
 }

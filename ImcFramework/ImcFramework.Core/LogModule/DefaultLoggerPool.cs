@@ -1,4 +1,5 @@
-﻿using ImcFramework.Infrastructure;
+﻿using ImcFramework.Core.LogModule;
+using ImcFramework.Infrastructure;
 using ImcFramework.WcfInterface;
 using log4net;
 using log4net.Appender;
@@ -21,9 +22,12 @@ namespace ImcFramework.Core
         private object lockObject = new object();
         private static HashSet<Tuple<string, ComonLog.LogLevel>> hashLogFile = new HashSet<Tuple<string, ComonLog.LogLevel>>();
 
+        private IFileAppender fileAppender;
+
         public DefaultLoggerPool(EServiceType serviceType)
         {
             this.ServiceType = serviceType;
+            fileAppender = new DefaultFileAppender(serviceType.ServiceType);
         }
 
         public EServiceType ServiceType
@@ -36,16 +40,7 @@ namespace ImcFramework.Core
         //ServiceType/SellerAccount__Level__Date.txt
         public string GetAppenderName(string sellerAccount, ComonLog.LogLevel logLevel)
         {
-            string appenderFormat = ServiceType.ToString() + "/" + "{0}{1}";
-            var appenderName = string.Empty;
-            if (string.IsNullOrEmpty(sellerAccount))
-            {
-                appenderName = string.Format(appenderFormat, "AllLog" + Defaults.BusinessLogFileSplitChar, logLevel.ToString());
-            }
-            else
-            {
-                appenderName = string.Format(appenderFormat, sellerAccount + Defaults.BusinessLogFileSplitChar, logLevel.ToString());
-            }
+            var appenderName = fileAppender.GetAppenderName(sellerAccount, logLevel);
 
             lock (lockObject)
             {

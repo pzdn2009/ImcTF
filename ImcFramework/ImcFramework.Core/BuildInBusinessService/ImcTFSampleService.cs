@@ -44,13 +44,15 @@ namespace ImcFramework.Core.BuildInBusinessService
             for (int i = 0; i < 10; i++)
             {
                 SellerAccountProgress.SendTaskProgressIncrease("PZ");
-                Thread.Sleep(1000);
+                Thread.Sleep(300);
+                NotifyAndLog("A:" + i, LogLevel.Info, "PZ");
             }
 
             for (int i = 0; i < 15; i++)
             {
                 SellerAccountProgress.SendTaskProgressIncrease("DN");
-                Thread.Sleep(500);
+                Thread.Sleep(200);
+                NotifyAndLog("B:" + i, LogLevel.Info, "DN");
             }
         }
     }
