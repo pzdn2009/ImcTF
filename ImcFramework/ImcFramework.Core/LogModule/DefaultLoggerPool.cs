@@ -24,13 +24,13 @@ namespace ImcFramework.Core
 
         private IFileAppender fileAppender;
 
-        public DefaultLoggerPool(EServiceType serviceType)
+        public DefaultLoggerPool(string serviceType)
         {
             this.ServiceType = serviceType;
-            fileAppender = new DefaultFileAppender(serviceType.ServiceType);
+            fileAppender = new DefaultFileAppender(serviceType);
         }
 
-        public EServiceType ServiceType
+        public string ServiceType
         {
             get;
             private set;
@@ -44,7 +44,7 @@ namespace ImcFramework.Core
 
             lock (lockObject)
             {
-                var tuple = Tuple.Create<string, ComonLog.LogLevel>(sellerAccount, logLevel);
+                var tuple = Tuple.Create(sellerAccount, logLevel);
                 if (!hashLogFile.Contains(tuple) || !LogFileExist(GetLogFileName(appenderName)))
                 {
                     InitMainBusinessLogger(appenderName, logLevel);
@@ -57,12 +57,7 @@ namespace ImcFramework.Core
 
         #region Get Logger's
 
-        public ComonLog.ILog GetMainBusinessLogger()
-        {
-            return GetMainBusinessLogger(string.Empty);
-        }
-
-        public ComonLog.ILog GetMainBusinessLogger(string sellerAccount, ComonLog.LogLevel logLevel = ComonLog.LogLevel.Info)
+        public ComonLog.ILog GetLogger(string sellerAccount, ComonLog.LogLevel logLevel = ComonLog.LogLevel.Info)
         {
             var appenderName = GetAppenderName(sellerAccount, logLevel);
             return ComonLog.LogManager.GetLogger(appenderName);
@@ -71,8 +66,8 @@ namespace ImcFramework.Core
         public void Log(string sellerAccount, LogContentEntity logContentEntity)
         {
             var appenderName = GetAppenderName(sellerAccount, FileAppenderHelper.ConvertLogLevel(logContentEntity.Level));
-
             Common.Logging.ILog log = Common.Logging.LogManager.GetLogger(appenderName);
+
             if (log.IsDebugEnabled)
             {
                 log.Debug(logContentEntity.ToString());
@@ -110,7 +105,6 @@ namespace ImcFramework.Core
         private bool LogFileExist(string fileName)
         {
             var fullName = Defaults.RootDirectory + fileName.Replace('/', '\\').Replace(".txt", DateTime.Now.ToString("yyyy-MM-dd") + ".txt");
-            //Console.WriteLine(fullName);
             return File.Exists(fullName);
         }
 
@@ -138,7 +132,7 @@ namespace ImcFramework.Core
             appender.DatePattern = "yyyy-MM-dd";
             appender.PreserveLogFileNameExtension = true;
             appender.StaticLogFileName = false;
-            appender.Threshold = ConvertLogLevel(logLevel);
+            appender.Threshold = FileAppenderHelper.ConvertLogLevel(logLevel);
 
             log4net.Filter.LevelRangeFilter levfilter = new log4net.Filter.LevelRangeFilter();
             levfilter.LevelMax = appender.Threshold;
@@ -177,31 +171,6 @@ namespace ImcFramework.Core
             appender.ActivateOptions();
 
             return appender;
-        }
-
-        private Level ConvertLogLevel(ComonLog.LogLevel logLevel)
-        {
-            switch (logLevel)
-            {
-                case ComonLog.LogLevel.All:
-                    return Level.All;
-                case ComonLog.LogLevel.Debug:
-                    return Level.Debug;
-                case ComonLog.LogLevel.Error:
-                    return Level.Error;
-                case ComonLog.LogLevel.Fatal:
-                    return Level.Fatal;
-                case ComonLog.LogLevel.Info:
-                    return Level.Info;
-                case ComonLog.LogLevel.Off:
-                    return Level.Off;
-                case ComonLog.LogLevel.Trace:
-                    return Level.Trace;
-                case ComonLog.LogLevel.Warn:
-                    return Level.Warn;
-                default:
-                    throw new NotSupportedException("Not Support logLevel:" + logLevel.ToString());
-            }
         }
 
         #endregion

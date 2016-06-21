@@ -16,7 +16,7 @@ namespace ImcFramework.Core
         /// <summary>
         /// 服务类型
         /// </summary>
-        EServiceType ServiceType { get; }
+        string ServiceType { get; }
 
         /// <summary>
         /// 获得AppenderName，用做查询
@@ -27,18 +27,12 @@ namespace ImcFramework.Core
         string GetAppenderName(string sellerAccount, global::Common.Logging.LogLevel logLevel);
 
         /// <summary>
-        /// 返回当前服务的所有日志
-        /// </summary>
-        /// <returns></returns>
-        ILog GetMainBusinessLogger();
-
-        /// <summary>
         /// 根据账号返回当前服务的日志
         /// </summary>
         /// <param name="sellerAccount">账号</param>
         /// <param name="logLevel">级别</param>
         /// <returns></returns>
-        ILog GetMainBusinessLogger(string sellerAccount, LogLevel logLevel = LogLevel.Info);
+        ILog GetLogger(string sellerAccount, LogLevel logLevel = LogLevel.Info);
 
         /// <summary>
         /// 直接记录日志

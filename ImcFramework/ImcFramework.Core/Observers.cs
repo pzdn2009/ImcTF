@@ -102,7 +102,7 @@ namespace ImcFramework.Core
         {
             #region 记录日志
 
-            var logger = LoggerPoolFactory.GetLoggerPool(messageEntity.ServiceType);
+            var logger = LoggerPoolFactory.GetLoggerPool(messageEntity.ServiceType.ServiceType);
 
             logger.Log(messageEntity.SellerAccount, new LogContentEntity()
             {
