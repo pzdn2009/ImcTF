@@ -11,7 +11,7 @@ namespace ImcFramework.Core
         private EServiceType serviceType;
         private string msgContent;
         private EMessageType messageType;
-        private string sellerAccount;
+        private string user;
         private string logLevel;
         private string className;
         private string methodName;
@@ -43,9 +43,9 @@ namespace ImcFramework.Core
             return this;
         }
 
-        public MessageEntityBuilder WithSellerAccount(string sellerAccount)
+        public MessageEntityBuilder WithUser(string user)
         {
-            this.sellerAccount = sellerAccount;
+            this.user = user;
             return this;
         }
 
@@ -80,7 +80,7 @@ namespace ImcFramework.Core
             entity.MsgContent = msgContent;
             entity.ServiceType = serviceType;
             entity.Timestamp = DateTime.Now;
-            entity.SellerAccount = sellerAccount;
+            entity.User = user;
             entity.LogLevel = logLevel;
             entity.ClassName = className;
             entity.MethodName = methodName;

@@ -73,7 +73,7 @@ namespace ImcFramework.Core
         }
 
         public static void BroadCastMessage(EServiceType serviceType, LogLevel logLevel,
-            string sellerAccount, string message, string className, string methodName)
+            string user, string message, string className, string methodName)
         {
             lock (lockObject)
             {
@@ -81,7 +81,7 @@ namespace ImcFramework.Core
                        .WithServiceType(serviceType)
                        .WithMsgContent(message)
                        .WithMessageType(EMessageType.Info)
-                       .WithSellerAccount(sellerAccount)
+                       .WithUser(user)
                        .WithLogLevel(logLevel.ToString())
                        .WithClassName(className)
                        .WithMethodName(methodName)
@@ -104,7 +104,7 @@ namespace ImcFramework.Core
 
             var logger = LoggerPoolFactory.GetLoggerPool(messageEntity.ServiceType.ServiceType);
 
-            logger.Log(messageEntity.SellerAccount, new LogContentEntity()
+            logger.Log(messageEntity.User, new LogContentEntity()
             {
                 Class = messageEntity.ClassName,
                 Method = messageEntity.MethodName,
@@ -166,7 +166,7 @@ namespace ImcFramework.Core
                         .WithCallbackMethodName(mn)
                         .WithServiceType(serviceType)
                         .WithTotal(total)
-                        .WithSellerAccount(sellerAccount)
+                        .WithUser(sellerAccount)
                         .Build();
 
                     DistributionFacilityFactory.GetDistributionFacility(msgEntity).Push(msgEntity);
@@ -195,7 +195,7 @@ namespace ImcFramework.Core
                     ProgressInfoMessage msgEntity = ProgressInfoMessageBuilder.Create()
                         .WithCallbackMethodName(mn)
                         .WithServiceType(serviceType)
-                        .WithSellerAccount(sellerAccount)
+                        .WithUser(sellerAccount)
                         .WithValue(value)
                         .Build();
 
@@ -227,7 +227,7 @@ namespace ImcFramework.Core
                     ProgressInfoMessage msgEntity = ProgressInfoMessageBuilder.Create()
                         .WithCallbackMethodName(mn)
                         .WithServiceType(serviceType)
-                        .WithSellerAccount(sellerAccount)
+                        .WithUser(sellerAccount)
                         .Build();
 
                     DistributionFacilityFactory.GetDistributionFacility(msgEntity).Push(msgEntity);

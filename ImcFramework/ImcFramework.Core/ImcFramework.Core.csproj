@@ -106,8 +106,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="BuildInBusinessService\RemoveLogFileEveryDay.cs" />
     <Compile Include="RunOnce.cs" />
-    <Compile Include="SellerAccountProgress\DefaultSellerAccountProgress.cs" />
-    <Compile Include="SellerAccountProgress\ISellerAccountProgress.cs" />
+    <Compile Include="MutilUerProgress\DefaultMultiUserProgress.cs" />
+    <Compile Include="MutilUerProgress\IMultiUserProgress.cs" />
     <Compile Include="ServiceManager.cs" />
     <Compile Include="TaskShedulers\LimitedConcurrencyLevelTaskScheduler.cs" />
     <Compile Include="WcfService\ClientConnectorReal.cs" />
