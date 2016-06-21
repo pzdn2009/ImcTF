@@ -12,11 +12,6 @@ namespace ImcFramework.Core
     public class LogContentEntity
     {
         /// <summary>
-        /// 线程ID
-        /// </summary>
-        public string ThreadId { get; set; }
-
-        /// <summary>
         /// 类名
         /// </summary>
         public string Class { get; set; }
@@ -24,11 +19,6 @@ namespace ImcFramework.Core
         /// 方法名
         /// </summary>
         public string Method { get; set; }
-
-        /// <summary>
-        /// 堆栈跟踪
-        /// </summary>
-        public string StackTrace { get; set; }
 
         /// <summary>
         /// 自定义消息
@@ -40,9 +30,14 @@ namespace ImcFramework.Core
         /// </summary>
         public string Level { get; set; }
 
-        /// <summary>
-        /// 服务类型
-        /// </summary>
-        public EServiceType ServiceType { get; set; }
+        public override string ToString()
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append("\r\n");
+            sb.Append("ClassName:" + Class + "\r\n");
+            sb.Append("MethodName:" + Method + "\r\n");
+            sb.Append("Message:" + Message + "\r\n");
+            return sb.ToString();
+        }
     }
 }

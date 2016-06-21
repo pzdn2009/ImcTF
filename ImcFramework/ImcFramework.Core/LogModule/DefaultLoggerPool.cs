@@ -68,6 +68,25 @@ namespace ImcFramework.Core
             return ComonLog.LogManager.GetLogger(appenderName);
         }
 
+        public void Log(string sellerAccount, LogContentEntity logContentEntity)
+        {
+            var appenderName = GetAppenderName(sellerAccount, FileAppenderHelper.ConvertLogLevel(logContentEntity.Level));
+
+            Common.Logging.ILog log = Common.Logging.LogManager.GetLogger(appenderName);
+            if (log.IsDebugEnabled)
+            {
+                log.Debug(logContentEntity.ToString());
+            }
+            if (log.IsInfoEnabled)
+            {
+                log.Info(logContentEntity.ToString());
+            }
+            if (log.IsErrorEnabled)
+            {
+                log.Error(logContentEntity.ToString());
+            }
+        }
+
         #endregion
 
         #region 初始化

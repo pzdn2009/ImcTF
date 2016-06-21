@@ -39,5 +39,11 @@ namespace ImcFramework.Core
         /// <param name="logLevel">级别</param>
         /// <returns></returns>
         ILog GetMainBusinessLogger(string sellerAccount, LogLevel logLevel = LogLevel.Info);
+
+        /// <summary>
+        /// 直接记录日志
+        /// </summary>
+        /// <param name="logContentEntity">日志实体</param>
+        void Log(string sellerAccount, LogContentEntity logContentEntity);
     }
 }
