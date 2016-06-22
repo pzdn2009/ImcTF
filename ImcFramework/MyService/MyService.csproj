@@ -60,6 +60,7 @@
     <None Include="App.config">
       <SubType>Designer</SubType>
     </None>
+    <None Include="MyService.nuspec" />
     <None Include="packages.config" />
     <None Include="quartz.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

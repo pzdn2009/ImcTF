@@ -79,6 +79,7 @@
     <Compile Include="XmlHelper.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="ImcFramework.Infrastructure.nuspec" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
