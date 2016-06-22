@@ -8,9 +8,9 @@
     <owners>$author$</owners>
     <projectUrl>https://github.com/pzdn2009/ImcTF</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>$description$</description>
+    <description>wcfinterface</description>
     <releaseNotes></releaseNotes>
-    <copyright>$copyright$</copyright>
+    <copyright>Copyright @ 2016</copyright>
     <tags></tags>
   </metadata>
 </package>

@@ -10,6 +10,6 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>ImcFramework Base Lib</description>
     <releaseNotes></releaseNotes>
-    <copyright>{copyright}</copyright>
+    <copyright>Copyright @ 2016</copyright>
   </metadata>
 </package>
