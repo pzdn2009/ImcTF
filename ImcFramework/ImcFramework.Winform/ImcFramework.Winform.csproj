@@ -141,6 +141,7 @@
     <EmbeddedResource Include="uc\ucWinServiceMgr.resx">
       <DependentUpon>ucWinServiceMgr.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="ImcFramework.Winform.nuspec" />
     <None Include="packages.config" />
     <None Include="Properties\app.manifest" />
     <None Include="Properties\DataSources\ImcFramework.WcfInterface.EServiceType.datasource" />

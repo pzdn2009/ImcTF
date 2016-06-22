@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>$id$</id>
+    <version>$version$</version>
+    <title>$title$</title>
+    <authors>$author$</authors>
+    <owners>$author$</owners>
+    <projectUrl>https://github.com/pzdn2009/ImcTF</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>ImcFramework Infrastructure lib</description>
+    <releaseNotes></releaseNotes>
+    <copyright>$copyright$</copyright>
+  </metadata>
+</package>
