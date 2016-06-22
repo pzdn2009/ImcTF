@@ -10,6 +10,7 @@ using System.Threading;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using ImcFramework.WcfInterface.TransferMessage;
 
 namespace ImcFramework.Core
 {
@@ -86,7 +87,7 @@ namespace ImcFramework.Core
                         LogHelper.Info(singleSwitch.ServiceType.ToString() + " ModifySchedule！");
                         callback.Notify(MessageEntity.NormalInfo(singleSwitch.ServiceType, " ModifySchedule"));
                         break;
-                    case ECommand.Cancle:
+                    case ECommand.Cancel:
                         ServiceManager.Cancel(singleSwitch.ServiceType.ToString());
                         LogHelper.Info(singleSwitch.ServiceType.ToString() + " Cancle！");
                         callback.Notify(MessageEntity.NormalInfo(singleSwitch.ServiceType, " Cancle"));

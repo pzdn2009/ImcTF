@@ -91,7 +91,6 @@
     <Compile Include="LogModule\LogContentEntity.cs" />
     <Compile Include="LogModule\LoggerPoolFactory.cs" />
     <Compile Include="MainBusinessBase.cs" />
-    <Compile Include="MessageEntityBuilder.cs" />
     <Compile Include="MqModuleExtension\MsmqDistribution.cs" />
     <Compile Include="ModuleExtension\IModuleExtension.cs" />
     <Compile Include="ModuleExtension\ModuleConfiguration.cs" />
@@ -99,7 +98,6 @@
     <Compile Include="ModuleExtension\ServiceContext.cs" />
     <Compile Include="MqModuleExtension\MqModule.cs" />
     <Compile Include="MqModuleExtension\MqDistributionBase.cs" />
-    <Compile Include="MutilTaskPaging.cs" />
     <Compile Include="GlobalTriggerListener.cs" />
     <Compile Include="Observers.cs" />
     <Compile Include="ProgressInfoManager.cs" />
@@ -113,7 +111,6 @@
     <Compile Include="MutilUerProgress\IMultiUserProgress.cs" />
     <Compile Include="ServiceManager.cs" />
     <Compile Include="ServiceModuleBase.cs" />
-    <Compile Include="TaskShedulers\LimitedConcurrencyLevelTaskScheduler.cs" />
     <Compile Include="WcfService\ClientConnectorReal.cs" />
     <Compile Include="WcfService\Host.cs" />
     <Compile Include="WcfService\LoginCustomValidator.cs" />

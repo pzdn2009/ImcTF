@@ -1,5 +1,6 @@
 ﻿using ImcFramework.Infrastructure;
 using ImcFramework.WcfInterface;
+using ImcFramework.WcfInterface.TransferMessage;
 using ImcFramework.Winform.Common;
 using System;
 using System.Drawing;
@@ -230,7 +231,7 @@ namespace ImcFramework.Winform
             if (MessageBox.Show("确定要取消吗？", "提示", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
                 EnsureClient();
-                client.RequestSwitch(new FunctionSwitch() { ServiceType = serviceType, Command = ECommand.Cancle, ScheduleFormat = "" });
+                client.RequestSwitch(new FunctionSwitch() { ServiceType = serviceType, Command = ECommand.Cancel, ScheduleFormat = "" });
             }
         }
 

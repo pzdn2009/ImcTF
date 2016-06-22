@@ -5,7 +5,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
 
-namespace ImcFramework.WcfInterface
+namespace ImcFramework.WcfInterface.TransferMessage
 {
     [DataContract]
     public class MessageEntity : ITransferMessage

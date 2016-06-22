@@ -2,13 +2,14 @@
 using System.ServiceModel;
 using System;
 using System.Windows.Forms;
+using ImcFramework.WcfInterface.TransferMessage;
 
 namespace ImcFramework.Winform
 {
     [CallbackBehavior(UseSynchronizationContext = false, AutomaticSessionShutdown = false)]
     public class MainConnectorCallback : IMessageCallback
     {
-        public void Notify(WcfInterface.MessageEntity msgEntity)
+        public void Notify(MessageEntity msgEntity)
         {
             Console.WriteLine(msgEntity.ServiceType.ServiceType);
         }

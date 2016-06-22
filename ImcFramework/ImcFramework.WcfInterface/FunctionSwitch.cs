@@ -54,6 +54,10 @@ namespace ImcFramework.WcfInterface
 
         [EnumMember]
         [Description("取消")]
-        Cancle
+        Cancel,
+
+        [EnumMember]
+        [Description("中断")]
+        Interrupt
     }
 }

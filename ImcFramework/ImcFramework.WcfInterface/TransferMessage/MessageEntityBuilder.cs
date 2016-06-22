@@ -1,10 +1,11 @@
 ﻿using ImcFramework.WcfInterface;
+using ImcFramework.WcfInterface.TransferMessage;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace ImcFramework.Core
+namespace ImcFramework.WcfInterface.TransferMessage
 {
     public class MessageEntityBuilder
     {
