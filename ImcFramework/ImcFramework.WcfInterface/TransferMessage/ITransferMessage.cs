@@ -19,7 +19,7 @@ namespace ImcFramework.WcfInterface.TransferMessage
         /// <summary>
         /// 账号
         /// </summary>
-        string SellerAccount { get; set; }
+        string User { get; set; }
 
         /// <summary>
         /// 回调方法名

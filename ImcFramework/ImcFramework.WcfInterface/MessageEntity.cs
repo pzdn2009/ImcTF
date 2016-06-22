@@ -40,7 +40,7 @@ namespace ImcFramework.WcfInterface
 
         #region　日志消息
 
-        public string SellerAccount { get; set; }
+        public string User { get; set; }
 
         public string LogLevel { get; set; }
 

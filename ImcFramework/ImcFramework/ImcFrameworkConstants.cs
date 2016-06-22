@@ -4,11 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ImcFramework.Core.LogModule
+namespace ImcFramework
 {
-    public enum LogCascade
+    public static class ImcFrameworkConstants
     {
-        OneFile,
-        DirectoryCascade
+        public const string CurrentVersion = "1.0.0.0";
     }
 }

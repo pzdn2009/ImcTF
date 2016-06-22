@@ -75,6 +75,10 @@
       <Project>{3b88d842-79bc-4961-82bb-5bdb90cea9aa}</Project>
       <Name>ImcFramework.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ImcFramework\ImcFramework.csproj">
+      <Project>{f104ba9c-d14c-459f-9b5d-a0b3706b5f22}</Project>
+      <Name>ImcFramework</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

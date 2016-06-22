@@ -23,12 +23,18 @@ namespace ImcFramework.Core.SignalRExt
 
         public override void Start()
         {
-            SignalRClientManager.RegisterAll();
+            if (!string.IsNullOrEmpty(Define.SignalRUrl))
+            {
+                SignalRClientManager.RegisterAll();
+            }
         }
 
         public override void Stop()
         {
-            SignalRClientManager.UnRegisterAll();
+            if (!string.IsNullOrEmpty(Define.SignalRUrl))
+            {
+                SignalRClientManager.UnRegisterAll();
+            }
         }
     }
 }

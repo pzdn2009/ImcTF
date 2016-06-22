@@ -83,13 +83,13 @@
     <Compile Include="IsolatedAd\RemoteObject.cs" />
     <Compile Include="ITaskCancle.cs" />
     <Compile Include="JobCronExpressionConfig.cs" />
+    <Compile Include="LogModule\DefaultFileAppender.cs" />
     <Compile Include="LogModule\DefaultLoggerPool.cs" />
+    <Compile Include="LogModule\FileAppenderHelper.cs" />
+    <Compile Include="LogModule\IFileAppender.cs" />
     <Compile Include="LogModule\ILoggerPool.cs" />
-    <Compile Include="LogModule\LogCascade.cs" />
     <Compile Include="LogModule\LogContentEntity.cs" />
     <Compile Include="LogModule\LoggerPoolFactory.cs" />
-    <Compile Include="LogModule\MainBusinessLayout.cs" />
-    <Compile Include="LogModule\MainBusinessPatternConverter.cs" />
     <Compile Include="MainBusinessBase.cs" />
     <Compile Include="MessageEntityBuilder.cs" />
     <Compile Include="MqModuleExtension\MsmqDistribution.cs" />
@@ -106,8 +106,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="BuildInBusinessService\RemoveLogFileEveryDay.cs" />
     <Compile Include="RunOnce.cs" />
-    <Compile Include="SellerAccountProgress\DefaultSellerAccountProgress.cs" />
-    <Compile Include="SellerAccountProgress\ISellerAccountProgress.cs" />
+    <Compile Include="MutilUerProgress\DefaultMultiUserProgress.cs" />
+    <Compile Include="MutilUerProgress\IMultiUserProgress.cs" />
     <Compile Include="ServiceManager.cs" />
     <Compile Include="TaskShedulers\LimitedConcurrencyLevelTaskScheduler.cs" />
     <Compile Include="WcfService\ClientConnectorReal.cs" />
@@ -129,6 +129,10 @@
     <ProjectReference Include="..\ImcFramework.WcfInterface\ImcFramework.WcfInterface.csproj">
       <Project>{7077341f-a72d-4a7e-a443-04adf773ca01}</Project>
       <Name>ImcFramework.WcfInterface</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ImcFramework\ImcFramework.csproj">
+      <Project>{f104ba9c-d14c-459f-9b5d-a0b3706b5f22}</Project>
+      <Name>ImcFramework</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

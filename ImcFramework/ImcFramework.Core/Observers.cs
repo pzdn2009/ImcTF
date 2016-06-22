@@ -73,7 +73,7 @@ namespace ImcFramework.Core
         }
 
         public static void BroadCastMessage(EServiceType serviceType, LogLevel logLevel,
-            string sellerAccount, string message, string className, string methodName)
+            string user, string message, string className, string methodName)
         {
             lock (lockObject)
             {
@@ -81,7 +81,7 @@ namespace ImcFramework.Core
                        .WithServiceType(serviceType)
                        .WithMsgContent(message)
                        .WithMessageType(EMessageType.Info)
-                       .WithSellerAccount(sellerAccount)
+                       .WithUser(user)
                        .WithLogLevel(logLevel.ToString())
                        .WithClassName(className)
                        .WithMethodName(methodName)
@@ -102,28 +102,15 @@ namespace ImcFramework.Core
         {
             #region 记录日志
 
-            var logger = LoggerPoolFactory.GetLoggerPool(messageEntity.ServiceType);
-            var appenderName = logger.GetAppenderName(messageEntity.SellerAccount,
-                GetLogLevel(messageEntity.LogLevel));
-            switch (messageEntity.LogLevel)
+            var logger = LoggerPoolFactory.GetLoggerPool(messageEntity.ServiceType.ServiceType);
+
+            logger.Log(messageEntity.User, new LogContentEntity()
             {
-                case "All":
-                    break;
-                case "Debug":
-                    LogHelper.Debug(messageEntity.ClassName, messageEntity.MethodName, messageEntity.MsgContent, appenderName);
-                    break;
-                case "Error":
-                    LogHelper.Error(messageEntity.ClassName, messageEntity.MethodName, messageEntity.MsgContent, appenderName);
-                    break;
-                case "Info":
-                    LogHelper.Info(messageEntity.ClassName, messageEntity.MethodName, messageEntity.MsgContent, appenderName);
-                    break;
-                case "Warn":
-                    LogHelper.Warn(messageEntity.ClassName, messageEntity.MethodName, messageEntity.MsgContent, appenderName);
-                    break;
-                default:
-                    break;
-            }
+                Class = messageEntity.ClassName,
+                Method = messageEntity.MethodName,
+                Message = messageEntity.MsgContent,
+                Level = messageEntity.LogLevel
+            });
 
             #endregion
 
@@ -131,26 +118,6 @@ namespace ImcFramework.Core
             {
                 clientCallback.Notify(messageEntity);
             });
-        }
-
-        private static LogLevel GetLogLevel(string logLevel)
-        {
-            switch (logLevel)
-            {
-                case "All":
-                    break;
-                case "Debug":
-                    return LogLevel.Debug;
-                case "Error":
-                    return LogLevel.Error;
-                case "Info":
-                    return LogLevel.Info;
-                case "Warn":
-                    return LogLevel.Warn;
-                default:
-                    break;
-            }
-            return LogLevel.All;
         }
 
         #region 销售账号任务通知
@@ -199,7 +166,7 @@ namespace ImcFramework.Core
                         .WithCallbackMethodName(mn)
                         .WithServiceType(serviceType)
                         .WithTotal(total)
-                        .WithSellerAccount(sellerAccount)
+                        .WithUser(sellerAccount)
                         .Build();
 
                     DistributionFacilityFactory.GetDistributionFacility(msgEntity).Push(msgEntity);
@@ -228,7 +195,7 @@ namespace ImcFramework.Core
                     ProgressInfoMessage msgEntity = ProgressInfoMessageBuilder.Create()
                         .WithCallbackMethodName(mn)
                         .WithServiceType(serviceType)
-                        .WithSellerAccount(sellerAccount)
+                        .WithUser(sellerAccount)
                         .WithValue(value)
                         .Build();
 
@@ -260,7 +227,7 @@ namespace ImcFramework.Core
                     ProgressInfoMessage msgEntity = ProgressInfoMessageBuilder.Create()
                         .WithCallbackMethodName(mn)
                         .WithServiceType(serviceType)
-                        .WithSellerAccount(sellerAccount)
+                        .WithUser(sellerAccount)
                         .Build();
 
                     DistributionFacilityFactory.GetDistributionFacility(msgEntity).Push(msgEntity);

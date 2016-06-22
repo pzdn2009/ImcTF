@@ -16,16 +16,16 @@ namespace ImcFramework.Core
     [DisallowConcurrentExecution]
     public abstract class MainBusinessBase : IJob, ITaskCancel
     {
-        private Lazy<ISellerAccountProgress> sellerAccountProgressLazy;
-        public ISellerAccountProgress SellerAccountProgress
+        private Lazy<IMutilUserProgress> multiUser;
+        public IMutilUserProgress MutilUserProgress
         {
-            get { return sellerAccountProgressLazy.Value; }
-            set { sellerAccountProgressLazy = new Lazy<ISellerAccountProgress>(() => { return value; }); }
+            get { return multiUser.Value; }
+            set { multiUser = new Lazy<IMutilUserProgress>(() => { return value; }); }
         }
 
         public MainBusinessBase()
         {
-            sellerAccountProgressLazy = new Lazy<ISellerAccountProgress>(() => { return new DefaultSellerAccountProgress(this.ServiceType); });
+            multiUser = new Lazy<IMutilUserProgress>(() => { return new DefaultMutilUserProgress(this.ServiceType); });
         }
 
 
@@ -99,7 +99,7 @@ namespace ImcFramework.Core
         {
             if (m_cts.IsCancellationRequested)
             {
-                SellerAccountProgress.FinishAll();
+                MutilUserProgress.FinishAll();
             }
         }
     }

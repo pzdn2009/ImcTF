@@ -36,6 +36,6 @@ namespace ImcFramework.WcfInterface.TransferMessage
         /// <summary>
         /// 销售账号
         /// </summary>
-        public string SellerAccount { get; set; }
+        public string User { get; set; }
     }
 }

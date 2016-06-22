@@ -37,20 +37,22 @@ namespace ImcFramework.Core.BuildInBusinessService
 
             NotifyAndLog("结束！", LogLevel.Info);
 
-            SellerAccountProgress.SendTaskProgressTotal(2, TotalType.SellerAccountCount);
-            SellerAccountProgress.SendTaskProgressItemTotal("PZ", 10);
-            SellerAccountProgress.SendTaskProgressItemTotal("DN", 15);
+            MutilUserProgress.SendTaskProgressTotal(2, TotalType.SellerAccountCount);
+            MutilUserProgress.SendTaskProgressItemTotal("PZ", 10);
+            MutilUserProgress.SendTaskProgressItemTotal("DN", 15);
 
             for (int i = 0; i < 10; i++)
             {
-                SellerAccountProgress.SendTaskProgressIncrease("PZ");
-                Thread.Sleep(1000);
+                MutilUserProgress.SendTaskProgressIncrease("PZ");
+                Thread.Sleep(300);
+                NotifyAndLog("A:" + i, LogLevel.Info, "PZ");
             }
 
             for (int i = 0; i < 15; i++)
             {
-                SellerAccountProgress.SendTaskProgressIncrease("DN");
-                Thread.Sleep(500);
+                MutilUserProgress.SendTaskProgressIncrease("DN");
+                Thread.Sleep(200);
+                NotifyAndLog("B:" + i, LogLevel.Info, "DN");
             }
         }
     }

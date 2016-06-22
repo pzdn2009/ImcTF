@@ -60,13 +60,13 @@ namespace ImcFramework.Core.MqModuleExtension
                                     Observers.SendTaskProgressTotal(msg.ServiceType, msg.Total, msg.TotalType, true);
                                     break;
                                 case "SendTaskProgressItemTotal":
-                                    Observers.SendTaskProgressItemTotal(msg.ServiceType, msg.SellerAccount, msg.Total, true);
+                                    Observers.SendTaskProgressItemTotal(msg.ServiceType, msg.User, msg.Total, true);
                                     break;
                                 case "SendTaskProgressIncrease":
-                                    Observers.SendTaskProgressIncrease(msg.ServiceType, msg.SellerAccount, msg.Value, true);
+                                    Observers.SendTaskProgressIncrease(msg.ServiceType, msg.User, msg.Value, true);
                                     break;
                                 case "SendTaskProgressForceFinish":
-                                    Observers.SendTaskProgressForceFinish(msg.ServiceType, msg.SellerAccount, true);
+                                    Observers.SendTaskProgressForceFinish(msg.ServiceType, msg.User, true);
                                     break;
                                 case "SendTaskProgressFinishAll":
                                     Observers.SendTaskProgressFinishAll(msg.ServiceType, true);

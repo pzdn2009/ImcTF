@@ -9,7 +9,7 @@ namespace ImcFramework.WcfInterface.TransferMessage
     public class ProgressInfoMessageBuilder
     {
         private EServiceType serviceType;
-        private string sellerAccount;
+        private string user;
 
         private int total;
         private TotalType totalType;
@@ -29,9 +29,9 @@ namespace ImcFramework.WcfInterface.TransferMessage
             return this;
         }
 
-        public ProgressInfoMessageBuilder WithSellerAccount(string sellerAccount)
+        public ProgressInfoMessageBuilder WithUser(string user)
         {
-            this.sellerAccount = sellerAccount;
+            this.user = user;
             return this;
         }
 
@@ -60,7 +60,7 @@ namespace ImcFramework.WcfInterface.TransferMessage
         {
             var entity = new ProgressInfoMessage();
             entity.ServiceType = serviceType;
-            entity.SellerAccount = sellerAccount;
+            entity.User = user;
             entity.Total = total;
             entity.TotalType = totalType;
             entity.Value = value;
