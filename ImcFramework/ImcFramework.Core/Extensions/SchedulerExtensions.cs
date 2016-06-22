@@ -33,7 +33,7 @@ namespace ImcFramework.Core.Extensions
         {
             if (scheduler != null && scheduler.IsStarted)
             {
-                scheduler.ResumeTrigger(serviceName.GetTriggerKey());
+                //scheduler.ResumeTrigger(serviceName.GetTriggerKey());
             }
         }
     }

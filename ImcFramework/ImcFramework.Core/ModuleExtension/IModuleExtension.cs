@@ -9,26 +9,8 @@ namespace ImcFramework.Core
     /// <summary>
     /// 模块扩展
     /// </summary>
-    public interface IModuleExtension
+    public interface IModuleExtension : IServiceModule<ServiceContext>
     {
-        /// <summary>
-        /// 服务上下文
-        /// </summary>
-        ServiceContext ServiceContext { get; set; }
 
-        /// <summary>
-        /// 扩展的名称
-        /// </summary>
-        string Name { get; }
-
-        /// <summary>
-        /// 启动
-        /// </summary>
-        void Start();
-
-        /// <summary>
-        /// 停止
-        /// </summary>
-        void Stop();
     }
 }

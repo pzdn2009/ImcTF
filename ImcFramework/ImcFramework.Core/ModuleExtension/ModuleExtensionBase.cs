@@ -24,6 +24,11 @@ namespace ImcFramework.Core
             get;
         }
 
+        public virtual IEnumerable<IServiceModule> DependencyModules
+        {
+            get;
+            set;
+        }
 
         public virtual void Start()
         {

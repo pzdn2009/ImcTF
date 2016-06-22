@@ -23,7 +23,7 @@ namespace ImcFramework.Core.IsolatedAd
             return new IsolatedJob(jobType);
         }
 
-        public void ReturnJob(Quartz.IJob job)
+        public void ReturnJob(IJob job)
         {
             IDisposable disposable = job as IDisposable;
             if (disposable != null)

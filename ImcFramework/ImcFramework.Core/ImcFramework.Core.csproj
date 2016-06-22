@@ -105,10 +105,14 @@
     <Compile Include="ProgressInfoManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="BuildInBusinessService\RemoveLogFileEveryDay.cs" />
+    <Compile Include="Quartz\KeyCreator.cs" />
+    <Compile Include="Quartz\ScheduleHelper.cs" />
+    <Compile Include="Quartz\StdQuartzModule.cs" />
     <Compile Include="RunOnce.cs" />
     <Compile Include="MutilUerProgress\DefaultMultiUserProgress.cs" />
     <Compile Include="MutilUerProgress\IMultiUserProgress.cs" />
     <Compile Include="ServiceManager.cs" />
+    <Compile Include="ServiceModuleBase.cs" />
     <Compile Include="TaskShedulers\LimitedConcurrencyLevelTaskScheduler.cs" />
     <Compile Include="WcfService\ClientConnectorReal.cs" />
     <Compile Include="WcfService\Host.cs" />
