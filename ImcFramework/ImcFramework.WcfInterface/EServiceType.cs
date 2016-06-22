@@ -9,24 +9,33 @@ namespace ImcFramework.WcfInterface
     [DataContract]
     public class EServiceType
     {
-        public EServiceType()
+        public EServiceType() : this(null, null)
         {
 
         }
-        public EServiceType(string serviceType)
+        public EServiceType(string serviceType) : this(serviceType, null)
         {
-            this.ServiceType = serviceType;
+
         }
-        public EServiceType(string serviceType,string serviceName)
+        public EServiceType(string serviceType, string serviceName, bool showInClientMenu = true)
         {
-            this.ServiceType = serviceType;
-            this.ServiceName = serviceName;
+            ServiceType = serviceType;
+            ServiceName = serviceName;
+
+            ShowInClientMenu = showInClientMenu;
         }
+
         [DataMember]
         public string ServiceType { get; set; }
 
         [DataMember]
         public string ServiceName { get; set; }
+
+        /// <summary>
+        /// show in client menu
+        /// </summary>
+        [IgnoreDataMember]
+        public bool ShowInClientMenu { get; set; }
 
         public override string ToString()
         {

@@ -1,50 +1,47 @@
-﻿using ImcFramework.WcfInterface;
+﻿using ImcFramework.Reflection;
+using ImcFramework.WcfInterface;
+using Quartz;
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
 
 namespace ImcFramework.Core
 {
     public class EServiceTypeReader
     {
-        private static readonly string fileName = AppDomain.CurrentDomain.BaseDirectory + "\\ServiceTypeConfig.xml";
-        private static object lockObject = new object();
-
         /// <summary>
-        /// 从指定的配置文件读取服务配置
+        /// 反射读取集合列表
         /// </summary>
         /// <param name="fileName">文件名</param>
         /// <returns>列表集合</returns>
         public static List<EServiceType> GetEServiceTypes()
         {
-            lock (lockObject)
+            var list = new List<EServiceType>();
+
+            ITypeFinder typeFinder = new TypeFinder();
+            var types = typeFinder.Find(zw => IsJobType(zw));
+
+            foreach (var type in types)
             {
-                if (!File.Exists(fileName))
+                var property = type.GetProperty("ServiceType");
+                if (property != null)
                 {
-                    throw new FileNotFoundException("找不到服务配置文件ServiceTypeConfig！");
+                    var val = property.GetValue(Activator.CreateInstance(type), null) as EServiceType;
+                    if (val != null && val.ShowInClientMenu)
+                    {
+                        list.Add(val);
+                    }
                 }
-
-                var xmlParentElements = XElement.Load(fileName).Descendants("EServiceType");
-                
-                var list = new List<EServiceType>();
-
-                foreach (var element in xmlParentElements)
-                {
-                    var svcType = new EServiceType();
-                    svcType.ServiceType = element.Element("ServiceType").Value;
-                    svcType.ServiceName = element.Element("ServiceName").Value;
-
-                    list.Add(svcType);
-                }
-
-                return list;
             }
+
+            return list;
         }
 
-
+        public static bool IsJobType(Type type)
+        {
+            return
+                type.IsClass &&
+                !type.IsAbstract &&
+                typeof(IJob).IsAssignableFrom(type);
+        }
     }
 }

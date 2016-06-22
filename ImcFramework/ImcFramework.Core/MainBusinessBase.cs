@@ -25,11 +25,13 @@ namespace ImcFramework.Core
 
         public MainBusinessBase()
         {
-            multiUser = new Lazy<IMutilUserProgress>(() => { return new DefaultMutilUserProgress(this.ServiceType); });
+            multiUser = new Lazy<IMutilUserProgress>(() => { return new DefaultMutilUserProgress(ServiceType); });
+            CancellationTokenSource = new CancellationTokenSource();
         }
 
-
         public abstract EServiceType ServiceType { get; }
+
+        protected CancellationTokenSource CancellationTokenSource { get; set; }
 
         public virtual void Execute(IJobExecutionContext context)
         {
@@ -37,38 +39,23 @@ namespace ImcFramework.Core
             {
                 ExecuteCore(context);
             }
-            catch(ImcFrameworkException ex)
+            catch (ImcFrameworkException ex)
             {
                 throw ex;
             }
-            catch(AggregateException ex)
+            catch (AggregateException ex)
             {
 
             }
             catch (Exception ex)
             {
-                
+
             }
         }
 
         public virtual void ExecuteCore(IJobExecutionContext context)
         {
 
-        }
-
-        public virtual void ControlTaskConcurrent(List<Task> tasks, int maxRunTasks = 5)
-        {
-            MutilTaskPaging.RunBySimplePaging(tasks, maxRunTasks);
-        }
-
-        private string message = null;
-        public string Message
-        {
-            get { return this.message; }
-            set
-            {
-                this.message = value;
-            }
         }
 
         protected string GetTraceId()
@@ -80,27 +67,26 @@ namespace ImcFramework.Core
         {
             NotifyAndLog(message, logLevel, null);
         }
-        protected void NotifyAndLog(string message, LogLevel logLevel, string sellerAccount)
+
+        protected void NotifyAndLog(string message, LogLevel logLevel, string user)
         {
             var sf = new StackFrame(2);
             var method = sf.GetMethod();
             var className = method.DeclaringType.Name;
-            Observers.BroadCastMessage(ServiceType, logLevel, sellerAccount, message, className, method.Name);
+            Observers.BroadCastMessage(ServiceType, logLevel, user, message, className, method.Name);
         }
-        //取消标记
-        protected CancellationTokenSource m_cts = new CancellationTokenSource();
+
+        
+
         public virtual void Cancel()
         {
-            m_cts.Cancel();
+            CancellationTokenSource.Cancel();
             NotifyAndLog("Cancel called", LogLevel.Info);
         }
 
-        protected void CheckIsCanceled()
+        protected bool IsCanceled()
         {
-            if (m_cts.IsCancellationRequested)
-            {
-                MutilUserProgress.FinishAll();
-            }
+            return CancellationTokenSource.IsCancellationRequested;
         }
     }
 }
