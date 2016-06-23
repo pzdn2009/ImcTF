@@ -74,7 +74,7 @@
     <Compile Include="Extensions\IServiceManager.cs" />
     <Compile Include="Extensions\SchedulerExtensions.cs" />
     <Compile Include="Extensions\ServiceHostExtension.cs" />
-    <Compile Include="GlobalJobListener.cs" />
+    <Compile Include="Quartz\GlobalJobListener.cs" />
     <Compile Include="Exceptions\ImcFrameworkException.cs" />
     <Compile Include="IDistributionFacility.cs" />
     <Compile Include="IsolatedAd\IsolatedJob.cs" />
@@ -98,7 +98,7 @@
     <Compile Include="ModuleExtension\ServiceContext.cs" />
     <Compile Include="MqModuleExtension\MqModule.cs" />
     <Compile Include="MqModuleExtension\MqDistributionBase.cs" />
-    <Compile Include="GlobalTriggerListener.cs" />
+    <Compile Include="Quartz\GlobalTriggerListener.cs" />
     <Compile Include="Observers.cs" />
     <Compile Include="ProgressInfoManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -136,11 +136,6 @@
       <Project>{f104ba9c-d14c-459f-9b5d-a0b3706b5f22}</Project>
       <Name>ImcFramework</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="ServiceTypeConfig.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

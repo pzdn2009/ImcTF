@@ -37,5 +37,7 @@ namespace ImcFramework.Core
         public virtual void Stop()
         {
         }
+
+        public virtual bool Enable { get; set; }
     }
 }
