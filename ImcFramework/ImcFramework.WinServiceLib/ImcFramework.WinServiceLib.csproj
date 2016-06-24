@@ -60,11 +60,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="App.config_Sample">
+    <Content Include="App.config_Sample">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    </Content>
     <None Include="ImcFramework.WinServiceLib.nuspec" />
     <None Include="packages.config" />
+    <None Include="Release note.md" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="ImcFramework.WinService.resx">
