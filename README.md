@@ -25,16 +25,32 @@
 ### 2.2 ImcTF的能力
 
 　1.Window服务的管理
+   
+  ![None](/doc/images/01windowservicestart.jpg) 
 
 　2.多Jobs
 
+  ![None](/doc/images/02MutilBusinessService.jpg)
+
 　3.多用户，多级别日志
+
+![None](/doc/images/03Log1.jpg)
+
+ImcTFSample文件夹：
+
+![None](/doc/images/03Log2.jpg)
 
 　4.基于wcf双工的客户端管理
 
+![None](/doc/images/04Client.jpg)
+
 　5.实时进度通知
 
+![None](/doc/images/05ProgressInfo.jpg)
+
 　6.隔离域作业（Isolated AppDomain Job），不用重启服务即可更新程序
+
+![None](/doc/images/06IsJobs.jpg)
 
 
 ## 3.怎么使用？
