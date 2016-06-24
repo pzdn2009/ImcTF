@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ImcFramework.Winform.Properties
+namespace MyWinform.Properties
 {
 
 

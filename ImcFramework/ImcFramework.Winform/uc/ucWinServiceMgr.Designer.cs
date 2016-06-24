@@ -134,10 +134,12 @@
             // 
             // btnQuery
             // 
+            this.btnQuery.AutoSize = true;
+            this.btnQuery.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.btnQuery.Location = new System.Drawing.Point(588, 14);
             this.btnQuery.Margin = new System.Windows.Forms.Padding(4);
             this.btnQuery.Name = "btnQuery";
-            this.btnQuery.Size = new System.Drawing.Size(78, 29);
+            this.btnQuery.Size = new System.Drawing.Size(77, 25);
             this.btnQuery.TabIndex = 14;
             this.btnQuery.Text = "刷新状态";
             this.btnQuery.UseVisualStyleBackColor = true;
@@ -185,10 +187,12 @@
             // 
             // btnOpenServicePath
             // 
+            this.btnOpenServicePath.AutoSize = true;
+            this.btnOpenServicePath.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.btnOpenServicePath.Location = new System.Drawing.Point(687, 14);
             this.btnOpenServicePath.Margin = new System.Windows.Forms.Padding(4);
             this.btnOpenServicePath.Name = "btnOpenServicePath";
-            this.btnOpenServicePath.Size = new System.Drawing.Size(112, 29);
+            this.btnOpenServicePath.Size = new System.Drawing.Size(107, 25);
             this.btnOpenServicePath.TabIndex = 26;
             this.btnOpenServicePath.Text = "打开服务路径";
             this.btnOpenServicePath.UseVisualStyleBackColor = true;
@@ -206,9 +210,11 @@
             // 
             // btnEditServiceList
             // 
+            this.btnEditServiceList.AutoSize = true;
+            this.btnEditServiceList.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.btnEditServiceList.Location = new System.Drawing.Point(628, 109);
             this.btnEditServiceList.Name = "btnEditServiceList";
-            this.btnEditServiceList.Size = new System.Drawing.Size(114, 38);
+            this.btnEditServiceList.Size = new System.Drawing.Size(107, 25);
             this.btnEditServiceList.TabIndex = 28;
             this.btnEditServiceList.Text = "编辑服务列表";
             this.btnEditServiceList.UseVisualStyleBackColor = true;
