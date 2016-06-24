@@ -119,6 +119,10 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="packages.config" />
+    <Content Include="quartz.config_Sample">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="Release note.md" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ImcFramework.WcfInterface\ImcFramework.WcfInterface.csproj">
@@ -129,6 +133,11 @@
       <Project>{f104ba9c-d14c-459f-9b5d-a0b3706b5f22}</Project>
       <Name>ImcFramework</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="quartz_jobs.xml_Sample">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
