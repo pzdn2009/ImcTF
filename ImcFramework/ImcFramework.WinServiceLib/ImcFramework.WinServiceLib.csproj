@@ -60,6 +60,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="App.config_Sample">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="ImcFramework.WinServiceLib.nuspec" />
     <None Include="packages.config" />
   </ItemGroup>
