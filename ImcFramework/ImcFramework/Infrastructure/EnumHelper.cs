@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Reflection;
 
-namespace ImcFramework
+namespace ImcFramework.Infrastructure
 {
     public static class EnumHelper
     {

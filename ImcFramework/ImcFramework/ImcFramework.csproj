@@ -35,8 +35,19 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Common.Logging, Version=3.3.1.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
+      <HintPath>..\packages\Common.Logging.3.3.1\lib\net40\Common.Logging.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Common.Logging.Core, Version=3.3.1.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
+      <HintPath>..\packages\Common.Logging.Core.3.3.1\lib\net40\Common.Logging.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Management" />
+    <Reference Include="System.Messaging" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -50,6 +61,22 @@
     <Compile Include="Commands\ICommand.cs" />
     <Compile Include="Data\ExecuteResult.cs" />
     <Compile Include="ImcFrameworkConstants.cs" />
+    <Compile Include="Infrastructure\ConfigReader.cs" />
+    <Compile Include="Infrastructure\DateTimeExtension.cs" />
+    <Compile Include="Infrastructure\DictionaryExtension.cs" />
+    <Compile Include="Infrastructure\EnumHelper.cs" />
+    <Compile Include="Infrastructure\FileExtension.cs" />
+    <Compile Include="Infrastructure\FtpHelper.cs" />
+    <Compile Include="Infrastructure\Guard.cs" />
+    <Compile Include="Infrastructure\LogHelper.cs" />
+    <Compile Include="Infrastructure\MachineManager.cs" />
+    <Compile Include="Infrastructure\MsmqHelper.cs" />
+    <Compile Include="Infrastructure\Retry.cs" />
+    <Compile Include="Infrastructure\SecurityHelper.cs" />
+    <Compile Include="Infrastructure\StringExtension.cs" />
+    <Compile Include="Infrastructure\TryCatchBlock.cs" />
+    <Compile Include="Infrastructure\WebRequestUtility.cs" />
+    <Compile Include="Infrastructure\XmlHelper.cs" />
     <Compile Include="IServiceModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reflection\CurrentDomainAssemblyFinder.cs" />
@@ -62,6 +89,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="ImcFramework.nuspec" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Cache\" />

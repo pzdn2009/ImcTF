@@ -59,10 +59,6 @@
       <Project>{3b88d842-79bc-4961-82bb-5bdb90cea9aa}</Project>
       <Name>ImcFramework.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ImcFramework.Infrastructure\ImcFramework.Infrastructure.csproj">
-      <Project>{365441e9-1338-42f2-b8fa-e79714f06d16}</Project>
-      <Name>ImcFramework.Infrastructure</Name>
-    </ProjectReference>
     <ProjectReference Include="..\ImcFramework.WcfInterface\ImcFramework.WcfInterface.csproj">
       <Project>{7077341f-a72d-4a7e-a443-04adf773ca01}</Project>
       <Name>ImcFramework.WcfInterface</Name>

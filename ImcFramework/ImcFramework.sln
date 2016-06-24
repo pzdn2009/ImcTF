@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImcFramework.Infrastructure", "ImcFramework.Infrastructure\ImcFramework.Infrastructure.csproj", "{365441E9-1338-42F2-B8FA-E79714F06D16}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".Nuget", ".Nuget", "{C112B5E4-E20F-44D6-A71E-04AB3C054FBB}"
 	ProjectSection(SolutionItems) = preProject
 		Nuget\NuGet.Config = Nuget\NuGet.Config
@@ -49,10 +47,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{365441E9-1338-42F2-B8FA-E79714F06D16}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{365441E9-1338-42F2-B8FA-E79714F06D16}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{365441E9-1338-42F2-B8FA-E79714F06D16}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{365441E9-1338-42F2-B8FA-E79714F06D16}.Release|Any CPU.Build.0 = Release|Any CPU
 		{7077341F-A72D-4A7E-A443-04ADF773CA01}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{7077341F-A72D-4A7E-A443-04ADF773CA01}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7077341F-A72D-4A7E-A443-04ADF773CA01}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -94,7 +88,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{365441E9-1338-42F2-B8FA-E79714F06D16} = {00317B7F-53FA-4920-8B14-BB5E5E32A1C6}
 		{7077341F-A72D-4A7E-A443-04ADF773CA01} = {99A917AC-DA4E-429A-BF6C-C75A247FA8C2}
 		{43CA7568-5832-4B41-96AD-6FF523EA9E7E} = {E6332877-4C74-4C57-ACC8-49310A20A965}
 		{6AE96B9C-6C90-47B7-851B-8C5E2E41F9B1} = {E6332877-4C74-4C57-ACC8-49310A20A965}
