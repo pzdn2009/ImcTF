@@ -10,6 +10,8 @@ namespace ImcFramework
     {
         string Name { get; }
 
+        bool Enable { get; set; }
+
         void Start();
 
         void Stop();

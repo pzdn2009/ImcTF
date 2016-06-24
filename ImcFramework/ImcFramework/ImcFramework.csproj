@@ -46,7 +46,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="EnumHelper.cs" />
+    <Compile Include="Commands\AbstractCommand.cs" />
+    <Compile Include="Commands\ICommand.cs" />
+    <Compile Include="Data\ExecuteResult.cs" />
     <Compile Include="ImcFrameworkConstants.cs" />
     <Compile Include="IServiceModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

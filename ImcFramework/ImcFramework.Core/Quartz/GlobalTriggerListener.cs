@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ImcFramework.Core
+namespace ImcFramework.Core.Quartz
 {
     public class GlobalTriggerListener : ITriggerListener
     {
