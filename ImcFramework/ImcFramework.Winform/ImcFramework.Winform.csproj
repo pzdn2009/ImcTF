@@ -154,9 +154,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\LogInfo.png" />
-    <None Include="WinService.xml_Sample">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    <Content Include="WinService.xml_Sample">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ImcFramework.WcfInterface\ImcFramework.WcfInterface.csproj">
