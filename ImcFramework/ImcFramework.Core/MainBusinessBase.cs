@@ -1,13 +1,7 @@
 ﻿using Common.Logging;
-using ImcFramework.Infrastructure;
-using ImcFramework.Core;
 using ImcFramework.WcfInterface;
 using Quartz;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Threading;
 using System.Diagnostics;
 
@@ -39,17 +33,23 @@ namespace ImcFramework.Core
             {
                 ExecuteCore(context);
             }
-            catch (ImcFrameworkException ex)
+            catch(ImcFrameworkException ex)
             {
-                throw ex;
+                var msg = ServiceType.ToString() + ex.Message + ex.StackTrace;
+                NotifyAndLog(msg, LogLevel.Error);
             }
             catch (AggregateException ex)
             {
-
+                foreach (var exItem in ex.InnerExceptions)
+                {
+                    var msg = ServiceType.ToString() + exItem.Message + ex.GetType().ToString() + ex.StackTrace;
+                    NotifyAndLog(msg, LogLevel.Error);
+                }
             }
             catch (Exception ex)
             {
-
+                var msg = ServiceType.ToString() + ex.Message + ex.StackTrace;
+                NotifyAndLog(msg, LogLevel.Error);
             }
         }
 
@@ -75,8 +75,6 @@ namespace ImcFramework.Core
             var className = method.DeclaringType.Name;
             Observers.BroadCastMessage(ServiceType, logLevel, user, message, className, method.Name);
         }
-
-        
 
         public virtual void Cancel()
         {
