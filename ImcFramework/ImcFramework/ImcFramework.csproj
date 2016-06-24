@@ -90,6 +90,7 @@
   <ItemGroup>
     <None Include="ImcFramework.nuspec" />
     <None Include="packages.config" />
+    <None Include="Release note.md" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Cache\" />
