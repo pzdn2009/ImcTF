@@ -71,9 +71,6 @@
     <Compile Include="Defaults.cs" />
     <Compile Include="DistributionFacilityFactory.cs" />
     <Compile Include="EServiceTypeReader.cs" />
-    <Compile Include="Extensions\IServiceManager.cs" />
-    <Compile Include="Extensions\SchedulerExtensions.cs" />
-    <Compile Include="Extensions\ServiceHostExtension.cs" />
     <Compile Include="Quartz\GlobalJobListener.cs" />
     <Compile Include="Exceptions\ImcFrameworkException.cs" />
     <Compile Include="IDistributionFacility.cs" />

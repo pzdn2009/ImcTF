@@ -55,6 +55,24 @@ namespace ImcFramework.Core
             }
         }
 
+        public static void StopAll()
+        {
+            if (modules != null)
+            {
+                foreach (var item in modules)
+                {
+                    item.Stop();
+                }
+            }
+
+            stdQuartzModule.Stop();
+
+            StopWcfHost();
+        }
+
+
+        #region Command
+
         public static void Continue(string serviceName)
         {
             if (stdQuartzModule.Scheduler != null && stdQuartzModule.Scheduler.IsStarted)
@@ -165,19 +183,6 @@ namespace ImcFramework.Core
             }
         }
 
-        public static void StopAll()
-        {
-            if (modules != null)
-            {
-                foreach (var item in modules)
-                {
-                    item.Stop();
-                }
-            }
-
-            stdQuartzModule.Stop();
-
-            StopWcfHost();
-        }
+        #endregion
     }
 }
