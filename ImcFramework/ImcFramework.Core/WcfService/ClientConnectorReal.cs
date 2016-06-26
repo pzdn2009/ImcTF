@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.Text;
 using ImcFramework.Infrastructure;
@@ -11,6 +10,9 @@ using System.IO;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using ImcFramework.WcfInterface.TransferMessage;
+using ImcFramework.Core.Quartz.Commands;
+using ImcFramework.Data;
+using ImcFramework.Core.Quartz;
 
 namespace ImcFramework.Core
 {
@@ -65,40 +67,13 @@ namespace ImcFramework.Core
         {
             try
             {
-                switch (singleSwitch.Command)
-                {
-                    case ECommand.Pause:
-                        ServiceManager.Pause(singleSwitch.ServiceType.ToString());
-                        LogHelper.Info(singleSwitch.ServiceType.ToString() + " Pause！");
-                        callback.Notify(MessageEntity.NormalInfo(singleSwitch.ServiceType, " Pause"));
-                        break;
-                    case ECommand.RunImmediately:
-                        ServiceManager.RunRightNow(singleSwitch.ServiceType.ToString());
-                        LogHelper.Info(singleSwitch.ServiceType.ToString() + " RunImmediately！");
-                        callback.Notify(MessageEntity.NormalInfo(singleSwitch.ServiceType, " RunImmediately"));
-                        break;
-                    case ECommand.Continue:
-                        ServiceManager.Continue(singleSwitch.ServiceType.ToString());
-                        LogHelper.Info(singleSwitch.ServiceType.ToString() + " Continue！");
-                        callback.Notify(MessageEntity.NormalInfo(singleSwitch.ServiceType, " Continue"));
-                        break;
-                    case ECommand.ModifySchedule:
-                        ServiceManager.ModifySchedule(singleSwitch.ServiceType.ToString(), singleSwitch.ScheduleFormat);
-                        LogHelper.Info(singleSwitch.ServiceType.ToString() + " ModifySchedule！");
-                        callback.Notify(MessageEntity.NormalInfo(singleSwitch.ServiceType, " ModifySchedule"));
-                        break;
-                    case ECommand.Cancel:
-                        ServiceManager.Cancel(singleSwitch.ServiceType.ToString());
-                        LogHelper.Info(singleSwitch.ServiceType.ToString() + " Cancle！");
-                        callback.Notify(MessageEntity.NormalInfo(singleSwitch.ServiceType, " Cancle"));
-                        break;
-                    default:
-                        break;
-                }
+                CommandInvoker.Invoke<ExecuteResult>(singleSwitch);
+
+                callback.Notify(MessageEntity.NormalInfo(singleSwitch.ServiceType, " " + singleSwitch.Command.ToString()));
             }
             catch (Exception ex)
             {
-                var fex = new FaultException(new FaultReason(ex.Message), new FaultCode("001"), "GetServiceList");
+                var fex = new FaultException(new FaultReason(ex.Message), new FaultCode("002"), "RequestSwitch");
                 LogHelper.Error(fex);
                 throw fex;
             }
@@ -106,13 +81,22 @@ namespace ImcFramework.Core
 
         public ServiceInfo GetServiceInfo(EServiceType serviceType)
         {
-            var result = new ServiceInfo();
+            try
+            {
+                var obj = CommandInvoker.Invoke<GetServiceInfoOutput>(new FunctionSwitch() { Command = ECommand.GetServiceInfo, ServiceType = serviceType });
+                if (obj != null)
+                {
+                    return new ServiceInfo() { Enable = obj.Enable, EServiceStatus = obj.EServiceStatus, ScheduleInfo = obj.ScheduleInfo };
+                }
 
-            result.EServiceStatus = ServiceManager.GetStatus(serviceType.ToString());
-            result.ScheduleInfo = ServiceManager.GetSchedule(serviceType.ToString());
-            result.Enable = result.EServiceStatus != EServiceStatus.Pause;
-
-            return result;
+                return null;
+            }
+            catch (Exception ex)
+            {
+                var fex = new FaultException(new FaultReason(ex.Message), new FaultCode("003"), "GetServiceInfo");
+                LogHelper.Error(fex);
+                throw fex;
+            }
         }
 
         public IEnumerable<LogInfo> GetLogInfoDates(EServiceType serviceType)

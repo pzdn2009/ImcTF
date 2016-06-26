@@ -58,6 +58,10 @@ namespace ImcFramework.WcfInterface
 
         [EnumMember]
         [Description("中断")]
-        Interrupt
+        Interrupt,
+
+        [EnumMember]
+        [Description("获取服务信息")]
+        GetServiceInfo
     }
 }

@@ -46,6 +46,8 @@ namespace ImcFramework.Core.Quartz
                     }
 
                     scheduler.Start();
+
+                    ServiceManager.ServiceContext.Scheduler = scheduler;
                 }
             }
         }

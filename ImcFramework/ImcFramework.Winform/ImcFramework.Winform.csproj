@@ -59,17 +59,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\WsDualClient.cs" />
-    <Compile Include="CronEditor.cs">
+    <Compile Include="Forms\CronEditor.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="CronEditor.designer.cs">
+    <Compile Include="Forms\CronEditor.designer.cs">
       <DependentUpon>CronEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="EventArgs\RequestLogArgs.cs" />
-    <Compile Include="FrmEditSvcList.cs">
+    <Compile Include="Forms\FrmEditSvcList.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FrmEditSvcList.designer.cs">
+    <Compile Include="Forms\FrmEditSvcList.designer.cs">
       <DependentUpon>FrmEditSvcList.cs</DependentUpon>
     </Compile>
     <Compile Include="FrmMain.cs">
@@ -79,7 +79,8 @@
       <DependentUpon>FrmMain.cs</DependentUpon>
     </Compile>
     <Compile Include="Common\MainConnectorCallback.cs" />
-    <Compile Include="IView.cs" />
+    <Compile Include="ThreadSafeVisit.cs" />
+    <Compile Include="Views\IView.cs" />
     <Compile Include="MyClients.cs" />
     <Compile Include="ProgressSynchronous.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -111,10 +112,10 @@
     <Compile Include="WinformRunHelper.cs" />
     <Compile Include="WinServiceConfigReader.cs" />
     <Compile Include="WinServiceControl.cs" />
-    <EmbeddedResource Include="CronEditor.resx">
+    <EmbeddedResource Include="Forms\CronEditor.resx">
       <DependentUpon>CronEditor.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FrmEditSvcList.resx">
+    <EmbeddedResource Include="Forms\FrmEditSvcList.resx">
       <DependentUpon>FrmEditSvcList.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FrmMain.resx">
@@ -143,7 +144,6 @@
       <DependentUpon>ucWinServiceMgr.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="ImcFramework.Winform.nuspec" />
-    <None Include="packages.config" />
     <None Include="Properties\app.manifest" />
   </ItemGroup>
   <ItemGroup>
@@ -168,6 +168,7 @@
       <Name>ImcFramework</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

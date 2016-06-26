@@ -8,7 +8,7 @@ using System.Diagnostics;
 namespace ImcFramework.Core
 {
     [DisallowConcurrentExecution]
-    public abstract class MainBusinessBase : IJob, ITaskCancel
+    public abstract class MainBusinessBase : IInterruptableJob, ICancel
     {
         private Lazy<IMutilUserProgress> multiUser;
         public IMutilUserProgress MutilUserProgress
@@ -33,7 +33,7 @@ namespace ImcFramework.Core
             {
                 ExecuteCore(context);
             }
-            catch(ImcFrameworkException ex)
+            catch (ImcFrameworkException ex)
             {
                 var msg = ServiceType.ToString() + ex.Message + ex.StackTrace;
                 NotifyAndLog(msg, LogLevel.Error);
@@ -85,6 +85,11 @@ namespace ImcFramework.Core
         protected bool IsCanceled()
         {
             return CancellationTokenSource.IsCancellationRequested;
+        }
+
+        public virtual void Interrupt()
+        {
+            NotifyAndLog("中断", LogLevel.Info);
         }
     }
 }

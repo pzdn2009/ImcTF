@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".Nuget", ".Nuget", "{C112B5E4-E20F-44D6-A71E-04AB3C054FBB}"
 	ProjectSection(SolutionItems) = preProject
@@ -44,6 +44,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DemoWinform", "DemoWinform", "{056362F8-2C49-4272-875C-D4F2E1645991}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyWinform", "MyWinform\MyWinform.csproj", "{75E5E5D7-C9F4-4B5E-802C-1F604BE36FB5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImcFramework.Core.Tests", "ImcFramework.Core.Tests\ImcFramework.Core.Tests.csproj", "{B6430508-3E17-4583-9557-73717AF43C64}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -91,6 +93,10 @@ Global
 		{75E5E5D7-C9F4-4B5E-802C-1F604BE36FB5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{75E5E5D7-C9F4-4B5E-802C-1F604BE36FB5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{75E5E5D7-C9F4-4B5E-802C-1F604BE36FB5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B6430508-3E17-4583-9557-73717AF43C64}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B6430508-3E17-4583-9557-73717AF43C64}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B6430508-3E17-4583-9557-73717AF43C64}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B6430508-3E17-4583-9557-73717AF43C64}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

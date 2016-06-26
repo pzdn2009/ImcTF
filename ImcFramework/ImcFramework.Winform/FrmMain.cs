@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.ServiceModel;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -12,6 +13,7 @@ namespace ImcFramework.Winform
 {
     public partial class FrmMain : Form
     {
+        private SynchronizationContext uiSyncContext;
         private WsDualClient m_WsDualClient;
 
         /// <summary>
@@ -24,6 +26,7 @@ namespace ImcFramework.Winform
             InitializeComponent();
 
             this.notifyIconMain.Icon = this.Icon;
+            uiSyncContext = SynchronizationContext.Current;
         }
 
         private void FrmMain_Load(object sender, EventArgs e)
@@ -46,7 +49,7 @@ namespace ImcFramework.Winform
             {
                 EnsureClientConnector();
 
-                var serviceList = m_WsDualClient.ClientConnector.GetServiceList();
+                var serviceList = m_WsDualClient.GetServiceList();
 
                 int cnt = 0;
                 foreach (var en in serviceList)
@@ -137,7 +140,7 @@ namespace ImcFramework.Winform
                     catch (Exception ex)
                     {
                         btn.ImageIndex = 4;
-                        btn.Visible = rdbAll.Checked || rdbInvalid.Checked;
+                        btn.SetValue(uiSyncContext, zw => zw.Visible, rdbAll.Checked || rdbInvalid.Checked);
                     }
                 }
 

@@ -22,7 +22,7 @@ namespace ImcFramework.Winform
         }
 
         private SynchronizationContext uiSyncContext = null;
-        
+
         WsDualClient m_WsDualClient;
         IClientConnector client = null;
 
@@ -120,17 +120,20 @@ namespace ImcFramework.Winform
                 {
                     while (chkAutoRefresh.Checked)
                     {
+                        EnsureClient();
+
                         var serviceInfo = client.GetServiceInfo(serviceType);
                         this.ServiceStatus = serviceInfo.EServiceStatus;
                         this.ScheduleInfo = serviceInfo.ScheduleInfo;
 
-                        this.btnPause.Enabled = serviceInfo.EServiceStatus != EServiceStatus.Pause;
-                        this.btnContinue.Enabled = !this.btnPause.Enabled;
+                        btnPause.SetValue(uiSyncContext, btn => btn.Enabled, serviceInfo.EServiceStatus != EServiceStatus.Pause);
+                        btnContinue.SetValue(uiSyncContext, btn => btn.Enabled, !btnPause.Enabled);
 
                         int num = (int)numericUpDown1.Value;
                         while (num-- != 0)
                         {
-                            labRefreshTip.Text = string.Format("update status in {0} seconds...... ", num);
+                            labRefreshTip.SetValue(uiSyncContext, lab => lab.Text, string.Format("update status in {0} seconds...... ", num));
+                            //labRefreshTip.Text = string.Format("update status in {0} seconds...... ", num);
                             System.Threading.Thread.Sleep(1000);
                         }
 
@@ -173,7 +176,10 @@ namespace ImcFramework.Winform
             }
             set
             {
-                labServiceStatus.Text = value.GetDescription();
+                uiSyncContext.Post((obj) =>
+                {
+                    labServiceStatus.Text = obj.ToString();
+                }, value.GetDescription());
             }
         }
 
@@ -185,7 +191,11 @@ namespace ImcFramework.Winform
             }
             set
             {
-                this.txtScheduleInfo.Text = value;
+                uiSyncContext.Post((obj) =>
+                {
+                    this.txtScheduleInfo.Text = value;
+                }, null);
+                
             }
         }
 
@@ -258,6 +268,22 @@ namespace ImcFramework.Winform
             catch (Exception ex)
             {
                 throw ex;
+            }
+        }
+
+        private void btnInterrupt_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("确定要中断吗？", "提示", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+                try
+                {
+                    EnsureClient();
+                    client.RequestSwitch(new FunctionSwitch() { ServiceType = serviceType, Command = ECommand.Interrupt });
+                }
+                catch (FaultException fex)
+                {
+                    MessageBox.Show(fex.Code.Name + ":" + fex.Action + ":" + fex.Reason.ToString());
+                }
             }
         }
 

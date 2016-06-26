@@ -71,6 +71,16 @@
     <Compile Include="Defaults.cs" />
     <Compile Include="DistributionFacilityFactory.cs" />
     <Compile Include="EServiceTypeReader.cs" />
+    <Compile Include="Quartz\Commands\AbstractSchedulerCommand.cs" />
+    <Compile Include="Quartz\Commands\CancelCommand.cs" />
+    <Compile Include="Quartz\CommandInvoker.cs" />
+    <Compile Include="Quartz\Commands\ContinueCommand.cs" />
+    <Compile Include="Quartz\Commands\GetServiceInfoCommand.cs" />
+    <Compile Include="Quartz\Commands\InterruptCommand.cs" />
+    <Compile Include="Quartz\Commands\PauseCommand.cs" />
+    <Compile Include="Quartz\Commands\RunImmediatelyCommand.cs" />
+    <Compile Include="Quartz\Commands\ModifyScheduleCommand.cs" />
+    <Compile Include="Quartz\Commands\GetServiceInfoOutput.cs" />
     <Compile Include="Quartz\GlobalJobListener.cs" />
     <Compile Include="Exceptions\ImcFrameworkException.cs" />
     <Compile Include="IDistributionFacility.cs" />
@@ -78,7 +88,7 @@
     <Compile Include="IsolatedAd\IsolatedJobFactory.cs" />
     <Compile Include="IsolatedAd\IsolateDomainLoader.cs" />
     <Compile Include="IsolatedAd\RemoteObject.cs" />
-    <Compile Include="ITaskCancle.cs" />
+    <Compile Include="ICancel.cs" />
     <Compile Include="JobCronExpressionConfig.cs" />
     <Compile Include="LogModule\DefaultFileAppender.cs" />
     <Compile Include="LogModule\DefaultLoggerPool.cs" />
@@ -104,8 +114,8 @@
     <Compile Include="Quartz\ScheduleHelper.cs" />
     <Compile Include="Quartz\StdQuartzModule.cs" />
     <Compile Include="RunOnce.cs" />
-    <Compile Include="MutilUerProgress\DefaultMultiUserProgress.cs" />
-    <Compile Include="MutilUerProgress\IMultiUserProgress.cs" />
+    <Compile Include="MutilUserProgress\DefaultMultiUserProgress.cs" />
+    <Compile Include="MutilUserProgress\IMultiUserProgress.cs" />
     <Compile Include="ServiceManager.cs" />
     <Compile Include="ServiceModuleBase.cs" />
     <Compile Include="WcfService\ClientConnectorReal.cs" />

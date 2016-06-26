@@ -41,17 +41,21 @@
             // 
             // txtServiceName
             // 
-            this.txtServiceName.Location = new System.Drawing.Point(19, 11);
+            this.txtServiceName.Location = new System.Drawing.Point(14, 9);
+            this.txtServiceName.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.txtServiceName.Name = "txtServiceName";
-            this.txtServiceName.Size = new System.Drawing.Size(221, 25);
+            this.txtServiceName.Size = new System.Drawing.Size(167, 21);
             this.txtServiceName.TabIndex = 0;
             this.txtServiceName.Text = "svcName";
             // 
             // btnAdd
             // 
-            this.btnAdd.Location = new System.Drawing.Point(434, 10);
+            this.btnAdd.AutoSize = true;
+            this.btnAdd.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnAdd.Location = new System.Drawing.Point(326, 8);
+            this.btnAdd.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnAdd.Name = "btnAdd";
-            this.btnAdd.Size = new System.Drawing.Size(75, 23);
+            this.btnAdd.Size = new System.Drawing.Size(39, 22);
             this.btnAdd.TabIndex = 1;
             this.btnAdd.Text = "保存";
             this.btnAdd.UseVisualStyleBackColor = true;
@@ -60,18 +64,22 @@
             // lsbServices
             // 
             this.lsbServices.FormattingEnabled = true;
-            this.lsbServices.ItemHeight = 15;
-            this.lsbServices.Location = new System.Drawing.Point(19, 117);
+            this.lsbServices.ItemHeight = 12;
+            this.lsbServices.Location = new System.Drawing.Point(14, 94);
+            this.lsbServices.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.lsbServices.Name = "lsbServices";
-            this.lsbServices.Size = new System.Drawing.Size(490, 229);
+            this.lsbServices.Size = new System.Drawing.Size(368, 184);
             this.lsbServices.TabIndex = 2;
             this.lsbServices.DoubleClick += new System.EventHandler(this.lsbServices_DoubleClick);
             // 
             // btnSave
             // 
-            this.btnSave.Location = new System.Drawing.Point(434, 371);
+            this.btnSave.AutoSize = true;
+            this.btnSave.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnSave.Location = new System.Drawing.Point(326, 297);
+            this.btnSave.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(75, 23);
+            this.btnSave.Size = new System.Drawing.Size(39, 22);
             this.btnSave.TabIndex = 3;
             this.btnSave.Text = "保存";
             this.btnSave.UseVisualStyleBackColor = true;
@@ -83,33 +91,35 @@
             this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.删除ToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(145, 30);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(125, 26);
             // 
             // 删除ToolStripMenuItem
             // 
             this.删除ToolStripMenuItem.Name = "删除ToolStripMenuItem";
-            this.删除ToolStripMenuItem.Size = new System.Drawing.Size(144, 26);
+            this.删除ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.删除ToolStripMenuItem.Text = "删除所选";
             this.删除ToolStripMenuItem.Click += new System.EventHandler(this.删除ToolStripMenuItem_Click);
             // 
             // txtBinding
             // 
-            this.txtBinding.Location = new System.Drawing.Point(19, 55);
+            this.txtBinding.Location = new System.Drawing.Point(14, 44);
+            this.txtBinding.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.txtBinding.Name = "txtBinding";
-            this.txtBinding.Size = new System.Drawing.Size(490, 25);
+            this.txtBinding.Size = new System.Drawing.Size(368, 21);
             this.txtBinding.TabIndex = 4;
             this.txtBinding.Text = "binding";
             // 
             // FrmEditSvcList
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(531, 422);
+            this.ClientSize = new System.Drawing.Size(398, 338);
             this.Controls.Add(this.txtBinding);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.lsbServices);
             this.Controls.Add(this.btnAdd);
             this.Controls.Add(this.txtServiceName);
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "FrmEditSvcList";

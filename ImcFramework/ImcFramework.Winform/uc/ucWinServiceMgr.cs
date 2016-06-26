@@ -8,18 +8,38 @@ using System.Text;
 using System.Windows.Forms;
 using System.ServiceProcess;
 using System.Threading.Tasks;
+using System.Threading;
+using System.Linq.Expressions;
 
 namespace ImcFramework.Winform
 {
     public partial class ucWinServiceMgr : UserControl
     {
+        private SynchronizationContext m_SyncContext = null;
         public ucWinServiceMgr()
         {
             InitializeComponent();
             this.SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.DoubleBuffer, true);
+            m_SyncContext = SynchronizationContext.Current;
         }
 
-        public string ServiceName { get { return cmbServiceList.SelectedValue.ToString(); } }
+        #region Thread Safe Control Visit
+
+        public string ServiceName
+        {
+            get
+            {
+                var str = string.Empty;
+                m_SyncContext.Send((obj) =>
+                {
+                    str = cmbServiceList.SelectedValue.ToString();
+                }, null);
+
+                return str;
+            }
+        }
+
+        #endregion
 
         private void btnQuery_Click(object sender, EventArgs e)
         {
@@ -80,8 +100,9 @@ namespace ImcFramework.Winform
 
         private string GetStaus()
         {
-            btnStart.Enabled = false;
-            btnStop.Enabled = false;
+            btnStart.SetValue(m_SyncContext, btn => btn.Enabled, false);
+            btnStop.SetValue(m_SyncContext, btn => btn.Enabled, false);
+
             string staStr = "";
             var status = WinServiceControl.GetServiceStatus(ServiceName);
             switch (status)
@@ -94,12 +115,12 @@ namespace ImcFramework.Winform
                     break;
                 case ServiceControllerStatus.Paused:
                     staStr = "服务已暂停！";
-                    btnStart.Enabled = true;
-                    btnStop.Enabled = true;
+                    btnStart.SetValue(m_SyncContext, btn => btn.Enabled, true);
+                    btnStop.SetValue(m_SyncContext, btn => btn.Enabled, true);
                     break;
                 case ServiceControllerStatus.Running:
                     staStr = "服务正在运行！";
-                    btnStop.Enabled = true;
+                    btnStop.SetValue(m_SyncContext, btn => btn.Enabled, true);
                     break;
                 case ServiceControllerStatus.StartPending:
                     staStr = "服务正在启动！";
@@ -109,7 +130,7 @@ namespace ImcFramework.Winform
                     break;
                 case ServiceControllerStatus.Stopped:
                     staStr = "服务未运行！";
-                    btnStart.Enabled = true;
+                    btnStart.SetValue(m_SyncContext, btn => btn.Enabled, true);
                     break;
                 default:
                     staStr = "未知状态！";
@@ -151,30 +172,32 @@ namespace ImcFramework.Winform
             {
                 while (true)
                 {
-                    System.Threading.Thread.Sleep(1000);
+                    Thread.Sleep(1000);
                     do
                     {
                         int num = (int)numericUpDown1.Value;
                         while (num-- != 0)
                         {
-                            labStatus.Text = string.Format("update status in {0} seconds...... ", num);
-                            System.Threading.Thread.Sleep(1000);
-                            labStatus.Text = "";
+                            labStatus.SetValue(m_SyncContext, lab => lab.Text, string.Format("update status in {0} seconds...... ", num));
+                            Thread.Sleep(1000);
                         }
 
                         GetLastestStatus();
 
-                        System.Threading.Thread.Sleep(3000);
+                        Thread.Sleep(3000);
 
-                        labMsg.Text = "";
+                        labStatus.SetValue(m_SyncContext, lab => lab.Text, string.Empty);
+
                     } while (chkAutoRefresh.Checked);
                 }
             });
             task.Start();
 
-            this.labStatus.Text = GetStaus();
+            labStatus.Text = GetStaus();
             HasLoad = true;
         }
+
+
 
         private void RefreshServiceList()
         {
@@ -188,21 +211,22 @@ namespace ImcFramework.Winform
         {
             if (WinServiceControl.Existed(ServiceName))
             {
-                btnInstall.Enabled = false;
-                btnUnInstall.Enabled = true;
+                btnInstall.SetValue(m_SyncContext, zw => zw.Enabled, false);
+                btnUnInstall.SetValue(m_SyncContext, zw => zw.Enabled, true);
 
-                labMsg.Text = "";
-                labStatus.Text = GetStaus();
+                labMsg.SetValue(m_SyncContext, zw => zw.Text, "");
+
+                labStatus.SetValue(m_SyncContext, lab => lab.Text, GetStaus());
             }
             else
             {
-                btnInstall.Enabled = true;
-                btnUnInstall.Enabled = false;
+                btnInstall.SetValue(m_SyncContext, zw => zw.Enabled, true);
+                btnUnInstall.SetValue(m_SyncContext, zw => zw.Enabled, false);
 
                 if (this.Visible)
                 {
-                    this.labMsg.Text = string.Format("{0}不存在", ServiceName);
-                    this.labMsg.ForeColor = Color.Red;
+                    labMsg.SetValue(m_SyncContext, zw => zw.Text, string.Format("{0}不存在", ServiceName));
+                    labMsg.SetValue(m_SyncContext, zw => zw.ForeColor, Color.Red);
                 }
             }
         }
