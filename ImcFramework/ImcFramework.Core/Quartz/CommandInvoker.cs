@@ -19,7 +19,7 @@ namespace ImcFramework.Core.Quartz
             if (!dict.ContainsKey(functionSwitch.Command))
             {
                 var type = GetCommandClass(functionSwitch.Command);
-                dynamic instance = Activator.CreateInstance(dict[functionSwitch.Command], new object[] { ServiceManager.ServiceContext.Scheduler });
+                dynamic instance = Activator.CreateInstance(type, new object[] { ServiceManager.ServiceContext.Scheduler });
                 dict[functionSwitch.Command] = instance;
             }
 
