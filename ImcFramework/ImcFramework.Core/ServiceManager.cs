@@ -1,12 +1,7 @@
-﻿using ImcFramework.WcfInterface;
-using Quartz;
-using Quartz.Impl;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.ServiceModel;
-using ImcFramework.Core.IsolatedAd;
+﻿using System.Collections.Generic;
 using ImcFramework.Core.Quartz;
+using ImcFramework.Core.WcfService;
+using ImcFramework.Ioc;
 
 namespace ImcFramework.Core
 {
@@ -15,38 +10,30 @@ namespace ImcFramework.Core
     /// </summary>
     public static class ServiceManager
     {
-        private static ServiceHost hostStub;
         private static IEnumerable<IModuleExtension> modules;
         private static IEnumerable<IServiceModule> buildInModules;
         private static StdQuartzModule stdQuartzModule;
+        private static WcfServiceModule wcfServiceModule;
+        private static IIocManager iocManager;
 
         static ServiceManager()
         {
             ServiceContext = new ServiceContext();
+            iocManager = new IocManager();
         }
 
         public static ServiceContext ServiceContext { get; set; }
 
-        public static void StopWcfHost()
-        {
-            if (hostStub != null)
-                Host.Close(hostStub);
-        }
-
-        public static void StartWcfHost()
-        {
-            hostStub = Host.HostService(typeof(ClientConnectorReal)); //寄宿
-        }
-
         public static void StartAll()
         {
-            StartWcfHost();
+            wcfServiceModule = new WcfServiceModule();
+            wcfServiceModule.Start();
 
             stdQuartzModule = new StdQuartzModule();
             stdQuartzModule.Start();
 
             ServiceContext.Scheduler = stdQuartzModule.Scheduler;
-            ServiceContext.WcfHost = hostStub;
+            ServiceContext.WcfHost = wcfServiceModule.ServiceHost;
             ServiceContext.ProgressInfoManager = ProgressInfoManager.Instance;
 
             modules = ModuleConfiguration.ReadConfig(ServiceContext);
@@ -67,8 +54,7 @@ namespace ImcFramework.Core
             }
 
             stdQuartzModule.Stop();
-
-            StopWcfHost();
+            wcfServiceModule.Stop();
         }
     }
 }

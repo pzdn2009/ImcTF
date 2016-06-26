@@ -7,7 +7,7 @@ using System.Linq;
 using System.ServiceModel.Security;
 using System.Text;
 
-namespace ImcFramework.Core
+namespace ImcFramework.Core.WcfService
 {
     public class LoginCustomValidator : UserNamePasswordValidator
     {

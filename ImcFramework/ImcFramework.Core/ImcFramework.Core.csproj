@@ -71,6 +71,8 @@
     <Compile Include="Defaults.cs" />
     <Compile Include="DistributionFacilityFactory.cs" />
     <Compile Include="EServiceTypeReader.cs" />
+    <Compile Include="IocManager.cs" />
+    <Compile Include="MutilUserProgress\ProgressInfoModule.cs" />
     <Compile Include="Quartz\Commands\AbstractSchedulerCommand.cs" />
     <Compile Include="Quartz\Commands\CancelCommand.cs" />
     <Compile Include="Quartz\CommandInvoker.cs" />
@@ -81,6 +83,7 @@
     <Compile Include="Quartz\Commands\RunImmediatelyCommand.cs" />
     <Compile Include="Quartz\Commands\ModifyScheduleCommand.cs" />
     <Compile Include="Quartz\Commands\GetServiceInfoOutput.cs" />
+    <Compile Include="Quartz\DefaultScheduleProvider.cs" />
     <Compile Include="Quartz\GlobalJobListener.cs" />
     <Compile Include="Exceptions\ImcFrameworkException.cs" />
     <Compile Include="IDistributionFacility.cs" />
@@ -110,6 +113,7 @@
     <Compile Include="ProgressInfoManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="BuildInBusinessService\RemoveLogFileEveryDay.cs" />
+    <Compile Include="Quartz\IScheduleProvider.cs" />
     <Compile Include="Quartz\KeyCreator.cs" />
     <Compile Include="Quartz\ScheduleHelper.cs" />
     <Compile Include="Quartz\StdQuartzModule.cs" />
@@ -119,8 +123,10 @@
     <Compile Include="ServiceManager.cs" />
     <Compile Include="ServiceModuleBase.cs" />
     <Compile Include="WcfService\ClientConnectorReal.cs" />
-    <Compile Include="WcfService\Host.cs" />
+    <Compile Include="WcfService\DefaultServiceHostProvider.cs" />
+    <Compile Include="WcfService\IServiceHostProvider.cs" />
     <Compile Include="WcfService\LoginCustomValidator.cs" />
+    <Compile Include="WcfService\WcfServiceModule.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

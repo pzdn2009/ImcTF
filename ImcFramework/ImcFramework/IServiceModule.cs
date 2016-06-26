@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Common.Logging;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,6 +16,8 @@ namespace ImcFramework
         void Start();
 
         void Stop();
+
+        ILog Logger { get; set; }
 
         IEnumerable<IServiceModule> DependencyModules { get; set; }
     }
