@@ -12,16 +12,21 @@ using System.Threading.Tasks;
 
 namespace ImcFramework.Core.Quartz
 {
-    public class CommandInvoker
+    public class CommandInvoker: ICommandInvoker
     {
+        private IScheduleProvider scheduleProvider;
+        public CommandInvoker(IScheduleProvider scheduleProvider)
+        {
+            this.scheduleProvider = scheduleProvider;
+        }
         private static Dictionary<ECommand, dynamic> dict = new Dictionary<ECommand, dynamic>();
 
-        public static TOutput Invoke<TOutput>(FunctionSwitch functionSwitch)
+        public TOutput Invoke<TOutput>(FunctionSwitch functionSwitch)
         {
             if (!dict.ContainsKey(functionSwitch.Command))
             {
                 var type = GetCommandClass(functionSwitch.Command);
-                dynamic instance = Activator.CreateInstance(type, new object[] { IocManager.Instance.Resolve<ISchedulerFactory>().GetScheduler() });
+                dynamic instance = Activator.CreateInstance(type, new object[] { scheduleProvider.Schedule });
                 dict[functionSwitch.Command] = instance;
             }
 

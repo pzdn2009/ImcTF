@@ -21,11 +21,14 @@ namespace ImcFramework.Core
     public class ClientConnectorReal : IClientConnector
     {
         private IMessageCallback callback;
+        private ICommandInvoker commandInvoker;
 
-        public ClientConnectorReal()
+        public ClientConnectorReal(ICommandInvoker commandInvoker)
         {
             OperationContext.Current.Channel.Closing += Channel_Closing;
             OperationContext.Current.Channel.Faulted += Channel_Faulted;
+
+            this.commandInvoker = commandInvoker;
         }
 
         void Channel_Faulted(object sender, EventArgs e)
@@ -67,7 +70,7 @@ namespace ImcFramework.Core
         {
             try
             {
-                CommandInvoker.Invoke<ExecuteResult>(singleSwitch);
+                commandInvoker.Invoke<ExecuteResult>(singleSwitch);
 
                 callback.Notify(MessageEntity.NormalInfo(singleSwitch.ServiceType, " " + singleSwitch.Command.ToString()));
             }
@@ -83,7 +86,7 @@ namespace ImcFramework.Core
         {
             try
             {
-                var obj = CommandInvoker.Invoke<GetServiceInfoOutput>(new FunctionSwitch() { Command = ECommand.GetServiceInfo, ServiceType = serviceType });
+                var obj = commandInvoker.Invoke<GetServiceInfoOutput>(new FunctionSwitch() { Command = ECommand.GetServiceInfo, ServiceType = serviceType });
                 if (obj != null)
                 {
                     return new ServiceInfo() { Enable = obj.Enable, EServiceStatus = obj.EServiceStatus, ScheduleInfo = obj.ScheduleInfo };

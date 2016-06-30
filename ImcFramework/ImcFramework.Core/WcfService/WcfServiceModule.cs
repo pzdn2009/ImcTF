@@ -1,4 +1,5 @@
 ﻿using ImcFramework.Infrastructure;
+using ImcFramework.WcfInterface;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,6 +8,7 @@ using System.ServiceModel.Description;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Autofac.Integration.Wcf;
 
 namespace ImcFramework.Core.WcfService
 {
@@ -27,6 +29,9 @@ namespace ImcFramework.Core.WcfService
             TryCatchBlock.TrycatchAndLog(() =>
             {
                 ServiceHost = new ServiceHost(typeof(ClientConnectorReal));
+
+                ServiceHost.AddDependencyInjectionBehavior<IClientConnector>(IocManager.Container);
+
                 //绑定服务行为
                 ServiceMetadataBehavior behavior = ServiceHost.Description.Behaviors.
                     Find<ServiceMetadataBehavior>();
@@ -49,6 +54,8 @@ namespace ImcFramework.Core.WcfService
                     LogHelper.Info("Host-->终结点为：" + ServiceHost.Description.Endpoints.FirstOrDefault().Address);
                     LogHelper.Info("Host-->服务启动，开始监听：" + ServiceHost.Description.ConfigurationName);
                 };
+
+                
 
                 Thread th = new Thread(ServiceHost.Open);
                 th.Start();

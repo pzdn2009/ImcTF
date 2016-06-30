@@ -19,6 +19,9 @@ namespace ImcFramework.Core
         static ServiceManager()
         {
             ServiceContext = new ServiceContext();
+            ServiceContext.Scheduler = null;
+            ServiceContext.WcfHost = null;
+            ServiceContext.ProgressInfoManager = ProgressInfoManager.Instance;
 
             iocManager = IocManager.Instance;
 
@@ -29,8 +32,11 @@ namespace ImcFramework.Core
 
         private static void Initialize()
         {
-            iocManager.Register<IServiceModule, StdQuartzModule>(DependencyLifeStyle.Singleton, false);
-            iocManager.Register<IServiceModule, WcfServiceModule>(DependencyLifeStyle.Singleton, false);
+            iocManager.Register(ServiceContext);
+            iocManager.RegisterAssembly(typeof(ServiceManager).Assembly);
+
+            //iocManager.Register<IServiceModule, StdQuartzModule>(DependencyLifeStyle.Singleton, false);
+            //iocManager.Register<IServiceModule, WcfServiceModule>(DependencyLifeStyle.Singleton, false);
 
             buildInModules = iocManager.Resolve<IEnumerable<IServiceModule>>();
         }
@@ -43,10 +49,6 @@ namespace ImcFramework.Core
                 buidIn.Initialize();
                 buidIn.Start();
             }
-
-            ServiceContext.Scheduler = null;
-            ServiceContext.WcfHost = null;
-            ServiceContext.ProgressInfoManager = ProgressInfoManager.Instance;
 
             extensionModules = ModuleConfiguration.ReadConfig(ServiceContext);
             foreach (var item in extensionModules)

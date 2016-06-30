@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Reflection;
 
 namespace ImcFramework.Ioc
 {
@@ -16,6 +17,14 @@ namespace ImcFramework.Ioc
 
         private static readonly IocManager instance;
         public static IocManager Instance { get { return instance; } }
+
+        public IContainer Container
+        {
+            get
+            {
+                return container;
+            }
+        }
 
         static IocManager()
         {
@@ -77,6 +86,38 @@ namespace ImcFramework.Ioc
         public TType Resolve<TType>()
         {
             return container.Resolve<TType>();
+        }
+
+        public void RegisterAssembly(Assembly assembly)
+        {
+            var builder2 = new ContainerBuilder();
+
+            builder2.RegisterAssemblyTypes(assembly).AsImplementedInterfaces();
+            
+            builder2.Update(container);
+        }
+
+        public void RegisterAssembly<TType>(Assembly assembly)
+        {
+            var builder2 = new ContainerBuilder();
+
+            builder2.RegisterAssemblyTypes(assembly).As<TType>();
+
+            builder2.Update(container);
+        }
+
+        public bool IsRegister<TType>()
+        {
+            return container.IsRegistered<TType>();
+        }
+
+        public void Register<TType>(TType instance, DependencyLifeStyle lifeStyle = DependencyLifeStyle.Singleton) where TType : class
+        {
+            var builder2 = new ContainerBuilder();
+
+            ApplyLifeStyle(builder2.RegisterInstance(instance).As<TType>(), lifeStyle);
+
+            builder2.Update(container);
         }
     }
 }

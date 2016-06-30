@@ -32,11 +32,11 @@ namespace ImcFramework.Core.Quartz
             var jobName = trigger.JobKey.Name;
             LogHelper.Error(string.Format("Job:{0} 错过了执行", jobName));
 
-            CommandInvoker.Invoke<ExecuteResult>(new WcfInterface.FunctionSwitch()
-            {
-                Command = WcfInterface.ECommand.RunImmediately,
-                ServiceType = EServiceTypeReader.ServiceTypes.FirstOrDefault(zw => zw.ServiceType == jobName)
-            });
+            //CommandInvoker.Invoke<ExecuteResult>(new WcfInterface.FunctionSwitch()
+            //{
+            //    Command = WcfInterface.ECommand.RunImmediately,
+            //    ServiceType = EServiceTypeReader.ServiceTypes.FirstOrDefault(zw => zw.ServiceType == jobName)
+            //});
         }
 
         public bool VetoJobExecution(ITrigger trigger, IJobExecutionContext context)
