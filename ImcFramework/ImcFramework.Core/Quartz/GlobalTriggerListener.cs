@@ -1,15 +1,17 @@
-﻿using ImcFramework.Infrastructure;
+﻿using ImcFramework.Data;
+using ImcFramework.Infrastructure;
 using Quartz;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ImcFramework.Core.Quartz
 {
     public class GlobalTriggerListener : ITriggerListener
     {
+        public GlobalTriggerListener()
+        {
+
+        }
+
         public string Name
         {
             get { return "GlobalTrigger"; }
@@ -29,6 +31,12 @@ namespace ImcFramework.Core.Quartz
         {
             var jobName = trigger.JobKey.Name;
             LogHelper.Error(string.Format("Job:{0} 错过了执行", jobName));
+
+            CommandInvoker.Invoke<ExecuteResult>(new WcfInterface.FunctionSwitch()
+            {
+                Command = WcfInterface.ECommand.RunImmediately,
+                ServiceType = EServiceTypeReader.ServiceTypes.FirstOrDefault(zw => zw.ServiceType == jobName)
+            });
         }
 
         public bool VetoJobExecution(ITrigger trigger, IJobExecutionContext context)

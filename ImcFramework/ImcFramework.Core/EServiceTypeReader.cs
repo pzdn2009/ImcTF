@@ -8,6 +8,8 @@ namespace ImcFramework.Core
 {
     public class EServiceTypeReader
     {
+        public static List<EServiceType> ServiceTypes { get; private set; }
+
         /// <summary>
         /// 反射读取集合列表
         /// </summary>
@@ -15,25 +17,28 @@ namespace ImcFramework.Core
         /// <returns>列表集合</returns>
         public static List<EServiceType> GetEServiceTypes()
         {
-            var list = new List<EServiceType>();
-
-            ITypeFinder typeFinder = new TypeFinder();
-            var types = typeFinder.Find(zw => IsJobType(zw));
-
-            foreach (var type in types)
+            if (ServiceTypes == null)
             {
-                var property = type.GetProperty("ServiceType");
-                if (property != null)
+                ServiceTypes = new List<EServiceType>();
+
+                ITypeFinder typeFinder = new TypeFinder();
+                var types = typeFinder.Find(zw => IsJobType(zw));
+
+                foreach (var type in types)
                 {
-                    var val = property.GetValue(Activator.CreateInstance(type), null) as EServiceType;
-                    if (val != null && val.ShowInClientMenu)
+                    var property = type.GetProperty("ServiceType");
+                    if (property != null)
                     {
-                        list.Add(val);
+                        var val = property.GetValue(Activator.CreateInstance(type), null) as EServiceType;
+                        if (val != null && val.ShowInClientMenu)
+                        {
+                            ServiceTypes.Add(val);
+                        }
                     }
                 }
             }
 
-            return list;
+            return ServiceTypes;
         }
 
         public static bool IsJobType(Type type)

@@ -66,9 +66,9 @@ namespace ImcFramework.Winform
 
                     CloseTabPages(null);
 
-                    FrmMain.GetServiceList();
-
                     FrmMain.NeedRefresh = true;
+
+                    FrmMain.GetServiceList();
                 }
             }
         }

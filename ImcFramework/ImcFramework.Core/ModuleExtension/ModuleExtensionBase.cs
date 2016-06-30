@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Common.Logging;
+using ImcFramework.Ioc;
 
 namespace ImcFramework.Core
 {
@@ -42,5 +43,10 @@ namespace ImcFramework.Core
         public virtual bool Enable { get; set; }
 
         public ILog Logger { get; set; }
+
+        public IIocManager IocManager
+        {
+            get;
+        }
     }
 }

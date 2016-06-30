@@ -1,4 +1,5 @@
 ﻿using ImcFramework.Core.IsolatedAd;
+using ImcFramework.Ioc;
 using Quartz;
 using Quartz.Impl;
 using System;

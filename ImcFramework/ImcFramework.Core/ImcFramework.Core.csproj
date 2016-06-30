@@ -71,7 +71,6 @@
     <Compile Include="Defaults.cs" />
     <Compile Include="DistributionFacilityFactory.cs" />
     <Compile Include="EServiceTypeReader.cs" />
-    <Compile Include="IocManager.cs" />
     <Compile Include="MutilUserProgress\ProgressInfoModule.cs" />
     <Compile Include="Quartz\Commands\AbstractSchedulerCommand.cs" />
     <Compile Include="Quartz\Commands\CancelCommand.cs" />

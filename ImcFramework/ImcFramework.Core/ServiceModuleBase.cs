@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Common.Logging;
+using ImcFramework.Ioc;
 
 namespace ImcFramework.Core
 {
@@ -14,6 +15,8 @@ namespace ImcFramework.Core
         {
             get;
         }
+
+        public IIocManager IocManager { get; set; }
 
         public virtual void Start()
         {

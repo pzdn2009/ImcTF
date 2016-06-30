@@ -8,8 +8,12 @@ namespace ImcFramework.Ioc
 {
     public interface IIocManager
     {
-        void Register(Type baseType, Type subType);
+        void Register<TType, TImpl>(DependencyLifeStyle lifeStyle = DependencyLifeStyle.Singleton)
+            where TType : class
+            where TImpl : class, TType;
 
-        object Resolve(Type type);
+        void Register<TType>(DependencyLifeStyle lifeStyle = DependencyLifeStyle.Singleton);
+
+        TType Resolve<TType>();
     }
 }
