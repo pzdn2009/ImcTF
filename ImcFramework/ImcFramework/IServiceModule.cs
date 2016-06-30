@@ -22,7 +22,7 @@ namespace ImcFramework
 
         ILog Logger { get; set; }
 
-        IIocManager IocManager { get; }
+        IIocManager IocManager { get; set; }
 
         IEnumerable<IServiceModule> DependencyModules { get; set; }
     }

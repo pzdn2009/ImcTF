@@ -8,7 +8,7 @@ namespace ImcFramework.Ioc
 {
     public interface IIocManager
     {
-        void Register<TType, TImpl>(DependencyLifeStyle lifeStyle = DependencyLifeStyle.Singleton)
+        void Register<TType, TImpl>(DependencyLifeStyle lifeStyle = DependencyLifeStyle.Singleton, bool coverExistingDefaults = true)
             where TType : class
             where TImpl : class, TType;
 

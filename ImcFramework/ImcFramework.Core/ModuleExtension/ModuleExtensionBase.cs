@@ -42,7 +42,6 @@ namespace ImcFramework.Core
 
         public void Initialize()
         {
-            throw new NotImplementedException();
         }
 
         public virtual bool Enable { get; set; }
@@ -51,7 +50,7 @@ namespace ImcFramework.Core
 
         public IIocManager IocManager
         {
-            get;
+            get; set;
         }
     }
 }

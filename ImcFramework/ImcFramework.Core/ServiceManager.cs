@@ -2,6 +2,7 @@
 using ImcFramework.Core.Quartz;
 using ImcFramework.Core.WcfService;
 using ImcFramework.Ioc;
+using System.Linq;
 
 namespace ImcFramework.Core
 {
@@ -10,10 +11,8 @@ namespace ImcFramework.Core
     /// </summary>
     public static class ServiceManager
     {
-        private static IEnumerable<IModuleExtension> modules;
+        private static IEnumerable<IModuleExtension> extensionModules;
         private static IEnumerable<IServiceModule> buildInModules;
-        private static StdQuartzModule stdQuartzModule;
-        private static WcfServiceModule wcfServiceModule;
 
         private static IIocManager iocManager = null;
 
@@ -22,30 +21,35 @@ namespace ImcFramework.Core
             ServiceContext = new ServiceContext();
 
             iocManager = IocManager.Instance;
+
+            Initialize();
         }
 
         public static ServiceContext ServiceContext { get; set; }
 
+        private static void Initialize()
+        {
+            iocManager.Register<IServiceModule, StdQuartzModule>(DependencyLifeStyle.Singleton, false);
+            iocManager.Register<IServiceModule, WcfServiceModule>(DependencyLifeStyle.Singleton, false);
+
+            buildInModules = iocManager.Resolve<IEnumerable<IServiceModule>>();
+        }
+
         public static void StartAll()
         {
-            wcfServiceModule = new WcfServiceModule();
-            wcfServiceModule.IocManager = iocManager;
-            wcfServiceModule.Initialize();
-            
-            wcfServiceModule.Start();
-
-            stdQuartzModule = new StdQuartzModule();
-            stdQuartzModule.IocManager = iocManager;
-            stdQuartzModule.Initialize();
-            
-            stdQuartzModule.Start();
+            foreach (var buidIn in buildInModules)
+            {
+                buidIn.IocManager = iocManager;
+                buidIn.Initialize();
+                buidIn.Start();
+            }
 
             ServiceContext.Scheduler = null;
-            ServiceContext.WcfHost = wcfServiceModule.ServiceHost;
+            ServiceContext.WcfHost = null;
             ServiceContext.ProgressInfoManager = ProgressInfoManager.Instance;
 
-            modules = ModuleConfiguration.ReadConfig(ServiceContext);
-            foreach (var item in modules)
+            extensionModules = ModuleConfiguration.ReadConfig(ServiceContext);
+            foreach (var item in extensionModules)
             {
                 item.Start();
             }
@@ -53,16 +57,18 @@ namespace ImcFramework.Core
 
         public static void StopAll()
         {
-            if (modules != null)
+            if (extensionModules != null)
             {
-                foreach (var item in modules)
+                foreach (var item in extensionModules)
                 {
                     item.Stop();
                 }
             }
 
-            stdQuartzModule.Stop();
-            wcfServiceModule.Stop();
+            foreach (var buidIn in buildInModules.Reverse())
+            {
+                buidIn.Stop();
+            }
         }
     }
 }

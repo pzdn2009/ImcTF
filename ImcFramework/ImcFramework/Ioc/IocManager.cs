@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using Autofac.Builder;
 using Autofac.Core;
 using System;
 using System.Collections.Generic;
@@ -29,20 +30,19 @@ namespace ImcFramework.Ioc
             container = builder.Build();
         }
 
-        public void Register<TType, TImpl>(DependencyLifeStyle lifeStyle = DependencyLifeStyle.Singleton)
+        public void Register<TType, TImpl>(DependencyLifeStyle lifeStyle = DependencyLifeStyle.Singleton, bool coverExistingDefaults = true)
             where TType : class
             where TImpl : class, TType
         {
             var builder2 = new ContainerBuilder();
 
-            switch (lifeStyle)
+            if (!coverExistingDefaults)
             {
-                case DependencyLifeStyle.Singleton:
-                    builder2.RegisterType<TImpl>().As<TType>().SingleInstance();
-                    break;
-                case DependencyLifeStyle.Transient:
-                    builder2.RegisterType<TImpl>().As<TType>().InstancePerDependency();
-                    break;
+                ApplyLifeStyle(builder2.RegisterType<TImpl>().As<TType>().PreserveExistingDefaults(), lifeStyle);
+            }
+            else
+            {
+                ApplyLifeStyle(builder2.RegisterType<TImpl>().As<TType>(), lifeStyle);
             }
 
             builder2.Update(container);
@@ -52,17 +52,26 @@ namespace ImcFramework.Ioc
         {
             var builder2 = new ContainerBuilder();
 
+            ApplyLifeStyle(builder2.RegisterType<TType>().As<TType>(), lifeStyle);
+
+            builder2.Update(container);
+        }
+
+        private IRegistrationBuilder<TLimit, TActivatorData, TRegistrationStyle> ApplyLifeStyle<TLimit, TActivatorData, TRegistrationStyle>(IRegistrationBuilder<TLimit, TActivatorData, TRegistrationStyle> chain, DependencyLifeStyle lifeStyle)
+        {
             switch (lifeStyle)
             {
                 case DependencyLifeStyle.Singleton:
-                    builder2.RegisterType<TType>().As<TType>().SingleInstance();
+                    chain = chain.SingleInstance();
                     break;
                 case DependencyLifeStyle.Transient:
-                    builder2.RegisterType<TType>().As<TType>().InstancePerDependency();
+                    chain = chain.InstancePerDependency();
                     break;
+                default:
+                    throw new NotSupportedException("not support the style" + lifeStyle.ToString());
             }
 
-            builder2.Update(container);
+            return chain;
         }
 
         public TType Resolve<TType>()

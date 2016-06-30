@@ -1,6 +1,9 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ImcFramework.Ioc;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 
 namespace ImcFramework.Tests
 {
@@ -48,7 +51,7 @@ namespace ImcFramework.Tests
         {
             IocManager.Instance.Register<IUser, UserA>(DependencyLifeStyle.Singleton);
             var ins1 = IocManager.Instance.Resolve<IUser>();
-            var ins2 = IocManager.Instance.Resolve<IUser>();    
+            var ins2 = IocManager.Instance.Resolve<IUser>();
 
             Assert.AreEqual(ins1, ins2);
             Assert.AreEqual(ins1.Name, ins2.Name);
@@ -77,6 +80,21 @@ namespace ImcFramework.Tests
             Assert.AreNotEqual(ins1, ins2);
             Assert.AreEqual(ins1.Name, ins2.Name);
         }
+
+        [TestMethod]
+        public void iocmanager_can_register_usera_userb_no_cover()
+        {
+            IocManager.Instance.Register<IUser, UserA>(DependencyLifeStyle.Transient);
+            IocManager.Instance.Register<IUser, UserB>(DependencyLifeStyle.Transient, false);
+
+            var instances = IocManager.Instance.Resolve<IEnumerable<IUser>>();
+
+            Assert.AreEqual(2, instances.Count());
+            var nameA = instances.First().Name;
+            var nameB = instances.Last().Name;
+            Assert.AreNotEqual(nameA, nameB);
+            Assert.AreEqual(nameA, "pzdn2009");
+        }
     }
 
     public interface IUser
@@ -95,7 +113,7 @@ namespace ImcFramework.Tests
         }
     }
 
-    public class UserB:IUser
+    public class UserB : IUser
     {
         public string Name
         {
