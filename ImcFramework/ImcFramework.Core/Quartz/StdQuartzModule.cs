@@ -15,8 +15,7 @@ namespace ImcFramework.Core.Quartz
     /// </summary>
     public class StdQuartzModule : ServiceModuleBase
     {
-        private static ISchedulerFactory schedulerFactory;
-        private static IScheduler scheduler;
+        private IScheduler scheduler;
 
         public override string Name
         {
@@ -26,31 +25,27 @@ namespace ImcFramework.Core.Quartz
             }
         }
 
-        public IScheduler Scheduler { get { return scheduler; } }
+        public override void Initialize()
+        {
+            IocManager.Register<ISchedulerFactory, StdSchedulerFactory>(DependencyLifeStyle.Singleton);
+        }
 
         public override void Start()
         {
             var isolatedJob = Defaults.IsIsolatedJob;
 
-            if (schedulerFactory == null)
+            var schedulerFactory = IocManager.Resolve<ISchedulerFactory>();
+
+            scheduler = schedulerFactory.GetScheduler();
+            scheduler.ListenerManager.AddJobListener(new GlobalJobListener());
+            scheduler.ListenerManager.AddTriggerListener(new GlobalTriggerListener());
+
+            if (isolatedJob)
             {
-                schedulerFactory = new StdSchedulerFactory();
-                if (scheduler == null || !scheduler.IsStarted)
-                {
-                    scheduler = schedulerFactory.GetScheduler();
-                    scheduler.ListenerManager.AddJobListener(new GlobalJobListener());
-                    scheduler.ListenerManager.AddTriggerListener(new GlobalTriggerListener());
-
-                    if (isolatedJob)
-                    {
-                        scheduler.JobFactory = new IsolatedJobFactory();
-                    }
-
-                    scheduler.Start();
-
-                    ServiceManager.ServiceContext.Scheduler = scheduler;
-                }
+                scheduler.JobFactory = new IsolatedJobFactory();
             }
+
+            scheduler.Start();
         }
 
         public override void Stop()

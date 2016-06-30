@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Common.Logging;
 using ImcFramework.Ioc;
 
@@ -25,6 +26,11 @@ namespace ImcFramework.Core
 
         public virtual void Stop()
         {
+        }
+
+        public virtual void Initialize()
+        {
+
         }
 
         public virtual bool Enable { get; set; }

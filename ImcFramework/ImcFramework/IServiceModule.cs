@@ -14,6 +14,8 @@ namespace ImcFramework
 
         bool Enable { get; set; }
 
+        void Initialize();
+
         void Start();
 
         void Stop();

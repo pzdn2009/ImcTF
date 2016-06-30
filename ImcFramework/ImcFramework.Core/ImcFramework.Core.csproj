@@ -114,7 +114,6 @@
     <Compile Include="BuildInBusinessService\RemoveLogFileEveryDay.cs" />
     <Compile Include="Quartz\IScheduleProvider.cs" />
     <Compile Include="Quartz\KeyCreator.cs" />
-    <Compile Include="Quartz\ScheduleHelper.cs" />
     <Compile Include="Quartz\StdQuartzModule.cs" />
     <Compile Include="RunOnce.cs" />
     <Compile Include="MutilUserProgress\DefaultMultiUserProgress.cs" />

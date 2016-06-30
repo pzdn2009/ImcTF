@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Autofac;
+using Autofac.Core;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +10,9 @@ namespace ImcFramework.Ioc
 {
     public class IocManager : IIocManager
     {
+        private ContainerBuilder builder;
+        private IContainer container;
+
         private static readonly IocManager instance;
         public static IocManager Instance { get { return instance; } }
 
@@ -16,26 +21,53 @@ namespace ImcFramework.Ioc
             instance = new IocManager();
         }
 
-        public IocManager()
+        private IocManager()
         {
-            
+            builder = new ContainerBuilder();
+
+            builder.RegisterInstance(this).As<IIocManager>().ExternallyOwned();
+            container = builder.Build();
         }
 
-        public void Register<TType, TImpl>(DependencyLifeStyle lifeStyle) 
+        public void Register<TType, TImpl>(DependencyLifeStyle lifeStyle = DependencyLifeStyle.Singleton)
             where TType : class
             where TImpl : class, TType
         {
-            throw new NotImplementedException();
+            var builder2 = new ContainerBuilder();
+
+            switch (lifeStyle)
+            {
+                case DependencyLifeStyle.Singleton:
+                    builder2.RegisterType<TImpl>().As<TType>().SingleInstance();
+                    break;
+                case DependencyLifeStyle.Transient:
+                    builder2.RegisterType<TImpl>().As<TType>().InstancePerDependency();
+                    break;
+            }
+
+            builder2.Update(container);
         }
 
         public void Register<TType>(DependencyLifeStyle lifeStyle = DependencyLifeStyle.Singleton)
         {
-            throw new NotImplementedException();
+            var builder2 = new ContainerBuilder();
+
+            switch (lifeStyle)
+            {
+                case DependencyLifeStyle.Singleton:
+                    builder2.RegisterType<TType>().As<TType>().SingleInstance();
+                    break;
+                case DependencyLifeStyle.Transient:
+                    builder2.RegisterType<TType>().As<TType>().InstancePerDependency();
+                    break;
+            }
+
+            builder2.Update(container);
         }
 
         public TType Resolve<TType>()
         {
-            throw new NotImplementedException();
+            return container.Resolve<TType>();
         }
     }
 }

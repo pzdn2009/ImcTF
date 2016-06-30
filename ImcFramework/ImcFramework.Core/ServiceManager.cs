@@ -14,12 +14,14 @@ namespace ImcFramework.Core
         private static IEnumerable<IServiceModule> buildInModules;
         private static StdQuartzModule stdQuartzModule;
         private static WcfServiceModule wcfServiceModule;
-        private static IIocManager iocManager;
+
+        private static IIocManager iocManager = null;
 
         static ServiceManager()
         {
             ServiceContext = new ServiceContext();
-            iocManager = new IocManager();
+
+            iocManager = IocManager.Instance;
         }
 
         public static ServiceContext ServiceContext { get; set; }
@@ -27,12 +29,18 @@ namespace ImcFramework.Core
         public static void StartAll()
         {
             wcfServiceModule = new WcfServiceModule();
+            wcfServiceModule.IocManager = iocManager;
+            wcfServiceModule.Initialize();
+            
             wcfServiceModule.Start();
 
             stdQuartzModule = new StdQuartzModule();
+            stdQuartzModule.IocManager = iocManager;
+            stdQuartzModule.Initialize();
+            
             stdQuartzModule.Start();
 
-            ServiceContext.Scheduler = stdQuartzModule.Scheduler;
+            ServiceContext.Scheduler = null;
             ServiceContext.WcfHost = wcfServiceModule.ServiceHost;
             ServiceContext.ProgressInfoManager = ProgressInfoManager.Instance;
 

@@ -40,6 +40,11 @@ namespace ImcFramework.Core
         {
         }
 
+        public void Initialize()
+        {
+            throw new NotImplementedException();
+        }
+
         public virtual bool Enable { get; set; }
 
         public ILog Logger { get; set; }

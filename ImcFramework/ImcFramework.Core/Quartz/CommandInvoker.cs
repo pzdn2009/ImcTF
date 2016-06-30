@@ -1,7 +1,9 @@
 ﻿using ImcFramework.Commands;
 using ImcFramework.Data;
+using ImcFramework.Ioc;
 using ImcFramework.Reflection;
 using ImcFramework.WcfInterface;
+using Quartz;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,7 +21,7 @@ namespace ImcFramework.Core.Quartz
             if (!dict.ContainsKey(functionSwitch.Command))
             {
                 var type = GetCommandClass(functionSwitch.Command);
-                dynamic instance = Activator.CreateInstance(type, new object[] { ServiceManager.ServiceContext.Scheduler });
+                dynamic instance = Activator.CreateInstance(type, new object[] { IocManager.Instance.Resolve<ISchedulerFactory>().GetScheduler() });
                 dict[functionSwitch.Command] = instance;
             }
 

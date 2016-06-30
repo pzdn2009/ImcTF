@@ -67,7 +67,6 @@ namespace ImcFramework.Winform
                     btn.ImageList = imgListServiceStatus;
                     btn.ImageIndex = 0;
                     btn.ImageAlign = ContentAlignment.MiddleRight;
-                    this.splitContainer1.Panel1.Controls.Add(btn);
 
                     this.splitContainer1.Panel1.Controls.Add(btn);
                 }
