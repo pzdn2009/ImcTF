@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.ServiceModel;
 using System.Text;
-using ImcFramework.Infrastructure;
 using System.Threading;
 using System.IO;
 using System.Text.RegularExpressions;
@@ -13,6 +12,7 @@ using ImcFramework.WcfInterface.TransferMessage;
 using ImcFramework.Core.Quartz.Commands;
 using ImcFramework.Data;
 using ImcFramework.Core.Quartz;
+using ImcFramework.Core.LogModule;
 
 namespace ImcFramework.Core
 {
@@ -22,29 +22,35 @@ namespace ImcFramework.Core
     {
         private IMessageCallback callback;
         private ICommandInvoker commandInvoker;
+        private ILoggerPool loggerPool;
 
-        public ClientConnectorReal(ICommandInvoker commandInvoker)
+        public ClientConnectorReal(ICommandInvoker commandInvoker, ILoggerPoolFactory loggerPoolFactory)
         {
             OperationContext.Current.Channel.Closing += Channel_Closing;
             OperationContext.Current.Channel.Faulted += Channel_Faulted;
 
             this.commandInvoker = commandInvoker;
+            this.loggerPool = loggerPoolFactory.GetLoggerPool("WcfService");
         }
 
-        void Channel_Faulted(object sender, EventArgs e)
+        #region Events
+
+        private void Channel_Faulted(object sender, EventArgs e)
         {
         }
 
-        void Channel_Closing(object sender, EventArgs e)
+        private void Channel_Closing(object sender, EventArgs e)
         {
         }
+
+        #endregion
 
         public void Register(EServiceType serviceType)
         {
             callback = OperationContext.Current.GetCallbackChannel<IMessageCallback>();
 
-            LogHelper.Info(serviceType.ToString() + " register！");
-            callback.Notify(MessageEntity.NormalInfo(serviceType, " register"));
+            loggerPool.Log(serviceType.ServiceType, new LogContentEntity("Register！"));
+            callback.Notify(MessageEntity.NormalInfo(serviceType, " Register"));
 
             Observers.Add(serviceType, callback);
         }
@@ -52,8 +58,9 @@ namespace ImcFramework.Core
         public void UnRegister(EServiceType serviceType)
         {
             callback = OperationContext.Current.GetCallbackChannel<IMessageCallback>();
-            LogHelper.Info(serviceType.ToString() + " unregister！");
-            callback.Notify(MessageEntity.NormalInfo(serviceType, " unregister"));
+
+            loggerPool.Log(serviceType.ServiceType, new LogContentEntity("Unregister！"));
+            callback.Notify(MessageEntity.NormalInfo(serviceType, " Unregister"));
 
             Observers.Remove(serviceType, callback);
         }
@@ -70,14 +77,18 @@ namespace ImcFramework.Core
         {
             try
             {
+                loggerPool.Log(singleSwitch.ServiceType.ServiceType, new LogContentEntity() { Message = singleSwitch.Command.ToString() });
+
                 commandInvoker.Invoke<ExecuteResult>(singleSwitch);
 
-                callback.Notify(MessageEntity.NormalInfo(singleSwitch.ServiceType, " " + singleSwitch.Command.ToString()));
+                callback.Notify(MessageEntity.NormalInfo(singleSwitch.ServiceType, singleSwitch.Command.ToString()));
             }
             catch (Exception ex)
             {
                 var fex = new FaultException(new FaultReason(ex.Message), new FaultCode("002"), "RequestSwitch");
-                LogHelper.Error(fex);
+
+                loggerPool.Log(singleSwitch.ServiceType.ServiceType, new LogContentEntity(fex.Message + fex.StackTrace) { Level = "Error" });
+
                 throw fex;
             }
         }
@@ -97,7 +108,7 @@ namespace ImcFramework.Core
             catch (Exception ex)
             {
                 var fex = new FaultException(new FaultReason(ex.Message), new FaultCode("003"), "GetServiceInfo");
-                LogHelper.Error(fex);
+                loggerPool.Log(serviceType.ServiceType, new LogContentEntity(fex.Message + fex.StackTrace));
                 throw fex;
             }
         }
@@ -199,7 +210,7 @@ namespace ImcFramework.Core
             catch (Exception ex)
             {
                 var fex = new FaultException(new FaultReason(ex.Message), new FaultCode("001"), "GetServiceList");
-                LogHelper.Error(fex);
+                loggerPool.Log("", new LogContentEntity(fex.Message + fex.StackTrace));
                 throw fex;
             }
         }

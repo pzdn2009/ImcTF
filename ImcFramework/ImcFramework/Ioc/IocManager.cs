@@ -88,9 +88,9 @@ namespace ImcFramework.Ioc
             return container.Resolve<TType>();
         }
 
-        public void RegisterAssembly(Assembly assembly)
+        public void RegisterAssemblyAsInterfaces(Assembly assembly)
         {
-            var builder2 = new ContainerBuilder();
+            var builder2 = new ContainerBuilder();  
 
             builder2.RegisterAssemblyTypes(assembly).AsImplementedInterfaces();
             

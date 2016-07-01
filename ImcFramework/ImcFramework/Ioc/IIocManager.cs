@@ -12,7 +12,7 @@ namespace ImcFramework.Ioc
     {
         IContainer Container { get; }
 
-        void RegisterAssembly(Assembly assembly);
+        void RegisterAssemblyAsInterfaces(Assembly assembly);
 
         void RegisterAssembly<TType>(Assembly assembly);
 

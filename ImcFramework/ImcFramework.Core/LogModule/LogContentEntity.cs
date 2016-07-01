@@ -1,6 +1,7 @@
 ﻿using ImcFramework.WcfInterface;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 
@@ -11,6 +12,30 @@ namespace ImcFramework.Core
     /// </summary>
     public class LogContentEntity
     {
+        public LogContentEntity() : this(string.Empty)
+        {
+
+        }
+
+        public LogContentEntity(string message)
+        {
+            var sf = new StackFrame(1);
+            var method = sf.GetMethod();
+
+            Class = method.DeclaringType.Name;
+            Method = method.Name;
+            Level = "Info";
+        }
+
+        public LogContentEntity(string message, string @class, string method, string level)
+        {
+            Message = message;
+
+            Class = @class;
+            Method = method;
+            Level = level;
+        }
+
         /// <summary>
         /// 类名
         /// </summary>
