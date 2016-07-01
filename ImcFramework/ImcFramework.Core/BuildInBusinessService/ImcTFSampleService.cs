@@ -37,7 +37,7 @@ namespace ImcFramework.Core.BuildInBusinessService
 
             NotifyAndLog("结束！", LogLevel.Info);
 
-            MutilUserProgress.SendTaskProgressTotal(2, TotalType.SellerAccountCount);
+            MutilUserProgress.SendTaskProgressTotal(2, TotalType.User);
             MutilUserProgress.SendTaskProgressItemTotal("PZ", 10);
             MutilUserProgress.SendTaskProgressItemTotal("DN", 15);
 

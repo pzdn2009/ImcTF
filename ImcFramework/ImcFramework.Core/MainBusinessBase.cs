@@ -4,6 +4,7 @@ using Quartz;
 using System;
 using System.Threading;
 using System.Diagnostics;
+using ImcFramework.Core.MutilUserProgress;
 
 namespace ImcFramework.Core
 {

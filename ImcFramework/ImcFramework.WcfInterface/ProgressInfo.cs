@@ -13,16 +13,21 @@ namespace ImcFramework.WcfInterface
         {
 
         }
-        public ProgressItem(int value, int total)
+        public ProgressItem(int value, int total, string user = "")
         {
             this.Value = value;
             this.Total = total;
+            this.User = user;
         }
+
         [DataMember]
         public int Total { get; set; }
 
         [DataMember]
         public int Value { get; set; }
+
+        [DataMember]
+        public string User { get; set; }
     }
 
     [DataContract]
@@ -32,11 +37,13 @@ namespace ImcFramework.WcfInterface
         {
 
         }
-        public ProgressSummary(int value, int total, TotalType totalType)
+        public ProgressSummary(int value, int total, TotalType totalType, string summaryName = "")
         {
             this.Value = value;
             this.Total = total;
             this.TotalType = totalType;
+
+            this.User = summaryName;
         }
 
         [DataMember]
@@ -47,10 +54,10 @@ namespace ImcFramework.WcfInterface
     public enum TotalType
     {
         /// <summary>
-        /// 账号总数（不能计算RecordCount时，用此表示）
+        /// 用户总数（不能计算RecordCount时，用此表示）
         /// </summary>
         [EnumMember]
-        SellerAccountCount,
+        User,
 
         /// <summary>
         /// 记录总数（如果能够计算的话，建议用此表示）

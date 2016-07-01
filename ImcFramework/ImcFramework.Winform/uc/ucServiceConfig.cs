@@ -413,7 +413,7 @@ namespace ImcFramework.Winform
 
                     setSellerAccountCount(sellerAccount, sellerAccountProgress);
 
-                    if (progressSynchronous.TotalType == TotalType.SellerAccountCount)  //按照账号
+                    if (progressSynchronous.TotalType == TotalType.User)  //按照账号
                     {
                         if (progressSynchronous.IsSellerAccountFinished(sellerAccount))
                         {
@@ -454,7 +454,7 @@ namespace ImcFramework.Winform
                 {
                     progressSynchronous.SetSellerAccountFinish(sellerAccount);
 
-                    if (progressSynchronous.TotalType == TotalType.SellerAccountCount)  //按照账号
+                    if (progressSynchronous.TotalType == TotalType.User)  //按照账号
                     {
                         progressSynchronous.TotalValue++;
                     }

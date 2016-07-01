@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using ImcFramework.Ioc;
 using System.Linq;
+using ImcFramework.Core.MutilUserProgress;
 
 namespace ImcFramework.Core
 {

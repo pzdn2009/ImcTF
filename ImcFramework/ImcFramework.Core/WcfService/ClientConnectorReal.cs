@@ -14,6 +14,7 @@ using ImcFramework.Data;
 using ImcFramework.Core.Quartz;
 using ImcFramework.Core.LogModule;
 using ImcFramework.Ioc;
+using ImcFramework.Core.MutilUserProgress;
 
 namespace ImcFramework.Core
 {

@@ -116,7 +116,7 @@
     <Compile Include="MqModuleExtension\MqDistributionBase.cs" />
     <Compile Include="Quartz\GlobalTriggerListener.cs" />
     <Compile Include="Observers.cs" />
-    <Compile Include="ProgressInfoManager.cs" />
+    <Compile Include="MutilUserProgress\ProgressInfoManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="BuildInBusinessService\RemoveLogFileEveryDay.cs" />
     <Compile Include="Quartz\ICommandInvoker.cs" />

@@ -3,7 +3,7 @@ using ImcFramework.WcfInterface;
 using ImcFramework.WcfInterface.TransferMessage;
 using System.Diagnostics;
 
-namespace ImcFramework.Core
+namespace ImcFramework.Core.MutilUserProgress
 {
     public class DefaultMutilUserProgress : IMutilUserProgress
     {

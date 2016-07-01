@@ -5,8 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ImcFramework.Core
+namespace ImcFramework.Core.MutilUserProgress
 {
+    public interface IProgressInfoManager
+    {
+
+    }
+
     public class ProgressInfoManager
     {
         private ProgressInfoManager() { }
@@ -68,11 +73,11 @@ namespace ImcFramework.Core
                 if (dictProgressInfo.ContainsKey(serviceType.ServiceType))
                 {
                     var info = dictProgressInfo[serviceType.ServiceType];
-                    if (info.DictSellerAccountProgressCount.ContainsKey(sellerAccount))
+                    if (info.DictUserProgressCount.ContainsKey(sellerAccount))
                     {
                         var progress = new ProgressItem();
-                        progress.Total = info.DictSellerAccountProgressCount[sellerAccount].Total;
-                        progress.Value = info.DictSellerAccountProgressCount[sellerAccount].Value;
+                        progress.Total = info.DictUserProgressCount[sellerAccount].Total;
+                        progress.Value = info.DictUserProgressCount[sellerAccount].Value;
                         return progress;
                     }
                 }
@@ -93,39 +98,31 @@ namespace ImcFramework.Core
             }
         }
 
-        public void SetItemTotal(string serviceType, string sellerAccount, int total)
+        public void SetItemTotal(string serviceType, string user, int total)
         {
             lock (lockObject)
             {
-                var dict = dictProgressInfo[serviceType].DictSellerAccountProgressCount;
-                if (dict.ContainsKey(sellerAccount))
-                {
-                    dict[sellerAccount].Total = total;
-                }
-                else
-                {
-                    dict[sellerAccount] = new ProgressItem(0, total);
-                }
+                dictProgressInfo[serviceType].SetProgressItem(user, total, 0);
             }
         }
 
-        public void SetItemValue(string serviceType, string sellerAccount, int value, bool accumulate = true)
+        public void SetItemValue(string serviceType, string user, int value, bool accumulate = true)
         {
             lock (lockObject)
             {
                 if (dictProgressInfo.ContainsKey(serviceType))
                 {
-                    var dict = dictProgressInfo[serviceType].DictSellerAccountProgressCount;
-                    if (dict.ContainsKey(sellerAccount))
+                    var dict = dictProgressInfo[serviceType].DictUserProgressCount;
+                    if (dict.ContainsKey(user))
                     {
                         if (!accumulate)
-                            dict[sellerAccount].Value = value;
+                            dict[user].Value = value;
                         else
-                            dict[sellerAccount].Value += value;
+                            dict[user].Value += value;
 
-                        if (dictProgressInfo[serviceType].ProgressSummary.TotalType == TotalType.SellerAccountCount)
+                        if (dictProgressInfo[serviceType].ProgressSummary.TotalType == TotalType.User)
                         {
-                            if (dict[sellerAccount].Value == dict[sellerAccount].Total)
+                            if (dict[user].Value == dict[user].Total)
                             {
                                 dictProgressInfo[serviceType].ProgressSummary.Value++;
                             }
@@ -139,15 +136,11 @@ namespace ImcFramework.Core
             }
         }
 
-        public void SetItemValueFinish(string serviceType, string sellerAccount)
+        public void SetItemValueFinish(string serviceType, string user)
         {
             lock (lockObject)
             {
-                var dict = dictProgressInfo[serviceType].DictSellerAccountProgressCount;
-                if (dict.ContainsKey(sellerAccount))
-                {
-                    dict[sellerAccount].Value = dict[sellerAccount].Total;
-                }
+                dictProgressInfo[serviceType].SetItemValueFinish(user);
             }
         }
 
@@ -169,7 +162,7 @@ namespace ImcFramework.Core
     {
         public ProgressInfoEntity()
         {
-            DictSellerAccountProgressCount = new Dictionary<string, ProgressItem>();
+            DictUserProgressCount = new Dictionary<string, ProgressItem>();
         }
 
         public bool ProgressSummarySpecific { get; private set; }
@@ -188,6 +181,33 @@ namespace ImcFramework.Core
         /// <summary>
         /// 销售账号|进度|总数
         /// </summary>
-        public Dictionary<string, ProgressItem> DictSellerAccountProgressCount { get; set; }
+        public Dictionary<string, ProgressItem> DictUserProgressCount { get; set; }
+
+        public int Count()
+        {
+            return DictUserProgressCount.Count;
+        }
+
+        public void SetProgressItem(string user, int total, int value, bool accumulate = true)
+        {
+            var dict = DictUserProgressCount;
+            if (dict.ContainsKey(user))
+            {
+                dict[user].Total = total;
+            }
+            else
+            {
+                dict[user] = new ProgressItem(0, total);
+            }
+        }
+
+        public void SetItemValueFinish(string user)
+        {
+            var dict = DictUserProgressCount;
+            if (dict.ContainsKey(user))
+            {
+                dict[user].Value = dict[user].Total;
+            }
+        }
     }
 }

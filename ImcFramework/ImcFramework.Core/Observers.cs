@@ -1,6 +1,7 @@
 ﻿using Common.Logging;
 using ImcFramework.Core.Distribution;
 using ImcFramework.Core.LogModule;
+using ImcFramework.Core.MutilUserProgress;
 using ImcFramework.WcfInterface;
 using ImcFramework.WcfInterface.TransferMessage;
 using System;
