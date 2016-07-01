@@ -18,7 +18,7 @@ namespace ImcFramework.Core.MqModuleExtension
         private ILoggerPool loggerPool;
         private IDistributionFacilityProvider distributionFacilityProvider;
 
-        public MqModule(ILoggerPoolFactory loggerPoolFactory,IDistributionFacilityProvider distributionFacilityProvider)
+        public MqModule(ILoggerPoolFactory loggerPoolFactory, IDistributionFacilityProvider distributionFacilityProvider)
         {
             m_MqDistributions = new List<IDistributionFacility<ITransferMessage>>();
 
@@ -73,19 +73,19 @@ namespace ImcFramework.Core.MqModuleExtension
                             switch (msg.CallbackMethodName)
                             {
                                 case "SendTaskProgressTotal":
-                                    Observers.SendTaskProgressTotal(msg.ServiceType, msg.Total, msg.TotalType, true);
+                                    Observers.SendTaskProgressTotal(msg.ServiceType, msg.Total, msg.TotalType);
                                     break;
                                 case "SendTaskProgressItemTotal":
-                                    Observers.SendTaskProgressItemTotal(msg.ServiceType, msg.User, msg.Total, true);
+                                    Observers.SendTaskProgressItemTotal(msg.ServiceType, msg.User, msg.Total);
                                     break;
                                 case "SendTaskProgressIncrease":
-                                    Observers.SendTaskProgressIncrease(msg.ServiceType, msg.User, msg.Value, true);
+                                    Observers.SendTaskProgressIncrease(msg.ServiceType, msg.User, msg.Value);
                                     break;
                                 case "SendTaskProgressForceFinish":
-                                    Observers.SendTaskProgressForceFinish(msg.ServiceType, msg.User, true);
+                                    Observers.SendTaskProgressForceFinish(msg.ServiceType, msg.User);
                                     break;
                                 case "SendTaskProgressFinishAll":
-                                    Observers.SendTaskProgressFinishAll(msg.ServiceType, true);
+                                    Observers.SendTaskProgressFinishAll(msg.ServiceType);
                                     break;
                                 default:
                                     break;

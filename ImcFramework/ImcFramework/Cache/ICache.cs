@@ -6,18 +6,16 @@ using System.Threading.Tasks;
 
 namespace ImcFramework.Cache
 {
-    public interface ICache
+    public interface ICache : IDisposable
     {
         string Name { get; }
 
-        object Get(ICacheKey key);
-
         object Get(string key);
 
-        void Set(ICacheKey key, object data, int timeout);
+        void Set(string key, object value, TimeSpan? timeout);
 
-        void Set(string key, object data, int timeout);
+        void Remove(string key);
 
-        void Remove(ICacheKey key);
+        void Clear();
     }
 }

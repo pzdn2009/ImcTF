@@ -120,153 +120,71 @@ namespace ImcFramework.Core
 
         #region 销售账号任务通知
 
-        public static void SendTaskProgressTotal(EServiceType serviceType, int total, TotalType totalType, bool fromMQ = false)
+        public static void SendTaskProgressTotal(EServiceType serviceType, int total, TotalType totalType)
         {
             lock (lockObject)
             {
-                if (Defaults.IsIsolatedJob && !fromMQ)
+                ////设置总数
+                ProgressInfoManager.Instance.SetTotal(serviceType.ServiceType, total, totalType);
+
+                CommonCallbackAction(serviceType, (clientCallback) =>
                 {
-                    var sf = new StackFrame();
-                    var mn = sf.GetMethod().Name;
-
-                    ProgressInfoMessage msgEntity = ProgressInfoMessageBuilder.Create()
-                        .WithCallbackMethodName(mn)
-                        .WithServiceType(serviceType)
-                        .WithTotal(total)
-                        .WithTotalType(totalType)
-                        .Build();
-
-                    DistributionFacilityFactory.GetDistributionFacility(msgEntity).Push(msgEntity);
-                }
-                else
-                {
-                    ////设置总数
-                    ProgressInfoManager.Instance.SetTotal(serviceType.ServiceType, total, totalType);
-
-                    CommonCallbackAction(serviceType, (clientCallback) =>
-                    {
-                        clientCallback.NotifyTaskProgressTotal(new ProgressSummary(0, total, totalType));
-                    });
-                }
+                    clientCallback.NotifyTaskProgressTotal(new ProgressSummary(0, total, totalType));
+                });
             }
         }
 
-        public static void SendTaskProgressItemTotal(EServiceType serviceType, string sellerAccount, int total, bool fromMQ = false)
+        public static void SendTaskProgressItemTotal(EServiceType serviceType, string sellerAccount, int total)
         {
             lock (lockObject)
             {
-                if (Defaults.IsIsolatedJob && !fromMQ)
+                ProgressInfoManager.Instance.SetItemTotal(serviceType.ServiceType, sellerAccount, total);
+
+                CommonCallbackAction(serviceType, (clientCallback) =>
                 {
-                    var sf = new StackFrame();
-                    var mn = sf.GetMethod().Name;
-
-                    ProgressInfoMessage msgEntity = ProgressInfoMessageBuilder.Create()
-                        .WithCallbackMethodName(mn)
-                        .WithServiceType(serviceType)
-                        .WithTotal(total)
-                        .WithUser(sellerAccount)
-                        .Build();
-
-                    DistributionFacilityFactory.GetDistributionFacility(msgEntity).Push(msgEntity);
-                }
-                else
-                {
-                    ProgressInfoManager.Instance.SetItemTotal(serviceType.ServiceType, sellerAccount, total);
-
-                    CommonCallbackAction(serviceType, (clientCallback) =>
-                    {
-                        clientCallback.NotifyTaskProgressItemTotal(sellerAccount, total);
-                    });
-                }
+                    clientCallback.NotifyTaskProgressItemTotal(sellerAccount, total);
+                });
             }
         }
 
-        public static void SendTaskProgressIncrease(EServiceType serviceType, string sellerAccount, int value, bool fromMQ = false)
+        public static void SendTaskProgressIncrease(EServiceType serviceType, string sellerAccount, int value)
         {
             lock (lockObject)
             {
-                if (Defaults.IsIsolatedJob && !fromMQ)
+                ProgressInfoManager.Instance.SetItemValue(serviceType.ServiceType, sellerAccount, value);
+
+                var progressInfoItem = ProgressInfoManager.Instance.GetSellerAccountProgressInfo(serviceType, sellerAccount);
+
+                CommonCallbackAction(serviceType, (clientCallback) =>
                 {
-                    var sf = new StackFrame();
-                    var mn = sf.GetMethod().Name;
-
-                    ProgressInfoMessage msgEntity = ProgressInfoMessageBuilder.Create()
-                        .WithCallbackMethodName(mn)
-                        .WithServiceType(serviceType)
-                        .WithUser(sellerAccount)
-                        .WithValue(value)
-                        .Build();
-
-                    DistributionFacilityFactory.GetDistributionFacility(msgEntity).Push(msgEntity);
-                }
-                else
-                {
-                    ProgressInfoManager.Instance.SetItemValue(serviceType.ServiceType, sellerAccount, value);
-
-                    var progressInfoItem = ProgressInfoManager.Instance.GetSellerAccountProgressInfo(serviceType, sellerAccount);
-
-                    CommonCallbackAction(serviceType, (clientCallback) =>
-                    {
-                        clientCallback.NotifyTaskProgressItemValueAndTotal(sellerAccount, new ProgressItem(progressInfoItem.Value, progressInfoItem.Total));
-                    });
-                }
+                    clientCallback.NotifyTaskProgressItemValueAndTotal(sellerAccount, new ProgressItem(progressInfoItem.Value, progressInfoItem.Total));
+                });
             }
         }
 
-        public static void SendTaskProgressForceFinish(EServiceType serviceType, string sellerAccount, bool fromMQ = false)
+        public static void SendTaskProgressForceFinish(EServiceType serviceType, string sellerAccount)
         {
             lock (lockObject)
             {
-                if (Defaults.IsIsolatedJob && !fromMQ)
+                ProgressInfoManager.Instance.SetItemValueFinish(serviceType.ServiceType, sellerAccount);
+
+                CommonCallbackAction(serviceType, (clientCallback) =>
                 {
-                    var sf = new StackFrame();
-                    var mn = sf.GetMethod().Name;
-
-                    ProgressInfoMessage msgEntity = ProgressInfoMessageBuilder.Create()
-                        .WithCallbackMethodName(mn)
-                        .WithServiceType(serviceType)
-                        .WithUser(sellerAccount)
-                        .Build();
-
-                    DistributionFacilityFactory.GetDistributionFacility(msgEntity).Push(msgEntity);
-                }
-                else
-                {
-                    ProgressInfoManager.Instance.SetItemValueFinish(serviceType.ServiceType, sellerAccount);
-
-                    CommonCallbackAction(serviceType, (clientCallback) =>
-                    {
-                        clientCallback.NotifyTaskProgressForceFinish(sellerAccount);
-                    });
-                }
+                    clientCallback.NotifyTaskProgressForceFinish(sellerAccount);
+                });
             }
         }
 
-        public static void SendTaskProgressFinishAll(EServiceType serviceType, bool fromMQ = false)
+        public static void SendTaskProgressFinishAll(EServiceType serviceType)
         {
             lock (lockObject)
             {
-                if (Defaults.IsIsolatedJob && !fromMQ)
+                ProgressInfoManager.Instance.Clear(serviceType.ServiceType);
+
+                CommonCallbackAction(serviceType, (clientCallback) =>
                 {
-                    var sf = new StackFrame();
-                    var mn = sf.GetMethod().Name;
-
-                    ProgressInfoMessage msgEntity = ProgressInfoMessageBuilder.Create()
-                        .WithCallbackMethodName(mn)
-                        .WithServiceType(serviceType)
-                        .Build();
-
-                    DistributionFacilityFactory.GetDistributionFacility(msgEntity).Push(msgEntity);
-                }
-                else
-                {
-                    ProgressInfoManager.Instance.Clear(serviceType.ServiceType);
-
-                    CommonCallbackAction(serviceType, (clientCallback) =>
-                    {
-                        clientCallback.NotifyTaskProgressFinishAll();
-                    });
-                }
+                    clientCallback.NotifyTaskProgressFinishAll();
+                });
             }
         }
 

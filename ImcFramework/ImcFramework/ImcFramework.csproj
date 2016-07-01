@@ -52,6 +52,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Management" />
     <Reference Include="System.Messaging" />
+    <Reference Include="System.Runtime.Caching" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -66,6 +67,8 @@
     <Compile Include="Cache\ICacheKeyProvider.cs" />
     <Compile Include="Cache\ICacheManager.cs" />
     <Compile Include="Cache\ICacheProvider.cs" />
+    <Compile Include="Cache\Memory\DefaultMemoryCache.cs" />
+    <Compile Include="Cache\Memory\MemoryCacheManager.cs" />
     <Compile Include="Commands\AbstractCommand.cs" />
     <Compile Include="Commands\ICommand.cs" />
     <Compile Include="Data\ExecuteResult.cs" />
