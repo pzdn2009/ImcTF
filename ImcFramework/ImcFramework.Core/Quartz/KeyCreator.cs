@@ -1,35 +1,30 @@
 ﻿using Quartz;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ImcFramework.Core.Quartz
 {
     internal static class KeyCreator
     {
-        private static string TRIGGER = "Trigger";
-        private static string MAIN_BUSINESS = "MainBusiness";
+        public static string TRIGGER = "Trigger";
+        public static string MAIN_BUSINESS = "MainBusiness";
 
-        public static JobKey GetJobKey(this string serviceName)
+        public static JobKey GetJobKey(this string serviceType)
         {
-            return GetJobKey(serviceName, MAIN_BUSINESS);
+            return GetJobKey(serviceType, MAIN_BUSINESS);
         }
 
-        public static JobKey GetJobKey(this string serviceName, string group)
+        public static JobKey GetJobKey(this string serviceType, string group)
         {
-            return new JobKey(serviceName, group);
+            return new JobKey(serviceType, group);
         }
 
-        public static TriggerKey GetTriggerKey(this string serviceName)
+        public static TriggerKey GetTriggerKey(this string serviceType)
         {
-            return GetTriggerKey(serviceName + TRIGGER, serviceName + TRIGGER);
+            return GetTriggerKey(serviceType + TRIGGER, serviceType + TRIGGER);
         }
 
-        public static TriggerKey GetTriggerKey(this string serviceName, string group)
+        public static TriggerKey GetTriggerKey(this string serviceType, string group)
         {
-            return new TriggerKey(serviceName, serviceName);
+            return new TriggerKey(serviceType, serviceType);
         }
     }
 }

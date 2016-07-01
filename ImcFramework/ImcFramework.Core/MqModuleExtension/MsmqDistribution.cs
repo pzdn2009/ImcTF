@@ -1,18 +1,14 @@
 ﻿using ImcFramework.Infrastructure;
-using ImcFramework.WcfInterface;
 using ImcFramework.WcfInterface.TransferMessage;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace ImcFramework.Core
+namespace ImcFramework.Core.MqModuleExtension
 {
     /// <summary>
     /// Msmq实现消息交换
     /// </summary>
-    public class MsmqDistribution<T> : MqModuleExtension.MqDistributionBase<T> where T : class, ITransferMessage
+    public class MsmqDistribution<T> : MqDistributionBase<T> where T : class, ITransferMessage
     {
         protected string m_MQPathFormat = @".\private$\{0}_{1}";
 

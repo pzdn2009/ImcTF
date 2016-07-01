@@ -18,7 +18,7 @@ namespace ImcFramework.Core
 
             if (Defaults.IsIsolatedJob)
             {
-                moduleExtensionList.Add(new MqModule() { ServiceContext = serviceContext });
+                //moduleExtensionList.Add(new MqModule() { ServiceContext = serviceContext });
             }
 
             return moduleExtensionList;

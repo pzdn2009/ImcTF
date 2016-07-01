@@ -1,14 +1,12 @@
 ﻿using Common.Logging;
+using ImcFramework.Core.Distribution;
 using ImcFramework.Core.LogModule;
-using ImcFramework.Infrastructure;
 using ImcFramework.WcfInterface;
 using ImcFramework.WcfInterface.TransferMessage;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.ServiceModel;
-using System.Text;
 
 namespace ImcFramework.Core
 {

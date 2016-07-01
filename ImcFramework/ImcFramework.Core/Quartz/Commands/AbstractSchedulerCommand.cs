@@ -1,13 +1,8 @@
 ﻿using ImcFramework.Commands;
 using ImcFramework.Data;
-using ImcFramework.Infrastructure;
 using ImcFramework.WcfInterface;
 using Quartz;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ImcFramework.Core.Quartz.Commands
 {
@@ -30,7 +25,7 @@ namespace ImcFramework.Core.Quartz.Commands
 
         protected override void HandleError(Exception exception, FunctionSwitch input, TOutput output)
         {
-            LogHelper.Error(exception);
+
         }
 
         public EServiceStatus GetStatus(string serviceName)

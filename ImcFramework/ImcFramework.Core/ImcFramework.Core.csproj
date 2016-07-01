@@ -77,7 +77,7 @@
   <ItemGroup>
     <Compile Include="BuildInBusinessService\ImcTFSampleService.cs" />
     <Compile Include="Defaults.cs" />
-    <Compile Include="DistributionFacilityFactory.cs" />
+    <Compile Include="Distribution\DistributionFacilityFactory.cs" />
     <Compile Include="EServiceTypeReader.cs" />
     <Compile Include="ModuleExtension\IModuleExtension.cs" />
     <Compile Include="ModuleExtension\ModuleConfiguration.cs" />
@@ -95,13 +95,13 @@
     <Compile Include="Quartz\DefaultScheduleProvider.cs" />
     <Compile Include="Quartz\GlobalJobListener.cs" />
     <Compile Include="Exceptions\ImcFrameworkException.cs" />
-    <Compile Include="IDistributionFacility.cs" />
+    <Compile Include="Distribution\IDistributionFacility.cs" />
     <Compile Include="IsolatedAd\IsolatedJob.cs" />
     <Compile Include="IsolatedAd\IsolatedJobFactory.cs" />
     <Compile Include="IsolatedAd\IsolateDomainLoader.cs" />
     <Compile Include="IsolatedAd\RemoteObject.cs" />
     <Compile Include="ICancel.cs" />
-    <Compile Include="JobCronExpressionConfig.cs" />
+    <Compile Include="Quartz\JobCronExpressionConfig.cs" />
     <Compile Include="LogModule\DefaultFileAppender.cs" />
     <Compile Include="LogModule\DefaultLoggerPool.cs" />
     <Compile Include="LogModule\FileAppenderHelper.cs" />

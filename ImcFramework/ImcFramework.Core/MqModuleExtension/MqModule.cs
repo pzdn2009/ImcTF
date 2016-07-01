@@ -1,30 +1,39 @@
-﻿using ImcFramework.Infrastructure;
-using ImcFramework.WcfInterface;
+﻿using ImcFramework.Core.Distribution;
+using ImcFramework.Core.LogModule;
+using ImcFramework.Infrastructure;
 using ImcFramework.WcfInterface.TransferMessage;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace ImcFramework.Core.MqModuleExtension
 {
     public class MqModule : ServiceModuleBase, IModuleExtension
     {
+        public const string MODUEL_NAME = "MQ_MODULE";
+
         private IList<IDistributionFacility<ITransferMessage>> m_MqDistributions;
 
-        public MqModule()
+        private ILoggerPool loggerPool;
+        private IDistributionFacilityProvider distributionFacilityProvider;
+
+        public MqModule(ILoggerPoolFactory loggerPoolFactory,IDistributionFacilityProvider distributionFacilityProvider)
         {
             m_MqDistributions = new List<IDistributionFacility<ITransferMessage>>();
-        }
 
-        private readonly string MQ_MODULE = "MQ_MODULE";
+            this.loggerPool = loggerPoolFactory.GetLoggerPool(MODUEL_NAME);
+
+            Logger = loggerPool.GetLogger("");
+
+            this.distributionFacilityProvider = distributionFacilityProvider;
+        }
 
         public override string Name
         {
             get
             {
-                return MQ_MODULE;
+                return MODUEL_NAME;
             }
         }
 
@@ -33,11 +42,14 @@ namespace ImcFramework.Core.MqModuleExtension
             get; set;
         }
 
+        public override void Initialize()
+        {
+            m_MqDistributions.Add(distributionFacilityProvider.GetDistributionFacility<MessageEntity>());
+            m_MqDistributions.Add(distributionFacilityProvider.GetDistributionFacility<ProgressInfoMessage>());
+        }
+
         public override void Start()
         {
-            m_MqDistributions.Add(DistributionFacilityFactory.GetDistributionFacility<MessageEntity>());
-            m_MqDistributions.Add(DistributionFacilityFactory.GetDistributionFacility<ProgressInfoMessage>());
-
             var fisrt = m_MqDistributions.First();
             var last = m_MqDistributions.Last();
 

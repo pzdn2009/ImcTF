@@ -1,6 +1,4 @@
 ﻿using System.Collections.Generic;
-using ImcFramework.Core.Quartz;
-using ImcFramework.Core.WcfService;
 using ImcFramework.Ioc;
 using System.Linq;
 
@@ -38,6 +36,7 @@ namespace ImcFramework.Core
             //iocManager.Register<IServiceModule, WcfServiceModule>(DependencyLifeStyle.Singleton, false);
 
             buildInModules = iocManager.Resolve<IEnumerable<IServiceModule>>();
+            extensionModules = iocManager.Resolve<IEnumerable<IModuleExtension>>();
         }
 
         public static void StartAll()
@@ -50,10 +49,13 @@ namespace ImcFramework.Core
                 buidIn.Start();
             }
 
-            extensionModules = ModuleConfiguration.ReadConfig(ServiceContext);
             foreach (var item in extensionModules)
             {
-                (item as IServiceModule).Start();
+                item.ServiceContext = ServiceContext;
+                var svc = (item as IServiceModule);
+                svc.IocManager = iocManager;
+                svc.Initialize();
+                svc.Start();
             }
         }
 

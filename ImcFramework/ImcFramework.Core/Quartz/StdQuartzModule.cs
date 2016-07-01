@@ -1,12 +1,8 @@
 ﻿using ImcFramework.Core.IsolatedAd;
+using ImcFramework.Core.LogModule;
 using ImcFramework.Ioc;
 using Quartz;
 using Quartz.Impl;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ImcFramework.Core.Quartz
 {
@@ -15,19 +11,29 @@ namespace ImcFramework.Core.Quartz
     /// </summary>
     public class StdQuartzModule : ServiceModuleBase
     {
+        public const string MODUEL_NAME = "Quartz_Module";
+
         private IScheduler scheduler;
+        private ILoggerPool loggerPool;
+
+        public StdQuartzModule(ILoggerPoolFactory loggerPoolFactory)
+        {
+            loggerPool = loggerPoolFactory.GetLoggerPool(MODUEL_NAME);
+            Logger = loggerPool.GetLogger("");
+        }
 
         public override string Name
         {
             get
             {
-                return "Quartz";
+                return MODUEL_NAME;
             }
         }
 
         public override void Initialize()
         {
             IocManager.Register<ISchedulerFactory, StdSchedulerFactory>(DependencyLifeStyle.Singleton);
+            IocManager.Register<ILoggerPool>(loggerPool, MODUEL_NAME);
         }
 
         public override void Start()

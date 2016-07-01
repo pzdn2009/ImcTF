@@ -19,6 +19,7 @@ namespace ImcFramework.Core.Quartz
         {
             this.scheduleProvider = scheduleProvider;
         }
+
         private static Dictionary<ECommand, dynamic> dict = new Dictionary<ECommand, dynamic>();
 
         public TOutput Invoke<TOutput>(FunctionSwitch functionSwitch)

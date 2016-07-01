@@ -1,11 +1,7 @@
 ﻿using ImcFramework.WcfInterface.TransferMessage;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace ImcFramework.Core
+namespace ImcFramework.Core.Distribution
 {
     /// <summary>
     /// 分布式设施

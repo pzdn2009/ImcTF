@@ -1,11 +1,7 @@
-﻿using ImcFramework.Infrastructure;
-using ImcFramework.WcfInterface;
+﻿using ImcFramework.Core.Distribution;
 using ImcFramework.WcfInterface.TransferMessage;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ImcFramework.Core.MqModuleExtension
 {
@@ -16,6 +12,7 @@ namespace ImcFramework.Core.MqModuleExtension
     {
         public MqDistributionBase()
         {
+
         }
 
         public abstract string MQPathFormat { get; set; }
