@@ -9,8 +9,8 @@ namespace ImcFramework.Core
     /// <summary>
     /// 模块扩展
     /// </summary>
-    public interface IModuleExtension : IServiceModule<ServiceContext>
+    public interface IModuleExtension
     {
-
+        ServiceContext ServiceContext { get; set; }
     }
 }

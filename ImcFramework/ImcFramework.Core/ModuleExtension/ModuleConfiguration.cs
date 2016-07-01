@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ImcFramework.Core.MqModuleExtension;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,7 +18,7 @@ namespace ImcFramework.Core
 
             if (Defaults.IsIsolatedJob)
             {
-                moduleExtensionList.Add(new MqModuleExtension.MqModule(serviceContext));
+                moduleExtensionList.Add(new MqModule() { ServiceContext = serviceContext });
             }
 
             return moduleExtensionList;

@@ -79,6 +79,8 @@
     <Compile Include="Defaults.cs" />
     <Compile Include="DistributionFacilityFactory.cs" />
     <Compile Include="EServiceTypeReader.cs" />
+    <Compile Include="ModuleExtension\IModuleExtension.cs" />
+    <Compile Include="ModuleExtension\ModuleConfiguration.cs" />
     <Compile Include="MutilUserProgress\ProgressInfoModule.cs" />
     <Compile Include="Quartz\Commands\AbstractSchedulerCommand.cs" />
     <Compile Include="Quartz\Commands\CancelCommand.cs" />
@@ -109,9 +111,6 @@
     <Compile Include="LogModule\LoggerPoolFactory.cs" />
     <Compile Include="MainBusinessBase.cs" />
     <Compile Include="MqModuleExtension\MsmqDistribution.cs" />
-    <Compile Include="ModuleExtension\IModuleExtension.cs" />
-    <Compile Include="ModuleExtension\ModuleConfiguration.cs" />
-    <Compile Include="ModuleExtension\ModuleExtensionBase.cs" />
     <Compile Include="ModuleExtension\ServiceContext.cs" />
     <Compile Include="MqModuleExtension\MqModule.cs" />
     <Compile Include="MqModuleExtension\MqDistributionBase.cs" />

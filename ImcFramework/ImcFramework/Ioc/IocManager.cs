@@ -83,17 +83,22 @@ namespace ImcFramework.Ioc
             return chain;
         }
 
-        public TType Resolve<TType>()
+        public TType Resolve<TType>(string key = null)
         {
-            return container.Resolve<TType>();
+            if (string.IsNullOrEmpty(key))
+            {
+                return container.Resolve<TType>();
+            }
+
+            return container.ResolveKeyed<TType>(key);
         }
 
         public void RegisterAssemblyAsInterfaces(Assembly assembly)
         {
-            var builder2 = new ContainerBuilder();  
+            var builder2 = new ContainerBuilder();
 
             builder2.RegisterAssemblyTypes(assembly).AsImplementedInterfaces();
-            
+
             builder2.Update(container);
         }
 
@@ -111,11 +116,18 @@ namespace ImcFramework.Ioc
             return container.IsRegistered<TType>();
         }
 
-        public void Register<TType>(TType instance, DependencyLifeStyle lifeStyle = DependencyLifeStyle.Singleton) where TType : class
+        public void Register<TType>(object instance, string key = null, DependencyLifeStyle lifeStyle = DependencyLifeStyle.Singleton) where TType : class
         {
             var builder2 = new ContainerBuilder();
 
-            ApplyLifeStyle(builder2.RegisterInstance(instance).As<TType>(), lifeStyle);
+            if (!string.IsNullOrEmpty(key))
+            {
+                ApplyLifeStyle(builder2.RegisterInstance(instance).Named<TType>(key).As<TType>(), lifeStyle);
+            }
+            else
+            {
+                ApplyLifeStyle(builder2.RegisterInstance(instance).As<TType>(), lifeStyle);
+            }
 
             builder2.Update(container);
         }

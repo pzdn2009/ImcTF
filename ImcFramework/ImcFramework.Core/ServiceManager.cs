@@ -32,7 +32,6 @@ namespace ImcFramework.Core
 
         private static void Initialize()
         {
-            iocManager.Register(ServiceContext);
             iocManager.RegisterAssemblyAsInterfaces(typeof(ServiceManager).Assembly);
 
             //iocManager.Register<IServiceModule, StdQuartzModule>(DependencyLifeStyle.Singleton, false);
@@ -45,30 +44,32 @@ namespace ImcFramework.Core
         {
             foreach (var buidIn in buildInModules)
             {
+                if (buidIn is IModuleExtension) continue;
                 buidIn.IocManager = iocManager;
                 buidIn.Initialize();
                 buidIn.Start();
             }
 
-            //extensionModules = ModuleConfiguration.ReadConfig(ServiceContext);
-            //foreach (var item in extensionModules)
-            //{
-            //    item.Start();
-            //}
+            extensionModules = ModuleConfiguration.ReadConfig(ServiceContext);
+            foreach (var item in extensionModules)
+            {
+                (item as IServiceModule).Start();
+            }
         }
 
         public static void StopAll()
         {
-            //if (extensionModules != null)
-            //{
-            //    foreach (var item in extensionModules)
-            //    {
-            //        item.Stop();
-            //    }
-            //}
+            if (extensionModules != null)
+            {
+                foreach (var item in extensionModules)
+                {
+                    (item as IServiceModule).Stop();
+                }
+            }
 
             foreach (var buidIn in buildInModules.Reverse())
             {
+                if (buidIn is IModuleExtension) continue;
                 buidIn.Stop();
             }
         }

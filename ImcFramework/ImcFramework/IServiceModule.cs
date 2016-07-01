@@ -26,9 +26,4 @@ namespace ImcFramework
 
         IEnumerable<IServiceModule> DependencyModules { get; set; }
     }
-
-    public interface IServiceModule<T> : IServiceModule
-    {
-        T ServiceContext { get; set; }
-    }
 }

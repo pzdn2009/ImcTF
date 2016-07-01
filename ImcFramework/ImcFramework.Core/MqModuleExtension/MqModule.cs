@@ -9,12 +9,11 @@ using System.Threading.Tasks;
 
 namespace ImcFramework.Core.MqModuleExtension
 {
-    public class MqModule : ModuleExtensionBase
+    public class MqModule : ServiceModuleBase, IModuleExtension
     {
         private IList<IDistributionFacility<ITransferMessage>> m_MqDistributions;
 
-        public MqModule(ServiceContext serviceContext)
-            : base(serviceContext)
+        public MqModule()
         {
             m_MqDistributions = new List<IDistributionFacility<ITransferMessage>>();
         }
@@ -27,6 +26,11 @@ namespace ImcFramework.Core.MqModuleExtension
             {
                 return MQ_MODULE;
             }
+        }
+
+        public ServiceContext ServiceContext
+        {
+            get; set;
         }
 
         public override void Start()

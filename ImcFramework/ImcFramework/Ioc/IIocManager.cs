@@ -22,9 +22,9 @@ namespace ImcFramework.Ioc
 
         void Register<TType>(DependencyLifeStyle lifeStyle = DependencyLifeStyle.Singleton);
 
-        void Register<TType>(TType instance, DependencyLifeStyle lifeStyle = DependencyLifeStyle.Singleton) where TType : class;
+        void Register<TType>(object instance, string key = null, DependencyLifeStyle lifeStyle = DependencyLifeStyle.Singleton) where TType : class;
 
-        TType Resolve<TType>();
+        TType Resolve<TType>(string key = null);
 
         bool IsRegister<TType>();
     }

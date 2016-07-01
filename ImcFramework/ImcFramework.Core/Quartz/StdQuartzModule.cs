@@ -47,7 +47,7 @@ namespace ImcFramework.Core.Quartz
 
             scheduler.Start();
 
-            IocManager.Register(scheduler);
+            IocManager.Register<IScheduler>(scheduler);
         }
 
         public override void Stop()

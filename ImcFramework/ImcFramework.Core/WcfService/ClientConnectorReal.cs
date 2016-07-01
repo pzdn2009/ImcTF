@@ -13,6 +13,7 @@ using ImcFramework.Core.Quartz.Commands;
 using ImcFramework.Data;
 using ImcFramework.Core.Quartz;
 using ImcFramework.Core.LogModule;
+using ImcFramework.Ioc;
 
 namespace ImcFramework.Core
 {
@@ -24,13 +25,13 @@ namespace ImcFramework.Core
         private ICommandInvoker commandInvoker;
         private ILoggerPool loggerPool;
 
-        public ClientConnectorReal(ICommandInvoker commandInvoker, ILoggerPoolFactory loggerPoolFactory)
+        public ClientConnectorReal(ICommandInvoker commandInvoker, IIocManager iocManager)
         {
             OperationContext.Current.Channel.Closing += Channel_Closing;
             OperationContext.Current.Channel.Faulted += Channel_Faulted;
 
             this.commandInvoker = commandInvoker;
-            this.loggerPool = loggerPoolFactory.GetLoggerPool("WcfService");
+            this.loggerPool = iocManager.Resolve<ILoggerPool>(WcfService.WcfServiceModule.MODUEL_NAME);
         }
 
         #region Events

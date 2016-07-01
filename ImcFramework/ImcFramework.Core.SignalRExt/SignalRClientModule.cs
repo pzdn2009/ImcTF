@@ -6,12 +6,11 @@ using System.Threading.Tasks;
 
 namespace ImcFramework.Core.SignalRExt
 {
-    public class SignalRClientModule : ModuleExtensionBase
+    public class SignalRClientModule : ServiceModuleBase, IModuleExtension
     {
         private const string NAME = "SIGNALR_MODULE_EXTENSION";
 
-        public SignalRClientModule(ServiceContext serviceContext)
-            : base(serviceContext)
+        public SignalRClientModule()
         {
 
         }
@@ -19,6 +18,11 @@ namespace ImcFramework.Core.SignalRExt
         public override string Name
         {
             get { return NAME; }
+        }
+
+        public ServiceContext ServiceContext
+        {
+            get; set;
         }
 
         public override void Start()

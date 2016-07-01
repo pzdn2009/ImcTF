@@ -11,6 +11,8 @@ using ImcFramework.Core.LogModule;
 using System.Reflection;
 using System.Linq;
 using ImcFramework.Core.WcfService;
+using Moq;
+using System.ServiceModel;
 
 namespace ImcFramework.Core.Tests
 {
@@ -20,7 +22,6 @@ namespace ImcFramework.Core.Tests
         private Assembly asm = null;
         private IIocManager ioc = null;
 
-        #region 附加测试特性
         //在运行每个测试之前，使用 TestInitialize 来运行代码
         [TestInitialize()]
         public void MyTestInitialize()
@@ -37,12 +38,9 @@ namespace ImcFramework.Core.Tests
             ioc = null;
         }
 
-        #endregion
-       
         [TestMethod]
         public void register_asm_can_resolve_the_IServiceModule()
         {
-            ioc.Register<ServiceContext>(DependencyLifeStyle.Singleton);
             ioc.RegisterAssemblyAsInterfaces(asm);
 
             var serviceModules = ioc.Resolve<IEnumerable<IServiceModule>>();
@@ -56,22 +54,27 @@ namespace ImcFramework.Core.Tests
         }
 
         [TestMethod]
-        public void register_asm_can_resolve_ICommandInvoker()
+        public void register_asm_can_resolve_the_IModuleExtension()
         {
-            ioc.Register<ServiceContext>(DependencyLifeStyle.Singleton);
             ioc.RegisterAssemblyAsInterfaces(asm);
 
-            var serviceModules = ioc.Resolve<IEnumerable<IServiceModule>>();
+            var serviceModules = ioc.Resolve<IEnumerable<IModuleExtension>>();
             foreach (var md in serviceModules)
             {
-                md.IocManager = ioc;
-                md.Initialize();
-                if (md.Name == "Quartz") 
-                {
-                    md.Start();
-                }
-                Console.WriteLine(md.Name);
+                Console.WriteLine(md.GetType().ToString());
             }
+
+            Assert.IsNotNull(serviceModules);
+            Console.WriteLine(serviceModules.Count());
+        }
+
+        [TestMethod]
+        public void register_asm_can_resolve_ICommandInvoker()
+        {
+            ioc.RegisterAssemblyAsInterfaces(asm);
+
+            Mock<IScheduler> moq = new Mock<IScheduler>();
+            ioc.Register<IScheduler>(moq.Object);// 依赖于IScheduler，由于没有启动ISchedule，则不会有，故mock一个。
 
             var cmdInvoker = ioc.Resolve<ICommandInvoker>();
 
@@ -81,20 +84,7 @@ namespace ImcFramework.Core.Tests
         [TestMethod]
         public void register_asm_can_resolve_ILoggerPoolFactory()
         {
-            ioc.Register<ServiceContext>(DependencyLifeStyle.Singleton);
             ioc.RegisterAssemblyAsInterfaces(asm);
-
-            var serviceModules = ioc.Resolve<IEnumerable<IServiceModule>>();
-            foreach (var md in serviceModules)
-            {
-                md.IocManager = ioc;
-                md.Initialize();
-                if (md.Name == "Quartz")
-                {
-                    md.Start();
-                }
-                Console.WriteLine(md.Name);
-            }
 
             var logPool = ioc.Resolve<ILoggerPoolFactory>();
 
@@ -104,20 +94,7 @@ namespace ImcFramework.Core.Tests
         [TestMethod]
         public void register_asm_can_resolve_IClientConnector()
         {
-            ioc.Register<ServiceContext>(DependencyLifeStyle.Singleton);
             ioc.RegisterAssemblyAsInterfaces(asm);
-
-            var serviceModules = ioc.Resolve<IEnumerable<IServiceModule>>();
-            foreach (var md in serviceModules)
-            {
-                md.IocManager = ioc;
-                md.Initialize();
-                if (md.Name == "Quartz")
-                {
-                    md.Start();
-                }
-                Console.WriteLine(md.Name);
-            }
 
             var wcf = ioc.Resolve<IClientConnector>();
 
