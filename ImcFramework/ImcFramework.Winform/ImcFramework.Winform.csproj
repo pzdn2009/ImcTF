@@ -42,6 +42,9 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ImcFramework.WinServiceLib">
+      <HintPath>..\ImcFramework.WinServiceLib\obj\Release\ImcFramework.WinServiceLib.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration.Install" />
     <Reference Include="System.Core" />
@@ -66,6 +69,12 @@
       <DependentUpon>CronEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="EventArgs\RequestLogArgs.cs" />
+    <Compile Include="Forms\EventLogViewer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\EventLogViewer.Designer.cs">
+      <DependentUpon>EventLogViewer.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\FrmEditSvcList.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -114,6 +123,9 @@
     <Compile Include="WinServiceControl.cs" />
     <EmbeddedResource Include="Forms\CronEditor.resx">
       <DependentUpon>CronEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\EventLogViewer.resx">
+      <DependentUpon>EventLogViewer.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FrmEditSvcList.resx">
       <DependentUpon>FrmEditSvcList.cs</DependentUpon>

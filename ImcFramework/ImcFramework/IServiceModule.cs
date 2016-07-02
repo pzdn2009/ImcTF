@@ -1,10 +1,6 @@
-﻿using Common.Logging;
-using ImcFramework.Ioc;
-using System;
+﻿using ImcFramework.Ioc;
+using ImcFramework.LogPool;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ImcFramework
 {
@@ -20,7 +16,7 @@ namespace ImcFramework
 
         void Stop();
 
-        ILog Logger { get; set; }
+        ILoggerPool LoggerPool { get; set; }
 
         IIocManager IocManager { get; set; }
 

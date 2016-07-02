@@ -1,6 +1,6 @@
 ﻿using Common.Logging;
 
-namespace ImcFramework.Core.LogModule
+namespace ImcFramework.LogPool
 {
     /// <summary>
     /// 业务日志池

@@ -1,12 +1,8 @@
 ﻿using Common.Logging;
 using ImcFramework.Infrastructure;
-using ImcFramework.WcfInterface;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
-namespace ImcFramework.Core.LogModule
+namespace ImcFramework.LogPool
 {
 
     internal struct AppenderKey

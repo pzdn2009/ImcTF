@@ -43,6 +43,7 @@
             this.btnOpenServicePath = new System.Windows.Forms.Button();
             this.cmbServiceList = new System.Windows.Forms.ComboBox();
             this.btnEditServiceList = new System.Windows.Forms.Button();
+            this.btnEvents = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -220,10 +221,23 @@
             this.btnEditServiceList.UseVisualStyleBackColor = true;
             this.btnEditServiceList.Click += new System.EventHandler(this.btnEditServiceList_Click);
             // 
+            // btnEvents
+            // 
+            this.btnEvents.AutoSize = true;
+            this.btnEvents.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnEvents.Location = new System.Drawing.Point(816, 15);
+            this.btnEvents.Name = "btnEvents";
+            this.btnEvents.Size = new System.Drawing.Size(65, 25);
+            this.btnEvents.TabIndex = 30;
+            this.btnEvents.Text = "Events";
+            this.btnEvents.UseVisualStyleBackColor = true;
+            this.btnEvents.Click += new System.EventHandler(this.btnEvents_Click);
+            // 
             // ucWinServiceMgr
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.btnEvents);
             this.Controls.Add(this.btnEditServiceList);
             this.Controls.Add(this.cmbServiceList);
             this.Controls.Add(this.btnOpenServicePath);
@@ -240,7 +254,7 @@
             this.Controls.Add(this.btnQuery);
             this.Controls.Add(this.label1);
             this.Name = "ucWinServiceMgr";
-            this.Size = new System.Drawing.Size(803, 203);
+            this.Size = new System.Drawing.Size(895, 203);
             this.Load += new System.EventHandler(this.ucWinServiceMgr_Load);
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             this.ResumeLayout(false);
@@ -265,5 +279,6 @@
         private System.Windows.Forms.Button btnOpenServicePath;
         private System.Windows.Forms.ComboBox cmbServiceList;
         private System.Windows.Forms.Button btnEditServiceList;
+        private System.Windows.Forms.Button btnEvents;
     }
 }

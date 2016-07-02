@@ -102,13 +102,6 @@
     <Compile Include="IsolatedAd\RemoteObject.cs" />
     <Compile Include="ICancel.cs" />
     <Compile Include="Quartz\JobCronExpressionConfig.cs" />
-    <Compile Include="LogModule\DefaultFileAppender.cs" />
-    <Compile Include="LogModule\DefaultLoggerPool.cs" />
-    <Compile Include="LogModule\FileAppenderHelper.cs" />
-    <Compile Include="LogModule\IFileAppender.cs" />
-    <Compile Include="LogModule\ILoggerPool.cs" />
-    <Compile Include="LogModule\LogContentEntity.cs" />
-    <Compile Include="LogModule\LoggerPoolFactory.cs" />
     <Compile Include="MainBusinessBase.cs" />
     <Compile Include="MqModuleExtension\MsmqDistribution.cs" />
     <Compile Include="ModuleExtension\ServiceContext.cs" />

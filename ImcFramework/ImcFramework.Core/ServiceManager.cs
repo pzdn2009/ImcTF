@@ -2,6 +2,7 @@
 using ImcFramework.Ioc;
 using System.Linq;
 using ImcFramework.Core.MutilUserProgress;
+using ImcFramework.LogPool;
 
 namespace ImcFramework.Core
 {
@@ -31,10 +32,8 @@ namespace ImcFramework.Core
 
         private static void Initialize()
         {
+            iocManager.RegisterAssemblyAsInterfaces(typeof(ILoggerPoolFactory).Assembly);
             iocManager.RegisterAssemblyAsInterfaces(typeof(ServiceManager).Assembly);
-
-            //iocManager.Register<IServiceModule, StdQuartzModule>(DependencyLifeStyle.Singleton, false);
-            //iocManager.Register<IServiceModule, WcfServiceModule>(DependencyLifeStyle.Singleton, false);
 
             buildInModules = iocManager.Resolve<IEnumerable<IServiceModule>>();
             extensionModules = iocManager.Resolve<IEnumerable<IModuleExtension>>();
@@ -42,10 +41,14 @@ namespace ImcFramework.Core
 
         public static void StartAll()
         {
+            var loggerPoolFactory = iocManager.Resolve<ILoggerPoolFactory>();
             foreach (var buidIn in buildInModules)
             {
                 if (buidIn is IModuleExtension) continue;
                 buidIn.IocManager = iocManager;
+                buidIn.LoggerPool = loggerPoolFactory.GetLoggerPool(buidIn.Name);
+                iocManager.Register<ILoggerPool>(buidIn.LoggerPool, buidIn.Name);
+
                 buidIn.Initialize();
                 buidIn.Start();
             }
@@ -55,6 +58,9 @@ namespace ImcFramework.Core
                 item.ServiceContext = ServiceContext;
                 var svc = (item as IServiceModule);
                 svc.IocManager = iocManager;
+                svc.LoggerPool = loggerPoolFactory.GetLoggerPool(svc.Name);
+                iocManager.Register<ILoggerPool>(svc.LoggerPool, svc.Name);
+
                 svc.Initialize();
                 svc.Start();
             }

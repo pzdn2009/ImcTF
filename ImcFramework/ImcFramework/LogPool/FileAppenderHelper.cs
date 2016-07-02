@@ -3,7 +3,7 @@ using log4net.Core;
 using log4net.Repository.Hierarchy;
 using System;
 
-namespace ImcFramework.Core.LogModule
+namespace ImcFramework.LogPool
 {
     public class FileAppenderHelper
     {

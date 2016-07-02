@@ -10,6 +10,7 @@ using System.ServiceProcess;
 using System.Threading.Tasks;
 using System.Threading;
 using System.Linq.Expressions;
+using ImcFramework.Winform.Forms;
 
 namespace ImcFramework.Winform
 {
@@ -258,6 +259,12 @@ namespace ImcFramework.Winform
                 var val = cmbServiceList.SelectedItem as WinServiceConfig;
                 MyClients.SetCurrentBinding(val.Binding);
             }
+        }
+
+        private void btnEvents_Click(object sender, EventArgs e)
+        {
+            EventLogViewer eventLogViewer = new EventLogViewer(ServiceName);
+            eventLogViewer.ShowDialog();
         }
     }
 }

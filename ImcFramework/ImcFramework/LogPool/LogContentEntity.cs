@@ -1,11 +1,7 @@
-﻿using ImcFramework.WcfInterface;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
+﻿using System.Diagnostics;
 using System.Text;
 
-namespace ImcFramework.Core
+namespace ImcFramework.LogPool
 {
     /// <summary>
     /// 日志实体

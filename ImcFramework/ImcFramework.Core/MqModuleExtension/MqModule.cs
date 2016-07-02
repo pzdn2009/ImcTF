@@ -1,6 +1,6 @@
 ﻿using ImcFramework.Core.Distribution;
-using ImcFramework.Core.LogModule;
 using ImcFramework.Infrastructure;
+using ImcFramework.LogPool;
 using ImcFramework.WcfInterface.TransferMessage;
 using System;
 using System.Collections.Generic;
@@ -15,16 +15,11 @@ namespace ImcFramework.Core.MqModuleExtension
 
         private IList<IDistributionFacility<ITransferMessage>> m_MqDistributions;
 
-        private ILoggerPool loggerPool;
         private IDistributionFacilityProvider distributionFacilityProvider;
 
-        public MqModule(ILoggerPoolFactory loggerPoolFactory, IDistributionFacilityProvider distributionFacilityProvider)
+        public MqModule(IDistributionFacilityProvider distributionFacilityProvider)
         {
             m_MqDistributions = new List<IDistributionFacility<ITransferMessage>>();
-
-            this.loggerPool = loggerPoolFactory.GetLoggerPool(MODUEL_NAME);
-
-            Logger = loggerPool.GetLogger("");
 
             this.distributionFacilityProvider = distributionFacilityProvider;
         }
@@ -44,12 +39,16 @@ namespace ImcFramework.Core.MqModuleExtension
 
         public override void Initialize()
         {
+            base.Initialize();
+
             m_MqDistributions.Add(distributionFacilityProvider.GetDistributionFacility<MessageEntity>());
             m_MqDistributions.Add(distributionFacilityProvider.GetDistributionFacility<ProgressInfoMessage>());
         }
 
         public override void Start()
         {
+            base.Start();
+
             var fisrt = m_MqDistributions.First();
             var last = m_MqDistributions.Last();
 
@@ -62,7 +61,7 @@ namespace ImcFramework.Core.MqModuleExtension
                     var msgs = fisrt.ReadMessages() as IEnumerable<MessageEntity>;
                     foreach (var msg in msgs.OrderBy(zw => zw.Timestamp))
                     {
-                        Observers.BroadCastMessageWithMQ(msg);
+                        Observers.BroadCastMessage(msg);
                     }
 
                     var msgs2 = last.ReadMessages() as IEnumerable<ProgressInfoMessage>;
@@ -81,10 +80,10 @@ namespace ImcFramework.Core.MqModuleExtension
                                 case "SendTaskProgressIncrease":
                                     Observers.SendTaskProgressIncrease(msg.ServiceType, msg.User, msg.Value);
                                     break;
-                                case "SendTaskProgressForceFinish":
+                                case "ForceFinish":
                                     Observers.SendTaskProgressForceFinish(msg.ServiceType, msg.User);
                                     break;
-                                case "SendTaskProgressFinishAll":
+                                case "FinishAll":
                                     Observers.SendTaskProgressFinishAll(msg.ServiceType);
                                     break;
                                 default:

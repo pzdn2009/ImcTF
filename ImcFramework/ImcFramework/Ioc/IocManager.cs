@@ -97,7 +97,7 @@ namespace ImcFramework.Ioc
         {
             var builder2 = new ContainerBuilder();
 
-            builder2.RegisterAssemblyTypes(assembly).AsImplementedInterfaces();
+            builder2.RegisterAssemblyTypes(assembly).AsImplementedInterfaces().Except<IocManager>();
 
             builder2.Update(container);
         }

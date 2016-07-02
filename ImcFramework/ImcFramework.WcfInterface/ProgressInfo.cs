@@ -43,8 +43,10 @@ namespace ImcFramework.WcfInterface
             this.Total = total;
             this.TotalType = totalType;
 
-            this.User = summaryName;
+            this.SummaryName = summaryName;
         }
+
+        public string SummaryName { get; set; }
 
         [DataMember]
         public TotalType TotalType { get; set; }

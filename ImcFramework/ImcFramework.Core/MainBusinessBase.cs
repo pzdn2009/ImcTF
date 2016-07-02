@@ -5,6 +5,8 @@ using System;
 using System.Threading;
 using System.Diagnostics;
 using ImcFramework.Core.MutilUserProgress;
+using ImcFramework.Core.Distribution;
+using ImcFramework.WcfInterface.TransferMessage;
 
 namespace ImcFramework.Core
 {
@@ -18,10 +20,14 @@ namespace ImcFramework.Core
             set { multiUser = new Lazy<IMutilUserProgress>(() => { return value; }); }
         }
 
+        private IDistributionFacility<MessageEntity> distributionFacility;
+
         public MainBusinessBase()
         {
             multiUser = new Lazy<IMutilUserProgress>(() => { return new DefaultMutilUserProgress(ServiceType); });
             CancellationTokenSource = new CancellationTokenSource();
+
+            distributionFacility = DistributionFacilityFactory.GetDistributionFacility<MessageEntity>();
         }
 
         public abstract EServiceType ServiceType { get; }
@@ -74,7 +80,18 @@ namespace ImcFramework.Core
             var sf = new StackFrame(2);
             var method = sf.GetMethod();
             var className = method.DeclaringType.Name;
-            Observers.BroadCastMessage(ServiceType, logLevel, user, message, className, method.Name);
+
+            var messageEntity = MessageEntityBuilder.Create()
+                       .WithServiceType(ServiceType)
+                       .WithMsgContent(message)
+                       .WithMessageType(EMessageType.Info)
+                       .WithUser(user)
+                       .WithLogLevel(logLevel.ToString())
+                       .WithClassName(className)
+                       .WithMethodName(method.Name)
+                       .Build();
+
+            distributionFacility.Push(messageEntity);
         }
 
         public virtual void Cancel()

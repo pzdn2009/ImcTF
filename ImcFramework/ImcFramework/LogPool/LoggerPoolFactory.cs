@@ -1,11 +1,6 @@
-﻿using ImcFramework.WcfInterface;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
-namespace ImcFramework.Core.LogModule
+namespace ImcFramework.LogPool
 {
     public interface ILoggerPoolFactory
     {

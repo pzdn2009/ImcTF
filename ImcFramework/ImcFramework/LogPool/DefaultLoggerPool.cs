@@ -1,21 +1,14 @@
-﻿using ImcFramework.Core.LogModule;
-using ImcFramework.Infrastructure;
-using ImcFramework.WcfInterface;
-using log4net;
+﻿using log4net;
 using log4net.Appender;
 using log4net.Core;
 using log4net.Layout;
-using log4net.Repository;
 using log4net.Repository.Hierarchy;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using ComonLog = global::Common.Logging;
 
-namespace ImcFramework.Core
+namespace ImcFramework.LogPool
 {
     public class DefaultLoggerPool : ILoggerPool
     {
@@ -35,7 +28,7 @@ namespace ImcFramework.Core
             get;
             private set;
         }
-        
+
         #region interfaces
 
         public ComonLog.ILog GetLogger(string user, ComonLog.LogLevel logLevel = ComonLog.LogLevel.Info)
@@ -76,7 +69,7 @@ namespace ImcFramework.Core
             lock (lockObject)
             {
                 var tuple = Tuple.Create(user, logLevel);
-                if (!hashLogFile.Contains(tuple) || !LogFileExist(GetLogFileName(appenderName)))
+                if (!hashLogFile.Contains(tuple))
                 {
                     InitMainBusinessLogger(appenderName, logLevel);
                     hashLogFile.Add(tuple);
@@ -98,13 +91,13 @@ namespace ImcFramework.Core
 
         private string GetLogFileName(string appenderName)
         {
-            var logFileName = string.Format("{0}" + Defaults.BusinessLogFileSplitChar + ".txt", appenderName);
+            var logFileName = string.Format("{0}__.txt", appenderName);
             return logFileName;
         }
 
         private bool LogFileExist(string fileName)
         {
-            var fullName = Defaults.RootDirectory + fileName.Replace('/', '\\').Replace(".txt", DateTime.Now.ToString("yyyy-MM-dd") + ".txt");
+            var fullName = AppDomain.CurrentDomain.BaseDirectory + "\\Log\\" + fileName.Replace('/', '\\').Replace(".txt", DateTime.Now.ToString("yyyy-MM-dd") + ".txt");
             return File.Exists(fullName);
         }
 

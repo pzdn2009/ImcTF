@@ -7,12 +7,12 @@ using Quartz;
 using Quartz.Impl;
 using ImcFramework.Ioc;
 using ImcFramework.Core.Quartz;
-using ImcFramework.Core.LogModule;
 using System.Reflection;
 using System.Linq;
 using ImcFramework.Core.WcfService;
 using Moq;
 using System.ServiceModel;
+using ImcFramework.LogPool;
 
 namespace ImcFramework.Core.Tests
 {
@@ -41,6 +41,7 @@ namespace ImcFramework.Core.Tests
         [TestMethod]
         public void register_asm_can_resolve_the_IServiceModule()
         {
+            ioc.RegisterAssemblyAsInterfaces(typeof(ILoggerPoolFactory).Assembly);
             ioc.RegisterAssemblyAsInterfaces(asm);
 
             var serviceModules = ioc.Resolve<IEnumerable<IServiceModule>>();

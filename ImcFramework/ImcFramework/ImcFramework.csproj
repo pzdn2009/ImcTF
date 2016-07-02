@@ -47,6 +47,10 @@
       <HintPath>..\packages\Common.Logging.Core.3.3.1\lib\net40\Common.Logging.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="log4net, Version=1.2.13.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
@@ -93,6 +97,13 @@
     <Compile Include="Ioc\IIocManager.cs" />
     <Compile Include="Ioc\IocManager.cs" />
     <Compile Include="IServiceModule.cs" />
+    <Compile Include="LogPool\DefaultFileAppender.cs" />
+    <Compile Include="LogPool\DefaultLoggerPool.cs" />
+    <Compile Include="LogPool\FileAppenderHelper.cs" />
+    <Compile Include="LogPool\IFileAppender.cs" />
+    <Compile Include="LogPool\ILoggerPool.cs" />
+    <Compile Include="LogPool\LogContentEntity.cs" />
+    <Compile Include="LogPool\LoggerPoolFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reflection\CurrentDomainAssemblyFinder.cs" />
     <Compile Include="Reflection\ITypeFinder.cs" />

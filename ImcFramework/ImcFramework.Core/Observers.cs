@@ -1,7 +1,7 @@
 ﻿using Common.Logging;
 using ImcFramework.Core.Distribution;
-using ImcFramework.Core.LogModule;
 using ImcFramework.Core.MutilUserProgress;
+using ImcFramework.LogPool;
 using ImcFramework.WcfInterface;
 using ImcFramework.WcfInterface.TransferMessage;
 using System;
@@ -71,33 +71,7 @@ namespace ImcFramework.Core
             }
         }
 
-        public static void BroadCastMessage(EServiceType serviceType, LogLevel logLevel,
-            string user, string message, string className, string methodName)
-        {
-            lock (lockObject)
-            {
-                var messageEntity = MessageEntityBuilder.Create()
-                       .WithServiceType(serviceType)
-                       .WithMsgContent(message)
-                       .WithMessageType(EMessageType.Info)
-                       .WithUser(user)
-                       .WithLogLevel(logLevel.ToString())
-                       .WithClassName(className)
-                       .WithMethodName(methodName)
-                       .Build();
-
-                if (Defaults.IsIsolatedJob)
-                {
-                    DistributionFacilityFactory.GetDistributionFacility(messageEntity).Push(messageEntity);
-                }
-                else
-                {
-                    BroadCastMessageWithMQ(messageEntity);
-                }
-            }
-        }
-
-        public static void BroadCastMessageWithMQ(MessageEntity messageEntity)
+        public static void BroadCastMessage(MessageEntity messageEntity)
         {
             #region 记录日志
 

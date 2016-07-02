@@ -12,9 +12,9 @@ using ImcFramework.WcfInterface.TransferMessage;
 using ImcFramework.Core.Quartz.Commands;
 using ImcFramework.Data;
 using ImcFramework.Core.Quartz;
-using ImcFramework.Core.LogModule;
 using ImcFramework.Ioc;
 using ImcFramework.Core.MutilUserProgress;
+using ImcFramework.LogPool;
 
 namespace ImcFramework.Core
 {
