@@ -8,5 +8,6 @@ namespace ImcFramework.Core.RedisExt
 {
     public class RedisConfigInfo
     {
+
     }
 }
