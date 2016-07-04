@@ -102,7 +102,7 @@ namespace ImcFramework.Core
                 var obj = commandInvoker.Invoke<GetServiceInfoOutput>(new FunctionSwitch() { Command = ECommand.GetServiceInfo, ServiceType = serviceType });
                 if (obj != null)
                 {
-                    return new ServiceInfo() { Enable = obj.Enable, EServiceStatus = obj.EServiceStatus, ScheduleInfo = obj.ScheduleInfo };
+                    return obj.ServiceInfo;
                 }
 
                 return null;

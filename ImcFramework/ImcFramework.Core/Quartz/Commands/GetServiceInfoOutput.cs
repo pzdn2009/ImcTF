@@ -10,10 +10,6 @@ namespace ImcFramework.Core.Quartz.Commands
 {
     public class GetServiceInfoOutput : ExecuteResult
     {
-        public EServiceStatus EServiceStatus { get; set; }
-
-        public string ScheduleInfo { get; set; }
-
-        public bool Enable { get; set; }
+        public ServiceInfo ServiceInfo { get; set; }
     }
 }

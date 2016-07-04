@@ -126,6 +126,8 @@ namespace ImcFramework.Winform
                         this.ServiceStatus = serviceInfo.EServiceStatus;
                         this.ScheduleInfo = serviceInfo.ScheduleInfo;
 
+                        labPrevFiredTime.SetValue(uiSyncContext, lab => lab.Text, serviceInfo.PrevFiredTime.HasValue ? serviceInfo.PrevFiredTime.Value.ToString() : string.Empty);
+                        labNextFiredTime.SetValue(uiSyncContext, lab => lab.Text, serviceInfo.NextFiredTime.HasValue ? serviceInfo.NextFiredTime.Value.ToString() : string.Empty);
                         btnPause.SetValue(uiSyncContext, btn => btn.Enabled, serviceInfo.EServiceStatus != EServiceStatus.Pause);
                         btnContinue.SetValue(uiSyncContext, btn => btn.Enabled, !btnPause.Enabled);
 
@@ -195,7 +197,7 @@ namespace ImcFramework.Winform
                 {
                     this.txtScheduleInfo.Text = value;
                 }, null);
-                
+
             }
         }
 

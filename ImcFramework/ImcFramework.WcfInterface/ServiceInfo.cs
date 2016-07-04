@@ -29,5 +29,11 @@ namespace ImcFramework.WcfInterface
         /// </summary>
         [DataMember]
         public bool Enable { get; set; }
+
+        [DataMember]
+        public DateTime? PrevFiredTime { get; set; }
+
+        [DataMember]
+        public DateTime? NextFiredTime { get; set; }
     }
 }

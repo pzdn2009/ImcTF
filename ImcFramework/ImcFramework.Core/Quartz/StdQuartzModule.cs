@@ -3,6 +3,7 @@ using ImcFramework.Ioc;
 using ImcFramework.LogPool;
 using Quartz;
 using Quartz.Impl;
+using System.Collections.Generic;
 
 namespace ImcFramework.Core.Quartz
 {
@@ -40,11 +41,7 @@ namespace ImcFramework.Core.Quartz
             var isolatedJob = Defaults.IsIsolatedJob;
 
             var schedulerFactory = IocManager.Resolve<ISchedulerFactory>();
-
             scheduler = schedulerFactory.GetScheduler();
-            scheduler.ListenerManager.AddJobListener(new GlobalJobListener());
-            scheduler.ListenerManager.AddTriggerListener(new GlobalTriggerListener());
-
             if (isolatedJob)
             {
                 scheduler.JobFactory = new IsolatedJobFactory();
@@ -53,6 +50,18 @@ namespace ImcFramework.Core.Quartz
             scheduler.Start();
 
             IocManager.Register<IScheduler>(scheduler);
+
+            var jobListeners = IocManager.Resolve<IEnumerable<IJobListener>>();
+            foreach (var jobListener in jobListeners)
+            {
+                scheduler.ListenerManager.AddJobListener(jobListener);
+            }
+
+            var triggerListeners = IocManager.Resolve<IEnumerable<ITriggerListener>>();
+            foreach (var triggerListener in triggerListeners)
+            {
+                scheduler.ListenerManager.AddTriggerListener(triggerListener);
+            }
         }
 
         public override void Stop()

@@ -13,7 +13,7 @@ namespace ImcFramework.LogPool
     public class DefaultLoggerPool : ILoggerPool
     {
         private object lockObject = new object();
-        private static HashSet<Tuple<string, ComonLog.LogLevel>> hashLogFile = new HashSet<Tuple<string, ComonLog.LogLevel>>();
+        private HashSet<Tuple<string, ComonLog.LogLevel>> hashLogFile = new HashSet<Tuple<string, ComonLog.LogLevel>>();
 
         private IFileAppender fileAppender;
 

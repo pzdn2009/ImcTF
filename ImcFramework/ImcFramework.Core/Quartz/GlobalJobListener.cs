@@ -1,15 +1,16 @@
-﻿using ImcFramework.Infrastructure;
+﻿using ImcFramework.LogPool;
 using Quartz;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ImcFramework.Core.Quartz
 {
     public class GlobalJobListener : IJobListener
     {
+        private ILoggerPool loggerPool;
+        public GlobalJobListener(ILoggerPool loggerPool)
+        {
+            this.loggerPool = loggerPool;
+        }
+
         public virtual void JobExecutionVetoed(IJobExecutionContext context)
         {
 
@@ -24,7 +25,11 @@ namespace ImcFramework.Core.Quartz
         {
             if (jobException != null)
             {
-                LogHelper.Error(string.Format("Job:{0} 执行出错：", context.JobDetail.Key.Name) + jobException);
+                loggerPool.Log(Name, new LogContentEntity()
+                {
+                    Level = "Error",
+                    Message = string.Format("[{0}]:[{1}] Has An Exceptions：", context.JobDetail.Key.Name, context.JobDetail.Key.Group) + jobException.Message + jobException.StackTrace
+                });
             }
         }
 
