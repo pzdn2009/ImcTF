@@ -15,6 +15,7 @@ using ImcFramework.Core.Quartz;
 using ImcFramework.Ioc;
 using ImcFramework.Core.MutilUserProgress;
 using ImcFramework.LogPool;
+using ImcFramework.Core.WcfService;
 
 namespace ImcFramework.Core
 {
@@ -25,13 +26,15 @@ namespace ImcFramework.Core
         private IMessageCallback callback;
         private ICommandInvoker commandInvoker;
         private ILoggerPool loggerPool;
+        private IServiceTypeReader serviceTypeReader;
 
-        public ClientConnectorReal(ICommandInvoker commandInvoker, IIocManager iocManager)
+        public ClientConnectorReal(ICommandInvoker commandInvoker, IServiceTypeReader serviceTypeReader, IIocManager iocManager)
         {
             OperationContext.Current.Channel.Closing += Channel_Closing;
             OperationContext.Current.Channel.Faulted += Channel_Faulted;
 
             this.commandInvoker = commandInvoker;
+            this.serviceTypeReader = serviceTypeReader;
             this.loggerPool = iocManager.Resolve<ILoggerPool>(WcfService.WcfServiceModule.MODUEL_NAME);
         }
 
@@ -207,7 +210,7 @@ namespace ImcFramework.Core
         {
             try
             {
-                return EServiceTypeReader.GetEServiceTypes();
+                return serviceTypeReader.GetEServiceTypes().ToList();
             }
             catch (Exception ex)
             {

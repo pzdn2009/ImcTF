@@ -4,24 +4,26 @@ using Quartz;
 using System;
 using System.Collections.Generic;
 
-namespace ImcFramework.Core
+namespace ImcFramework.Core.WcfService
 {
-    public class EServiceTypeReader
+    public class DefaultServiceTypeReader : IServiceTypeReader
     {
-        public static List<EServiceType> ServiceTypes { get; private set; }
+        private static List<EServiceType> serviceTypes;
 
-        /// <summary>
-        /// 反射读取集合列表
-        /// </summary>
-        /// <param name="fileName">文件名</param>
-        /// <returns>列表集合</returns>
-        public static List<EServiceType> GetEServiceTypes()
+        private IServiceTypeFilter serviceTypeFilter;
+        private ITypeFinder typeFinder;
+        public DefaultServiceTypeReader(IServiceTypeFilter serviceTypeFilter, ITypeFinder typeFinder)
         {
-            if (ServiceTypes == null)
-            {
-                ServiceTypes = new List<EServiceType>();
+            this.serviceTypeFilter = serviceTypeFilter;
+            this.typeFinder = typeFinder;
+        }
 
-                ITypeFinder typeFinder = new TypeFinder();
+        public IEnumerable<EServiceType> GetEServiceTypes()
+        {
+            if (serviceTypes == null)
+            {
+                serviceTypes = new List<EServiceType>();
+
                 var types = typeFinder.Find(zw => IsJobType(zw));
 
                 foreach (var type in types)
@@ -30,15 +32,20 @@ namespace ImcFramework.Core
                     if (property != null)
                     {
                         var val = property.GetValue(Activator.CreateInstance(type), null) as EServiceType;
+                        if (!serviceTypeFilter.Filter(val))
+                        {
+                            continue;
+                        }
+
                         if (val != null && val.ShowInClientMenu)
                         {
-                            ServiceTypes.Add(val);
+                            serviceTypes.Add(val);
                         }
                     }
                 }
             }
 
-            return ServiceTypes;
+            return serviceTypes;
         }
 
         public static bool IsJobType(Type type)
