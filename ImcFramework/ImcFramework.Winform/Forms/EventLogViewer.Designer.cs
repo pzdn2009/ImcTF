@@ -40,11 +40,13 @@
             // 
             // eventlogs
             // 
+            this.eventlogs.Dock = System.Windows.Forms.DockStyle.Fill;
             this.eventlogs.FormattingEnabled = true;
             this.eventlogs.ItemHeight = 15;
-            this.eventlogs.Location = new System.Drawing.Point(82, 109);
+            this.eventlogs.Location = new System.Drawing.Point(0, 0);
             this.eventlogs.Name = "eventlogs";
-            this.eventlogs.Size = new System.Drawing.Size(511, 244);
+            this.eventlogs.ScrollAlwaysVisible = true;
+            this.eventlogs.Size = new System.Drawing.Size(765, 448);
             this.eventlogs.TabIndex = 0;
             // 
             // EventLogViewer
