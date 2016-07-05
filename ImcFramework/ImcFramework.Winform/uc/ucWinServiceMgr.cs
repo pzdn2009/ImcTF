@@ -57,6 +57,7 @@ namespace ImcFramework.Winform
         {
             if (MessageBox.Show("确定要卸载服务吗？", "提示", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
+                
                 InstallOrUnInstallService(ServiceName, false);
                 GetLastestStatus();
             }
@@ -64,16 +65,15 @@ namespace ImcFramework.Winform
 
         private void InstallOrUnInstallService(string serviceName, bool install)
         {
-            var ofd = new OpenFileDialog();
-            if (ofd.ShowDialog() != System.Windows.Forms.DialogResult.OK)
-            {
-                return;
-            }
-
-            string exeFileName = ofd.FileName;
-
             if (install)
             {
+                var ofd = new OpenFileDialog();
+                if (ofd.ShowDialog() != System.Windows.Forms.DialogResult.OK)
+                {
+                    return;
+                }
+
+                string exeFileName = ofd.FileName;
                 WinServiceControl.InstallmyService(null, exeFileName);
                 if (WinServiceControl.Existed(serviceName))
                 {
@@ -87,7 +87,7 @@ namespace ImcFramework.Winform
             }
             else
             {
-                WinServiceControl.UnInstallmyService(exeFileName);
+                WinServiceControl.UnInstallByServiceName(ServiceName);
                 if (!WinServiceControl.Existed(serviceName))
                 {
                     labMsg.Text = "服务【" + serviceName + "】卸载成功！";

@@ -38,13 +38,21 @@ namespace ImcFramework.Winform
         /// 卸载Windows服务  
         /// </summary>  
         /// <param name="filepath">程序文件路径</param>  
-        public static void UnInstallmyService(string filepath)
+        public static void UnInstallByFilePath(string filepath)
         {
             var asmInstaller = new AssemblyInstaller();
             asmInstaller.UseNewContext = true;
             asmInstaller.Path = filepath;
             asmInstaller.Uninstall(null);
             asmInstaller.Dispose();
+        }
+
+        public static void UnInstallByServiceName(string serviceName)
+        {
+            string key = @"SYSTEM\CurrentControlSet\Services\" + serviceName;
+            string path = Registry.LocalMachine.OpenSubKey(key).GetValue("ImagePath").ToString();
+            path = path.Replace("\"", string.Empty);
+            UnInstallByFilePath(path);
         }
 
         /// <summary>  
