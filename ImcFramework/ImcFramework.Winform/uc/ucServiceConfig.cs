@@ -485,9 +485,9 @@ namespace ImcFramework.Winform
         {
             SendOrPostCallback callback = delegate (object state)
             {
-                MessageBox.Show("运行完成！");
                 this.taskProgressBar.Value = 0;
                 this.flowLayoutPanel1.Controls.Clear();
+                AutoCloseForm.Show("运行完成！");
             };
             uiSyncContext.Post(callback, null);
         }
