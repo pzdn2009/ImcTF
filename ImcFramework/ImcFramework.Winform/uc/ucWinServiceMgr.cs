@@ -258,6 +258,7 @@ namespace ImcFramework.Winform
             {
                 var val = cmbServiceList.SelectedItem as WinServiceConfig;
                 MyClients.SetCurrentBinding(val.Binding);
+                GetLastestStatus();
             }
         }
 

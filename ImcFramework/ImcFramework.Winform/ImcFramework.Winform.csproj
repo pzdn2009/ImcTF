@@ -61,6 +61,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\ServiceTypeTabPage.cs" />
+    <Compile Include="Common\ServiceTypeWcfClient.cs" />
     <Compile Include="Common\WsDualClient.cs" />
     <Compile Include="FormBase.cs">
       <SubType>Form</SubType>
