@@ -88,6 +88,11 @@ namespace ImcFramework.Winform.Common
             return ClientConnector.GetProgressSellerAccountTotal(serviceType, sellerAccount);
         }
 
+        public bool Login(string userName, string password)
+        {
+            return ClientConnector.Login(userName, password);
+        }
+
         public DuplexChannelFactory<IClientConnector> Factory { get; set; }
 
         public IClientConnector ClientConnector { get; set; }

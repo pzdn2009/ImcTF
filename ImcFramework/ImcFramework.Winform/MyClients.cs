@@ -61,12 +61,15 @@ namespace ImcFramework.Winform
         {
             lock (lockObject)
             {
-                //更新配置
-                m_CurrentBinding = binding;
+                if (binding != m_CurrentBinding)
+                {
+                    //更新配置
+                    m_CurrentBinding = binding;
 
-                OnBindingChanged?.Invoke(null, null);
+                    OnBindingChanged?.Invoke(null, null);
 
-                CloseTabPages(null);
+                    CloseTabPages(null);
+                }
             }
         }
 

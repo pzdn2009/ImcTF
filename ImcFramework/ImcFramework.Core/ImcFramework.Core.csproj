@@ -78,7 +78,12 @@
     <Compile Include="BuildInBusinessService\ImcTFSampleService.cs" />
     <Compile Include="Defaults.cs" />
     <Compile Include="Distribution\DistributionFacilityFactory.cs" />
+    <Compile Include="MutilUserProgress\IProgressInfoManager.cs" />
+    <Compile Include="MutilUserProgress\ServiceTypeProgressInfo.cs" />
+    <Compile Include="MutilUserProgress\UserProgressItem.cs" />
+    <Compile Include="WcfService\DefaultLogin.cs" />
     <Compile Include="WcfService\DefaultServiceTypeReader.cs" />
+    <Compile Include="WcfService\ILogin.cs" />
     <Compile Include="WcfService\IServiceTypeReader.cs" />
     <Compile Include="ModuleExtension\IModuleExtension.cs" />
     <Compile Include="ModuleExtension\ModuleConfiguration.cs" />
@@ -117,7 +122,7 @@
     <Compile Include="Quartz\IScheduleProvider.cs" />
     <Compile Include="Quartz\KeyCreator.cs" />
     <Compile Include="Quartz\StdQuartzModule.cs" />
-    <Compile Include="RunOnce.cs" />
+    <Compile Include="Quartz\RunOnce.cs" />
     <Compile Include="MutilUserProgress\DefaultMultiUserProgress.cs" />
     <Compile Include="MutilUserProgress\IMultiUserProgress.cs" />
     <Compile Include="ServiceManager.cs" />

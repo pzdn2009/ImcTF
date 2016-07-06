@@ -10,10 +10,10 @@ namespace ImcFramework.Core.SignalRExt
 
         public static void RegisterAll()
         {
-            foreach (var serviceType in EServiceTypeReader.GetEServiceTypes())
-            {
-                Resolve(serviceType);
-            }
+            //foreach (var serviceType in EServiceTypeReader.GetEServiceTypes())
+            //{
+            //    Resolve(serviceType);
+            //}
         }
 
         public static SignalRClient Resolve(EServiceType serviceType)

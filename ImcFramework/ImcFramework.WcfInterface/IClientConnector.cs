@@ -12,6 +12,9 @@ namespace ImcFramework.WcfInterface
     [ServiceContract(CallbackContract = typeof(IMessageCallback))]
     public interface IClientConnector
     {
+        [OperationContract]
+        bool Login(string userName, string password);
+
         /// <summary>
         /// 注册（登陆）
         /// </summary>

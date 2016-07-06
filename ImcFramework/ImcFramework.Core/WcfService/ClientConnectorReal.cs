@@ -27,14 +27,16 @@ namespace ImcFramework.Core
         private ICommandInvoker commandInvoker;
         private ILoggerPool loggerPool;
         private IServiceTypeReader serviceTypeReader;
+        private ILogin login;
 
-        public ClientConnectorReal(ICommandInvoker commandInvoker, IServiceTypeReader serviceTypeReader, IIocManager iocManager)
+        public ClientConnectorReal(ICommandInvoker commandInvoker, IServiceTypeReader serviceTypeReader, IIocManager iocManager,ILogin login)
         {
             OperationContext.Current.Channel.Closing += Channel_Closing;
             OperationContext.Current.Channel.Faulted += Channel_Faulted;
 
             this.commandInvoker = commandInvoker;
             this.serviceTypeReader = serviceTypeReader;
+            this.login = login;
             this.loggerPool = iocManager.Resolve<ILoggerPool>(WcfService.WcfServiceModule.MODUEL_NAME);
         }
 
@@ -218,6 +220,11 @@ namespace ImcFramework.Core
                 loggerPool.Log("", new LogContentEntity(fex.Message + fex.StackTrace));
                 throw fex;
             }
+        }
+
+        public bool Login(string userName, string password)
+        {
+            return login.Login(userName, password);
         }
     }
 }
