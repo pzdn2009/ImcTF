@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.Serialization;
-using System.Text;
 
 namespace ImcFramework.WcfInterface
 {
@@ -30,6 +27,12 @@ namespace ImcFramework.WcfInterface
         /// </summary>
         [DataMember]
         public ECommand Command { get; set; }
+        
+        /// <summary>
+        /// 参数
+        /// </summary>
+        [DataMember]
+        public RequestParameterList RequestParameterList { get; set; }
     }
 
     [DataContract]

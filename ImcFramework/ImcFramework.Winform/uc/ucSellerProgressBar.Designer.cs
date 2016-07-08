@@ -35,10 +35,10 @@
             // progressBarObject
             // 
             this.progressBarObject.Dock = System.Windows.Forms.DockStyle.Top;
-            this.progressBarObject.Location = new System.Drawing.Point(0, 12);
-            this.progressBarObject.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.progressBarObject.Location = new System.Drawing.Point(0, 15);
+            this.progressBarObject.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.progressBarObject.Name = "progressBarObject";
-            this.progressBarObject.Size = new System.Drawing.Size(161, 18);
+            this.progressBarObject.Size = new System.Drawing.Size(215, 22);
             this.progressBarObject.TabIndex = 0;
             // 
             // linkLabelKeyName
@@ -46,22 +46,21 @@
             this.linkLabelKeyName.AutoSize = true;
             this.linkLabelKeyName.Dock = System.Windows.Forms.DockStyle.Top;
             this.linkLabelKeyName.Location = new System.Drawing.Point(0, 0);
-            this.linkLabelKeyName.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.linkLabelKeyName.Name = "linkLabelKeyName";
-            this.linkLabelKeyName.Size = new System.Drawing.Size(113, 12);
+            this.linkLabelKeyName.Size = new System.Drawing.Size(142, 15);
             this.linkLabelKeyName.TabIndex = 1;
             this.linkLabelKeyName.TabStop = true;
             this.linkLabelKeyName.Text = "进度对象账号名称：";
             // 
             // ucSellerProgressBar
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.progressBarObject);
             this.Controls.Add(this.linkLabelKeyName);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "ucSellerProgressBar";
-            this.Size = new System.Drawing.Size(161, 34);
+            this.Size = new System.Drawing.Size(215, 42);
             this.ResumeLayout(false);
             this.PerformLayout();
 

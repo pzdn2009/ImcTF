@@ -82,8 +82,10 @@
     <Compile Include="MutilUserProgress\ServiceTypeProgressInfo.cs" />
     <Compile Include="MutilUserProgress\UserProgressItem.cs" />
     <Compile Include="WcfService\DefaultLogin.cs" />
+    <Compile Include="WcfService\DefaultRequestParameterProvider.cs" />
     <Compile Include="WcfService\DefaultServiceTypeReader.cs" />
     <Compile Include="WcfService\ILogin.cs" />
+    <Compile Include="WcfService\IRequestParameterProvider.cs" />
     <Compile Include="WcfService\IServiceTypeReader.cs" />
     <Compile Include="ModuleExtension\IModuleExtension.cs" />
     <Compile Include="ModuleExtension\ModuleConfiguration.cs" />

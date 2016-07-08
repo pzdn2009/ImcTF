@@ -28,8 +28,9 @@ namespace ImcFramework.Core
         private ILoggerPool loggerPool;
         private IServiceTypeReader serviceTypeReader;
         private ILogin login;
+        private IRequestParameterProvider requestParameterProvider;
 
-        public ClientConnectorReal(ICommandInvoker commandInvoker, IServiceTypeReader serviceTypeReader, IIocManager iocManager,ILogin login)
+        public ClientConnectorReal(ICommandInvoker commandInvoker, IServiceTypeReader serviceTypeReader, IIocManager iocManager,ILogin login, IRequestParameterProvider requestParameterProvider)
         {
             OperationContext.Current.Channel.Closing += Channel_Closing;
             OperationContext.Current.Channel.Faulted += Channel_Faulted;
@@ -37,6 +38,7 @@ namespace ImcFramework.Core
             this.commandInvoker = commandInvoker;
             this.serviceTypeReader = serviceTypeReader;
             this.login = login;
+            this.requestParameterProvider = requestParameterProvider;
             this.loggerPool = iocManager.Resolve<ILoggerPool>(WcfService.WcfServiceModule.MODUEL_NAME);
         }
 
@@ -225,6 +227,11 @@ namespace ImcFramework.Core
         public bool Login(string userName, string password)
         {
             return login.Login(userName, password);
+        }
+
+        public RequestParameterList GetRequestParameter(EServiceType serviceType)
+        {
+            return requestParameterProvider.GetRequestParameter(serviceType);
         }
     }
 }

@@ -91,5 +91,13 @@ namespace ImcFramework.WcfInterface
         /// <param name="sellerAccount"></param>
         [OperationContract]
         ProgressItem GetProgressSellerAccountTotal(EServiceType serviceType, string sellerAccount);
+        
+        /// <summary>
+        /// Get the Job Parameters about the serviceType
+        /// </summary>
+        /// <param name="serviceType"></param>
+        /// <returns></returns>
+        [OperationContract]
+        RequestParameterList GetRequestParameter(EServiceType serviceType);
     }
 }

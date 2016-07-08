@@ -48,6 +48,7 @@
     <Compile Include="IClientConnector.cs" />
     <Compile Include="IMessageCallback.cs" />
     <Compile Include="LogInfo.cs" />
+    <Compile Include="RequestParameter.cs" />
     <Compile Include="TransferMessage\MessageEntityBuilder.cs" />
     <Compile Include="TransferMessage\MessageEntity.cs" />
     <Compile Include="ProgressInfo.cs" />

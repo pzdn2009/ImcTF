@@ -2,11 +2,7 @@
 using ImcFramework.WcfInterface;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.ServiceModel;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace ImcFramework.Winform.Common
 {
@@ -91,6 +87,11 @@ namespace ImcFramework.Winform.Common
         public bool Login(string userName, string password)
         {
             return ClientConnector.Login(userName, password);
+        }
+
+        public RequestParameterList GetRequestParameter(EServiceType serviceType)
+        {
+            return ClientConnector.GetRequestParameter(serviceType);
         }
 
         public DuplexChannelFactory<IClientConnector> Factory { get; set; }

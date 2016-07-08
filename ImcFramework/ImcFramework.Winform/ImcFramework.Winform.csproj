@@ -110,6 +110,8 @@
     </Compile>
     <Compile Include="Common\MainConnectorCallback.cs" />
     <Compile Include="ThreadSafeVisit.cs" />
+    <Compile Include="uc\DefaultFlowLayoutParameter.cs" />
+    <Compile Include="uc\IFlowLayoutParameter.cs" />
     <Compile Include="Views\IView.cs" />
     <Compile Include="MyClients.cs" />
     <Compile Include="ProgressSynchronous.cs" />
