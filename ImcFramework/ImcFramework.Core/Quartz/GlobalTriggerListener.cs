@@ -1,4 +1,5 @@
-﻿using ImcFramework.Data;
+﻿using ImcFramework.Core.WcfService;
+using ImcFramework.Data;
 using ImcFramework.LogPool;
 using Quartz;
 using System.Linq;
@@ -9,11 +10,13 @@ namespace ImcFramework.Core.Quartz
     {
         private ILoggerPool loggerPool;
         private ICommandInvoker commandInvoker;
+        private IServiceTypeReader serviceTypeReader;
 
-        public GlobalTriggerListener(ILoggerPool loggerPool, ICommandInvoker commandInvoker)
+        public GlobalTriggerListener(ILoggerPool loggerPool, ICommandInvoker commandInvoker, IServiceTypeReader serviceTypeReader)
         {
             this.loggerPool = loggerPool;
             this.commandInvoker = commandInvoker;
+            this.serviceTypeReader = serviceTypeReader;
         }
 
         public string Name
@@ -48,7 +51,7 @@ namespace ImcFramework.Core.Quartz
             commandInvoker.Invoke<ExecuteResult>(new WcfInterface.FunctionSwitch()
             {
                 Command = WcfInterface.ECommand.RunImmediately,
-                ServiceType = EServiceTypeReader.ServiceTypes.FirstOrDefault(zw => zw.ServiceType == jobName)
+                ServiceType = serviceTypeReader.GetEServiceTypes().FirstOrDefault(zw => zw.ServiceType == jobName)
             });
         }
 

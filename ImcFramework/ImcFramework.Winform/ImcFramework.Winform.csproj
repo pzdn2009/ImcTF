@@ -61,7 +61,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\ServiceTypeTabPage.cs" />
+    <Compile Include="Common\ServiceTypeWcfClient.cs" />
+    <Compile Include="Common\UserInfo.cs" />
     <Compile Include="Common\WsDualClient.cs" />
+    <Compile Include="FormBase.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormBase.designer.cs">
+      <DependentUpon>FormBase.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\AutoCloseForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\AutoCloseForm.designer.cs">
+      <DependentUpon>AutoCloseForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\CronEditor.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -81,6 +96,12 @@
     <Compile Include="Forms\FrmEditSvcList.designer.cs">
       <DependentUpon>FrmEditSvcList.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\FrmLogin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FrmLogin.designer.cs">
+      <DependentUpon>FrmLogin.cs</DependentUpon>
+    </Compile>
     <Compile Include="FrmMain.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -89,6 +110,8 @@
     </Compile>
     <Compile Include="Common\MainConnectorCallback.cs" />
     <Compile Include="ThreadSafeVisit.cs" />
+    <Compile Include="uc\DefaultFlowLayoutParameter.cs" />
+    <Compile Include="uc\IFlowLayoutParameter.cs" />
     <Compile Include="Views\IView.cs" />
     <Compile Include="MyClients.cs" />
     <Compile Include="ProgressSynchronous.cs" />
@@ -121,6 +144,12 @@
     <Compile Include="WinformRunHelper.cs" />
     <Compile Include="WinServiceConfigReader.cs" />
     <Compile Include="WinServiceControl.cs" />
+    <EmbeddedResource Include="FormBase.resx">
+      <DependentUpon>FormBase.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\AutoCloseForm.resx">
+      <DependentUpon>AutoCloseForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\CronEditor.resx">
       <DependentUpon>CronEditor.cs</DependentUpon>
     </EmbeddedResource>
@@ -129,6 +158,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FrmEditSvcList.resx">
       <DependentUpon>FrmEditSvcList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FrmLogin.resx">
+      <DependentUpon>FrmLogin.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FrmMain.resx">
       <DependentUpon>FrmMain.cs</DependentUpon>

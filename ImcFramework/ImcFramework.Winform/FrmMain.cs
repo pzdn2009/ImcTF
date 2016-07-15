@@ -27,6 +27,13 @@ namespace ImcFramework.Winform
 
             this.notifyIconMain.Icon = this.Icon;
             uiSyncContext = SynchronizationContext.Current;
+            MyClients.OnBindingChanged += BindingChanged;
+        }
+
+        public void BindingChanged(object sender,EventArgs e)
+        {
+            NeedRefresh = true;
+            GetServiceList();
         }
 
         private void FrmMain_Load(object sender, EventArgs e)

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.ComponentModel;
-using System.Runtime.Serialization;
+﻿using System.Runtime.Serialization;
 namespace ImcFramework.WcfInterface
 {
     [DataContract]
@@ -25,8 +20,20 @@ namespace ImcFramework.WcfInterface
             ShowInClientMenu = showInClientMenu;
         }
 
+        public EServiceType(string serviceType, string serviceName, string groupName, bool showInClientMenu = true)
+        {
+            ServiceType = serviceType;
+            ServiceName = serviceName;
+            GroupName = groupName;
+
+            ShowInClientMenu = showInClientMenu;
+        }
+
         [DataMember]
         public string ServiceType { get; set; }
+
+        [DataMember]
+        public string GroupName { get; set; }
 
         [DataMember]
         public string ServiceName { get; set; }
@@ -40,6 +47,11 @@ namespace ImcFramework.WcfInterface
         public override string ToString()
         {
             return ServiceType;
+        }
+
+        public string GetFullString()
+        {
+            return ServiceType + "_" + GroupName + "_" + ServiceName;
         }
     }
 }

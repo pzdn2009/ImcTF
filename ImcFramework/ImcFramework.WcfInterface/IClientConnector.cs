@@ -12,6 +12,9 @@ namespace ImcFramework.WcfInterface
     [ServiceContract(CallbackContract = typeof(IMessageCallback))]
     public interface IClientConnector
     {
+        [OperationContract]
+        bool Login(string userName, string password);
+
         /// <summary>
         /// 注册（登陆）
         /// </summary>
@@ -88,5 +91,13 @@ namespace ImcFramework.WcfInterface
         /// <param name="sellerAccount"></param>
         [OperationContract]
         ProgressItem GetProgressSellerAccountTotal(EServiceType serviceType, string sellerAccount);
+        
+        /// <summary>
+        /// Get the Job Parameters about the serviceType
+        /// </summary>
+        /// <param name="serviceType"></param>
+        /// <returns></returns>
+        [OperationContract]
+        RequestParameterList GetRequestParameter(EServiceType serviceType);
     }
 }

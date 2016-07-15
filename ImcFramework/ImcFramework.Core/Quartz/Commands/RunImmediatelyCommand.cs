@@ -28,7 +28,7 @@ namespace ImcFramework.Core.Quartz.Commands
                 var job = Scheduler.GetJobDetail(serviceName.GetJobKey());
                 if (job != null)
                 {
-                    Scheduler.TriggerJob(job.Key);
+                    Scheduler.TriggerJob(job.Key, ConvertToJobDataMap(input.RequestParameterList));
                 }
 
                 RunOnce.Remove(serviceName);

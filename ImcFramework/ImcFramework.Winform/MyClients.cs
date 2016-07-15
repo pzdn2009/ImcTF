@@ -19,18 +19,20 @@ namespace ImcFramework.Winform
         /// <summary>
         /// 服务字典
         /// </summary>
-        private static Dictionary<EServiceType, WsDualClient> dictWcfClients = new Dictionary<EServiceType, WsDualClient>();
+        private static ServiceTypeWcfClient dictWcfClients = new ServiceTypeWcfClient();
 
         /// <summary>
         /// Tab字典
         /// </summary>
-        private static Dictionary<EServiceType, TabPage> dictTabPages = new Dictionary<EServiceType, TabPage>();
+        private static ServiceTypeTabPage dictTabPages = new ServiceTypeTabPage();
 
         public static TabControl TabControlMain
         {
             get;
             set;
         }
+
+        public static EventHandler OnBindingChanged;
 
         /// <summary>
         /// 当前主窗体 
@@ -59,16 +61,14 @@ namespace ImcFramework.Winform
         {
             lock (lockObject)
             {
-                if (m_CurrentBinding != binding)
+                if (binding != m_CurrentBinding)
                 {
                     //更新配置
                     m_CurrentBinding = binding;
 
+                    OnBindingChanged?.Invoke(null, null);
+
                     CloseTabPages(null);
-
-                    FrmMain.NeedRefresh = true;
-
-                    FrmMain.GetServiceList();
                 }
             }
         }
@@ -148,61 +148,14 @@ namespace ImcFramework.Winform
             {
                 var serviceType = dictTabPages.First(zw => zw.Value == tabPage).Key;
 
-                CloseWcfConnection(serviceType);
+                dictWcfClients.CloseWcfConnection(serviceType);
 
                 //清楚字典
                 dictTabPages.Remove(serviceType);
 
                 //界面删除
-                TabControlMain.TabPages.Remove(TabControlMain.SelectedTab);
+                TabControlMain.TabPages.Remove(tabPage);
             }
         }
-
-        #region 关闭Wcf连接
-
-        /// <summary>
-        /// 关闭所有的WCF连接
-        /// </summary>
-        private static void CloseWcfConnections()
-        {
-            var connections = dictWcfClients.ToList();
-            for (int i = connections.Count - 1; i >= 0; i--)
-            {
-                CloseWcfConnection(connections[i].Key);
-            }
-        }
-
-        /// <summary>
-        /// 关闭指定服务的WCF链接
-        /// </summary>
-        /// <param name="serviceType">服务类型</param>
-        /// <returns></returns>
-        private static bool CloseWcfConnection(EServiceType serviceType)
-        {
-            try
-            {
-                if (dictWcfClients.ContainsKey(serviceType))
-                {
-                    if (dictWcfClients[serviceType].Factory.State != System.ServiceModel.CommunicationState.Faulted)
-                        dictWcfClients[serviceType].ClientConnector.UnRegister(serviceType);
-                    return true;
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-            finally
-            {
-                if (dictWcfClients.ContainsKey(serviceType))
-                {
-                    dictWcfClients[serviceType].Factory.Abort();
-                    dictWcfClients.Remove(serviceType);
-                }
-            }
-            return false;
-        }
-
-        #endregion
     }
 }

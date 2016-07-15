@@ -42,5 +42,20 @@ namespace ImcFramework.Core.Quartz.Commands
 
             return EServiceStatus.Normal;
         }
+
+        public JobDataMap ConvertToJobDataMap(RequestParameterList requestParameterList)
+        {
+            var jobDataMap = new JobDataMap();
+
+            if (requestParameterList != null && requestParameterList.RequestParameters != null)
+            {
+                foreach (var item in requestParameterList.RequestParameters)
+                {
+                    jobDataMap.Add(item.Name, item.CommaValue);
+                }
+            }
+
+            return jobDataMap;
+        }
     }
 }
