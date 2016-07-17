@@ -140,5 +140,10 @@ namespace ImcFramework.Ioc
 
             builder2.Update(container);
         }
+
+        public object Resolve(Type type)
+        {
+            return container.Resolve(type);
+        }
     }
 }

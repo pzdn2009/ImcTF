@@ -39,16 +39,29 @@ namespace ImcFramework.Core.MqModuleExtension
 
             IocManager.RegisterGeneric(typeof(MsmqDistribution<>), typeof(IDistributionFacility<>));
 
-            m_MqDistributions.Add(IocManager.Resolve<IDistributionFacility<MessageEntity>>());
-            m_MqDistributions.Add(IocManager.Resolve<IDistributionFacility<ProgressInfoMessage>>());
+            var list = IocManager.Resolve<IEnumerable<ITransferMessage>>();
+            foreach (var item in list)
+            {
+                Type generic = typeof(IDistributionFacility<>);
+                generic = generic.MakeGenericType(new Type[] { item.GetType() });
+
+                var obj = IocManager.Resolve(generic);
+                m_MqDistributions.Add((IDistributionFacility<ITransferMessage>)obj);
+
+                LoggerPool.Log(Name, new LogContentEntity()
+                {
+                    Level = "Debug",
+                    Message = obj.GetType().ToString()
+                });
+            }
         }
 
         public override void Start()
         {
             base.Start();
 
-            var fisrt = m_MqDistributions.First();
-            var last = m_MqDistributions.Last();
+            var first = m_MqDistributions.Last();
+            var last = m_MqDistributions.First();
 
             Task.Factory.StartNew(() =>
             {
@@ -56,7 +69,23 @@ namespace ImcFramework.Core.MqModuleExtension
                 {
                     System.Threading.Thread.Sleep(1);
 
-                    var msgs = fisrt.ReadMessages() as IEnumerable<MessageEntity>;
+                    //foreach (var dis in m_MqDistributions)
+                    //{
+                    //    foreach (var msg in dis.ReadMessages())
+                    //    {
+                    //        if (msg is MessageEntity)
+                    //        {
+                    //            Observers.BroadCastMessage(msg as MessageEntity);
+                    //        }
+                    //        else
+                    //        {
+
+                    //        }
+                    //    }
+                    //}
+
+                    //return;
+                    var msgs = first.ReadMessages() as IEnumerable<MessageEntity>;
                     foreach (var msg in msgs.OrderBy(zw => zw.Timestamp))
                     {
                         Observers.BroadCastMessage(msg);
@@ -97,7 +126,7 @@ namespace ImcFramework.Core.MqModuleExtension
                             });
                         }
                     }
-                }
+                }//while
             });
         }
 

@@ -32,6 +32,7 @@ namespace ImcFramework.Core
 
         private static void Initialize()
         {
+            iocManager.RegisterAssemblyAsInterfaces(typeof(WcfInterface.TransferMessage.MessageEntity).Assembly);
             iocManager.RegisterAssemblyAsInterfaces(typeof(ILoggerPoolFactory).Assembly);
             iocManager.RegisterAssemblyAsInterfaces(typeof(ServiceManager).Assembly);
 

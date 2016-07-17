@@ -28,6 +28,8 @@ namespace ImcFramework.Ioc
 
         TType Resolve<TType>(string key = null);
 
+        object Resolve(Type type);
+
         bool IsRegister<TType>();
     }
 }
