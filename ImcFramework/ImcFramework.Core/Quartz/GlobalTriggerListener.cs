@@ -48,6 +48,8 @@ namespace ImcFramework.Core.Quartz
                 Message = string.Format("[{0}]:[{1}]Misfired", trigger.Key.Name, trigger.Key.Group)
             });
 
+            return;
+
             commandInvoker.Invoke<ExecuteResult>(new WcfInterface.FunctionSwitch()
             {
                 Command = WcfInterface.ECommand.RunImmediately,

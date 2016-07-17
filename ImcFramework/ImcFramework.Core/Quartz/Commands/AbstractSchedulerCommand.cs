@@ -28,16 +28,18 @@ namespace ImcFramework.Core.Quartz.Commands
 
         }
 
-        public EServiceStatus GetStatus(string serviceName)
+        public EServiceStatus GetStatus(EServiceType serviceType)
         {
-            var state = Scheduler.GetTriggerState(serviceName.GetTriggerKey());
-            if (state == TriggerState.Paused)
-                return EServiceStatus.Pause;  //暂停
+            var trigger = Scheduler.GetTrigger(serviceType);
+            if (Scheduler.GetTriggerState(trigger.Key) == TriggerState.Paused)
+            {
+                return EServiceStatus.Pause;
+            }
 
             foreach (var item in Scheduler.GetCurrentlyExecutingJobs())
             {
-                if (item.JobDetail.Key.Name == serviceName)
-                    return EServiceStatus.Running;  //运行
+                if (item.JobDetail.Key == serviceType.ToJobKey())
+                    return EServiceStatus.Running;
             }
 
             return EServiceStatus.Normal;

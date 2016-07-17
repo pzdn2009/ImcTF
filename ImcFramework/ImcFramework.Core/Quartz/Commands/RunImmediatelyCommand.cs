@@ -16,22 +16,22 @@ namespace ImcFramework.Core.Quartz.Commands
         {
             if (input.Command == ECommand.RunImmediately)
             {
-                var serviceName = input.ServiceType.ServiceType;
-                if (GetStatus(serviceName) == EServiceStatus.Running)
+                if (GetStatus(input.ServiceType) == EServiceStatus.Running)
                     return;
 
-                if (RunOnce.Exist(serviceName))
+                var serviceTypeKey = input.ServiceType.GetFullString();
+                if (RunOnce.Exist(serviceTypeKey))
                     return;
 
-                RunOnce.Add(serviceName);
+                RunOnce.Add(serviceTypeKey);
 
-                var job = Scheduler.GetJobDetail(serviceName.GetJobKey());
+                var job = Scheduler.GetJobDetail(input.ServiceType.ToJobKey());
                 if (job != null)
                 {
                     Scheduler.TriggerJob(job.Key, ConvertToJobDataMap(input.RequestParameterList));
                 }
 
-                RunOnce.Remove(serviceName);
+                RunOnce.Remove(serviceTypeKey);
             }
         }
     }

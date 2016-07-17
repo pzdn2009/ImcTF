@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ImcFramework.WcfInterface;
+using Quartz;
+using System;
 using System.IO;
 using System.Linq;
 using System.Xml.Linq;
@@ -17,7 +19,7 @@ namespace ImcFramework.Core.Quartz
         /// </summary>
         /// <param name="fileName">文件名</param>
         /// <returns>列表集合</returns>
-        public static string GetCronExpression(string triggerName)
+        public static string GetCronExpression(ITrigger trigger)
         {
             lock (lockObject)
             {
@@ -29,14 +31,18 @@ namespace ImcFramework.Core.Quartz
                 XDocument doc = XDocument.Load(fileName);
 
                 var cron = doc.Document.Descendants(ns + "cron")
-                .FirstOrDefault(zw => zw.Element(ns + "name").Value == triggerName)
+                .FirstOrDefault(zw =>
+                zw.Element(ns + "name").Value == trigger.Key.Name &&
+                zw.Element(ns + "group").Value == trigger.Key.Group &&
+                zw.Element(ns + "job-name").Value == trigger.JobKey.Name &&
+                zw.Element(ns + "job-group").Value == trigger.JobKey.Group)
                 .Element(ns + "cron-expression");
 
                 return cron.Value;
             }
         }
 
-        public static string SetCronExpression(string triggerName, string cronExpr)
+        public static string SetCronExpression(ITrigger trigger, string cronExpr)
         {
             lock (lockObject)
             {
@@ -48,7 +54,11 @@ namespace ImcFramework.Core.Quartz
                 XDocument doc = XDocument.Load(fileName);
 
                 var query = doc.Document.Descendants(ns + "cron")
-                .FirstOrDefault(zw => zw.Element(ns + "name").Value == triggerName)
+                .FirstOrDefault(zw =>
+                zw.Element(ns + "name").Value == trigger.Key.Name &&
+                zw.Element(ns + "group").Value == trigger.Key.Group &&
+                zw.Element(ns + "job-name").Value == trigger.JobKey.Name &&
+                zw.Element(ns + "job-group").Value == trigger.JobKey.Group)
                 .Element(ns + "cron-expression");
                 query.Value = cronExpr;
                 doc.Save(fileName);
