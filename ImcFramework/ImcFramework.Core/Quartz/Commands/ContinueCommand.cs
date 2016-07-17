@@ -21,7 +21,7 @@ namespace ImcFramework.Core.Quartz.Commands
             {
                 if (Scheduler != null && Scheduler.IsStarted)
                 {
-                    Scheduler.ResumeTrigger(input.ServiceType.ServiceType.GetTriggerKey());
+                    Scheduler.ResumeTrigger(Scheduler.GetTrigger(input.ServiceType).Key);
                 }
             }
         }

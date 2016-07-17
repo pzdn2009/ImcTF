@@ -1,30 +1,31 @@
-﻿using Quartz;
+﻿using ImcFramework.WcfInterface;
+using Quartz;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace ImcFramework.Core.Quartz
 {
     internal static class KeyCreator
     {
-        public static string TRIGGER = "Trigger";
         public static string MAIN_BUSINESS = "MainBusiness";
 
-        public static JobKey GetJobKey(this string serviceType)
+        public static JobKey ToJobKey(this EServiceType serviceType)
         {
-            return GetJobKey(serviceType, MAIN_BUSINESS);
+            return ToJobKey(serviceType.ServiceType, serviceType.GroupName);
         }
 
-        public static JobKey GetJobKey(this string serviceType, string group)
+        public static JobKey ToJobKey(string serviceType, string groupName)
         {
-            return new JobKey(serviceType, group);
+            if (string.IsNullOrEmpty(groupName))
+            {
+                groupName = MAIN_BUSINESS;
+            }
+            return new JobKey(serviceType, groupName);
         }
 
-        public static TriggerKey GetTriggerKey(this string serviceType)
+        public static ITrigger GetTrigger(this IScheduler scheduler, EServiceType serviceType)
         {
-            return GetTriggerKey(serviceType + TRIGGER, serviceType + TRIGGER);
-        }
-
-        public static TriggerKey GetTriggerKey(this string serviceType, string group)
-        {
-            return new TriggerKey(serviceType, serviceType);
+            return scheduler.GetTriggersOfJob(serviceType.ToJobKey()).FirstOrDefault();
         }
     }
 }

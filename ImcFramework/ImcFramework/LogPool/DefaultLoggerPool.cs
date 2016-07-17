@@ -42,15 +42,19 @@ namespace ImcFramework.LogPool
             var appenderName = GetAppenderName(user, FileAppenderHelper.ConvertLogLevel(logContentEntity.Level));
             Common.Logging.ILog log = Common.Logging.LogManager.GetLogger(appenderName);
 
-            if (log.IsDebugEnabled)
+            if (log.IsDebugEnabled && logContentEntity.Level == "Debug")
             {
                 log.Debug(logContentEntity.ToString());
             }
-            if (log.IsInfoEnabled)
+            if (log.IsInfoEnabled && logContentEntity.Level == "Info")
             {
                 log.Info(logContentEntity.ToString());
             }
-            if (log.IsErrorEnabled)
+            if (log.IsWarnEnabled && logContentEntity.Level == "Warn")
+            {
+                log.Warn(logContentEntity.ToString());
+            }
+            if (log.IsErrorEnabled && logContentEntity.Level == "Error")
             {
                 log.Error(logContentEntity.ToString());
             }

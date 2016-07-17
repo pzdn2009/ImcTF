@@ -20,12 +20,10 @@ namespace ImcFramework.Core.Quartz.Commands
         {
             if (input.Command == ECommand.Cancel)
             {
-                var serviceName = input.ServiceType.ServiceType;
-
-                if (GetStatus(serviceName) != EServiceStatus.Running)
+                if (GetStatus(input.ServiceType) != EServiceStatus.Running)
                     return;
 
-                var job = Scheduler.GetCurrentlyExecutingJobs().FirstOrDefault(zw => zw.JobDetail.Key.Name == serviceName);
+                var job = Scheduler.GetCurrentlyExecutingJobs().FirstOrDefault(zw => zw.JobDetail.Key == input.ServiceType.ToJobKey());
                 if (job == null)
                 {
                     return;

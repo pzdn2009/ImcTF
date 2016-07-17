@@ -22,23 +22,23 @@ namespace ImcFramework.Core.Quartz.Commands
             if (input.Command == ECommand.GetServiceInfo)
             {
                 var serviceInfo = new ServiceInfo();
-                var serviceName = input.ServiceType.ServiceType;
-                serviceInfo.EServiceStatus = GetStatus(serviceName);
+
+                serviceInfo.EServiceStatus = GetStatus(input.ServiceType);
                 serviceInfo.Enable = serviceInfo.EServiceStatus != EServiceStatus.Pause;
 
-                var trigger = Scheduler.GetTrigger(serviceName.GetTriggerKey());
+                var trigger = Scheduler.GetTrigger(input.ServiceType);
                 if (trigger != null)
                 {
                     var cronBuilder = trigger as ICronTrigger;
-                    serviceInfo.ScheduleInfo = JobCronExpressionConfig.GetCronExpression(serviceName + "Trigger");
+                    serviceInfo.ScheduleInfo = JobCronExpressionConfig.GetCronExpression(trigger);
                     var prev = trigger.GetPreviousFireTimeUtc();
-                    if(prev.HasValue)
+                    if (prev.HasValue)
                     {
                         serviceInfo.PrevFiredTime = prev.Value.LocalDateTime;
                     }
 
                     var next = trigger.GetNextFireTimeUtc();
-                    if(next.HasValue)
+                    if (next.HasValue)
                     {
                         serviceInfo.NextFiredTime = next.Value.LocalDateTime;
                     }

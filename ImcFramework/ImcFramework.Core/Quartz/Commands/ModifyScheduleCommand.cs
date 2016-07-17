@@ -20,21 +20,18 @@ namespace ImcFramework.Core.Quartz.Commands
         {
             if (input.Command == ECommand.ModifySchedule)
             {
-                var serviceName = input.ServiceType.ServiceType;
                 var cronExpresion = input.ScheduleFormat;
 
-                var triggerKey = serviceName.GetTriggerKey();
-                var triggerName = serviceName + "Trigger";
-                var trigger = Scheduler.GetTrigger(triggerKey);
+                var trigger = Scheduler.GetTrigger(input.ServiceType);
                 if (trigger != null)
                 {
                     var cronBuilder = trigger as ICronTrigger;
-                    JobCronExpressionConfig.SetCronExpression(triggerName, cronExpresion);
+                    JobCronExpressionConfig.SetCronExpression(trigger, cronExpresion);
                     cronBuilder.CronExpressionString = cronExpresion;
                     var newTrigger = cronBuilder.GetTriggerBuilder().Build();
-                    Scheduler.PauseTrigger(triggerKey);
-                    Scheduler.RescheduleJob(triggerKey, newTrigger);
-                    Scheduler.ResumeTrigger(triggerKey);
+                    Scheduler.PauseTrigger(trigger.Key);
+                    Scheduler.RescheduleJob(trigger.Key, newTrigger);
+                    Scheduler.ResumeTrigger(trigger.Key);
                 }
             }
         }

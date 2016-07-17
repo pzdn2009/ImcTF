@@ -19,10 +19,7 @@ namespace ImcFramework.Core.Quartz.Commands
         {
             if (input.Command == ECommand.Pause)
             {
-                var serviceName = input.ServiceType.ServiceType;
-
-                Scheduler.PauseTrigger(serviceName.GetTriggerKey());
-                bool yes = Scheduler.IsJobGroupPaused(serviceName + "Trigger");
+                Scheduler.PauseTrigger(Scheduler.GetTrigger(input.ServiceType).Key);
             }
         }
     }
