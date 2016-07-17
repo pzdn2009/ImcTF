@@ -15,13 +15,9 @@ namespace ImcFramework.Core.MqModuleExtension
 
         private IList<IDistributionFacility<ITransferMessage>> m_MqDistributions;
 
-        private IDistributionFacilityProvider distributionFacilityProvider;
-
-        public MqModule(IDistributionFacilityProvider distributionFacilityProvider)
+        public MqModule()
         {
             m_MqDistributions = new List<IDistributionFacility<ITransferMessage>>();
-
-            this.distributionFacilityProvider = distributionFacilityProvider;
         }
 
         public override string Name
@@ -41,8 +37,10 @@ namespace ImcFramework.Core.MqModuleExtension
         {
             base.Initialize();
 
-            m_MqDistributions.Add(distributionFacilityProvider.GetDistributionFacility<MessageEntity>());
-            m_MqDistributions.Add(distributionFacilityProvider.GetDistributionFacility<ProgressInfoMessage>());
+            IocManager.RegisterGeneric(typeof(MsmqDistribution<>), typeof(IDistributionFacility<>));
+
+            m_MqDistributions.Add(IocManager.Resolve<IDistributionFacility<MessageEntity>>());
+            m_MqDistributions.Add(IocManager.Resolve<IDistributionFacility<ProgressInfoMessage>>());
         }
 
         public override void Start()
@@ -92,7 +90,11 @@ namespace ImcFramework.Core.MqModuleExtension
                         }
                         catch (Exception ex)
                         {
-                            LogHelper.Error("我去，出大事了:" + ex.Message + ex.StackTrace);
+                            LoggerPool.Log(Name, new LogContentEntity()
+                            {
+                                Level = "Error",
+                                Message = "Oh,No!:" + ex.Message + ex.StackTrace
+                            });
                         }
                     }
                 }

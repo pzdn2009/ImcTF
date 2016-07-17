@@ -13,6 +13,9 @@ using ImcFramework.Core.WcfService;
 using Moq;
 using System.ServiceModel;
 using ImcFramework.LogPool;
+using ImcFramework.Core.Distribution;
+using ImcFramework.WcfInterface.TransferMessage;
+using ImcFramework.Core.MqModuleExtension;
 
 namespace ImcFramework.Core.Tests
 {
@@ -100,6 +103,17 @@ namespace ImcFramework.Core.Tests
             var wcf = ioc.Resolve<IClientConnector>();
 
             Assert.IsNotNull(wcf);
+        }
+
+        [TestMethod]
+        public void register_asm_can_resolve_IIDistributionFacility_T()
+        {
+            ioc.RegisterAssemblyAsInterfaces(asm);
+            ioc.RegisterGeneric(typeof(MsmqDistribution<>), typeof(IDistributionFacility<>));
+
+            var mq = ioc.Resolve<IDistributionFacility<MessageEntity>>();
+
+            Assert.IsNotNull(mq);
         }
     }
 }

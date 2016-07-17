@@ -131,5 +131,14 @@ namespace ImcFramework.Ioc
 
             builder2.Update(container);
         }
+
+        public void RegisterGeneric(Type type, Type target)
+        {
+            var builder2 = new ContainerBuilder();
+
+            builder2.RegisterGeneric(type).As(target);
+
+            builder2.Update(container);
+        }
     }
 }

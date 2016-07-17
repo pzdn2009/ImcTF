@@ -16,6 +16,8 @@ namespace ImcFramework.Ioc
 
         void RegisterAssembly<TType>(Assembly assembly);
 
+        void RegisterGeneric(Type type,Type target);
+
         void Register<TType, TImpl>(DependencyLifeStyle lifeStyle = DependencyLifeStyle.Singleton, bool coverExistingDefaults = true)
             where TType : class
             where TImpl : class, TType;
