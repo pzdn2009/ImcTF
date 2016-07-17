@@ -13,6 +13,9 @@ using ImcFramework.Core.WcfService;
 using Moq;
 using System.ServiceModel;
 using ImcFramework.LogPool;
+using ImcFramework.Core.Distribution;
+using ImcFramework.WcfInterface.TransferMessage;
+using ImcFramework.Core.MqModuleExtension;
 
 namespace ImcFramework.Core.Tests
 {
@@ -100,6 +103,71 @@ namespace ImcFramework.Core.Tests
             var wcf = ioc.Resolve<IClientConnector>();
 
             Assert.IsNotNull(wcf);
+        }
+
+        [TestMethod]
+        public void register_asm_can_resolve_IDistributionFacility_T()
+        {
+            ioc.RegisterAssemblyAsInterfaces(asm);
+            ioc.RegisterGeneric(typeof(MsmqDistribution<>), typeof(IDistributionFacility<>));
+
+            var mq = ioc.Resolve<IDistributionFacility<MessageEntity>>();
+
+            Assert.IsNotNull(mq);
+        }
+
+        [TestMethod]
+        public void register_asm_can_resolve_ITransferMessage()
+        {
+            ioc.RegisterAssemblyAsInterfaces(typeof(ITransferMessage).Assembly);
+            ioc.RegisterAssemblyAsInterfaces(asm);
+
+            var list = ioc.Resolve<IEnumerable<ITransferMessage>>();
+            foreach (var item in list)
+            {
+                Console.WriteLine(item.GetType().ToString());
+            }
+
+            Assert.AreEqual(2, list.Count());
+        }
+
+        //[TestMethod]
+        //public void register_asm_can_resolve_IMessageEntityCallback()
+        //{
+        //    ioc.RegisterAssemblyAsInterfaces(typeof(ITransferMessage).Assembly);
+        //    ioc.RegisterAssemblyAsInterfaces(asm);
+
+        //    var list = ioc.Resolve<IEnumerable<ITransferMessageCallback<MessageEntity>>>();
+        //    foreach (var item in list)
+        //    {
+        //        Console.WriteLine(item.GetType().ToString());
+        //    }
+
+        //    Assert.AreEqual(1, list.Count());
+        //}
+
+        [TestMethod]
+        public void register_asm_can_resolve_IIDistributionFacility_T()
+        {
+            List<IDistributionFacility<ITransferMessage>> m_MqDistributions = new List<IDistributionFacility<ITransferMessage>>();
+        ioc.RegisterAssemblyAsInterfaces(typeof(ITransferMessage).Assembly);
+            ioc.RegisterAssemblyAsInterfaces(asm);
+
+            ioc.RegisterGeneric(typeof(MsmqDistribution<>), typeof(IDistributionFacility<>));
+
+            var list = ioc.Resolve<IEnumerable<ITransferMessage>>();
+            foreach (var item in list)
+            {
+                Type generic = typeof(IDistributionFacility<>);
+                generic = generic.MakeGenericType(new Type[] { item.GetType() });
+
+                var obj = ioc.Resolve(generic);
+                m_MqDistributions.Add((IDistributionFacility<ITransferMessage>)obj);
+
+                Console.WriteLine(obj.GetType().ToString());
+            }
+
+            Assert.AreEqual(2, m_MqDistributions.Count());
         }
     }
 }
