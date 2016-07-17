@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ImcFramework.Reflection
 {
@@ -17,6 +16,36 @@ namespace ImcFramework.Reflection
 
         public List<Assembly> GetAllAssemblies()
         {
+            string path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+
+            foreach (string dll in Directory.GetFiles(path, "*.dll"))
+            {
+                try
+                {
+                    var loadedAssembly = Assembly.LoadFile(dll);
+                }
+                catch { }
+            }
+
+            return AppDomain.CurrentDomain.GetAssemblies().ToList();
+        }
+
+        public List<Assembly> GetAllBinDirectoryAssemblies()
+        {
+            string binPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "bin");
+
+            if (Directory.Exists(binPath))
+            {
+                foreach (string dll in Directory.GetFiles(binPath, "*.dll", SearchOption.AllDirectories))
+                {
+                    try
+                    {
+                        var loadedAssembly = Assembly.LoadFile(dll);
+                    }
+                    catch { }
+                }
+            }
+
             return AppDomain.CurrentDomain.GetAssemblies().ToList();
         }
     }

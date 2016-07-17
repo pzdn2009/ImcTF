@@ -3,6 +3,10 @@ using ImcFramework.Ioc;
 using System.Linq;
 using ImcFramework.Core.MutilUserProgress;
 using ImcFramework.LogPool;
+using ImcFramework.Reflection;
+using System;
+using System.Reflection;
+using System.IO;
 
 namespace ImcFramework.Core
 {
@@ -30,10 +34,23 @@ namespace ImcFramework.Core
 
         public static ServiceContext ServiceContext { get; set; }
 
-        private static void Initialize()
+        internal static void Initialize()
         {
             iocManager.RegisterAssemblyAsInterfaces(typeof(ILoggerPoolFactory).Assembly);
-            iocManager.RegisterAssemblyAsInterfaces(typeof(ServiceManager).Assembly);
+
+            var asms = iocManager.Resolve<IAssemblyFinder>();
+            foreach (var asm in asms.GetAllAssemblies())
+            {
+                iocManager.RegisterAssemblyAsInterfaces(asm);
+            }
+            foreach (var asm in asms.GetAllBinDirectoryAssemblies())
+            {
+                iocManager.RegisterAssemblyAsInterfaces(asm);
+            }
+
+            //load the Global Register & call the register method
+            var gl = iocManager.Resolve<IEnumerable<IGlobalRegister>>();
+            gl.ToList().ForEach(zw => { zw.Register(iocManager); });
 
             buildInModules = iocManager.Resolve<IEnumerable<IServiceModule>>();
             extensionModules = iocManager.Resolve<IEnumerable<IModuleExtension>>();
