@@ -16,9 +16,7 @@ namespace ImcFramework.Reflection
 
         public List<Assembly> GetAllAssemblies()
         {
-            string path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-
-            foreach (string dll in Directory.GetFiles(path, "*.dll"))
+            foreach (string dll in Directory.GetFiles(AppDomain.CurrentDomain.BaseDirectory, "*.dll"))
             {
                 try
                 {
