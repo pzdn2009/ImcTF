@@ -3,6 +3,10 @@ using ImcFramework.Ioc;
 using System.Linq;
 using ImcFramework.Core.MutilUserProgress;
 using ImcFramework.LogPool;
+using ImcFramework.Reflection;
+using System;
+using System.Reflection;
+using System.IO;
 
 namespace ImcFramework.Core
 {
@@ -30,11 +34,40 @@ namespace ImcFramework.Core
 
         public static ServiceContext ServiceContext { get; set; }
 
-        private static void Initialize()
+        internal static void Initialize()
         {
-            iocManager.RegisterAssemblyAsInterfaces(typeof(ILoggerPoolFactory).Assembly);
-            iocManager.RegisterAssemblyAsInterfaces(typeof(ServiceManager).Assembly);
+            var registeredAssmeblies = new HashSet<string>();
 
+            var imcAsm = typeof(ILoggerPoolFactory).Assembly;
+            iocManager.RegisterAssemblyAsInterfaces(imcAsm);
+            registeredAssmeblies.Add(imcAsm.FullName);
+
+            var assemblyFinder = iocManager.Resolve<IAssemblyFinder>();
+            foreach (var asm in assemblyFinder.GetAllAssemblies().Union(assemblyFinder.GetAllBinDirectoryAssemblies()))
+            {
+                try
+                {
+                    if (registeredAssmeblies.Contains(asm.FullName)) continue;
+
+                    var types = asm.GetExportedTypes();
+                    foreach (var type in types)
+                    {
+                        if (type.Namespace.Contains(ImcFrameworkConstants.Imc))
+                        {
+                            iocManager.RegisterAssemblyAsInterfaces(asm);
+                            registeredAssmeblies.Add(asm.FullName);
+                            break;
+                        }
+                    }
+                }
+                catch { }
+            }
+
+            //load the Global Register & call the register method
+            var gl = iocManager.Resolve<IEnumerable<IGlobalRegister>>();
+            gl.ToList().ForEach(zw => { zw.Register(iocManager); });
+
+            //resolve the modules
             buildInModules = iocManager.Resolve<IEnumerable<IServiceModule>>();
             extensionModules = iocManager.Resolve<IEnumerable<IModuleExtension>>();
         }

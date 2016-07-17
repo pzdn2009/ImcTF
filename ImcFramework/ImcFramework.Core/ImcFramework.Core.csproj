@@ -78,6 +78,7 @@
     <Compile Include="BuildInBusinessService\ImcTFSampleService.cs" />
     <Compile Include="Defaults.cs" />
     <Compile Include="Distribution\DistributionFacilityFactory.cs" />
+    <Compile Include="IGlobalRegister.cs" />
     <Compile Include="MutilUserProgress\IProgressInfoManager.cs" />
     <Compile Include="MutilUserProgress\ServiceTypeProgressInfo.cs" />
     <Compile Include="MutilUserProgress\UserProgressItem.cs" />
