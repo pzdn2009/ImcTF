@@ -1,5 +1,4 @@
 ﻿using ImcFramework.Core.Distribution;
-using ImcFramework.Infrastructure;
 using ImcFramework.LogPool;
 using ImcFramework.WcfInterface.TransferMessage;
 using System;
@@ -14,10 +13,12 @@ namespace ImcFramework.Core.MqModuleExtension
         public const string MODUEL_NAME = "MQ_MODULE";
 
         private IList<IDistributionFacility<ITransferMessage>> m_MqDistributions;
+        private List<ITransferMessageCallback> m_TransferMessageCallbacks;
 
         public MqModule()
         {
             m_MqDistributions = new List<IDistributionFacility<ITransferMessage>>();
+            m_TransferMessageCallbacks = new List<ITransferMessageCallback>();
         }
 
         public override string Name
@@ -39,20 +40,18 @@ namespace ImcFramework.Core.MqModuleExtension
 
             IocManager.RegisterGeneric(typeof(MsmqDistribution<>), typeof(IDistributionFacility<>));
 
-            var list = IocManager.Resolve<IEnumerable<ITransferMessage>>();
-            foreach (var item in list)
+            var transferMsgs = IocManager.Resolve<IEnumerable<ITransferMessage>>();
+            var resTransferMessageCallbacks = IocManager.Resolve<IEnumerable<ITransferMessageCallback>>();
+
+            foreach (var transferMsg in transferMsgs)
             {
-                Type generic = typeof(IDistributionFacility<>);
-                generic = generic.MakeGenericType(new Type[] { item.GetType() });
+                var distType = typeof(IDistributionFacility<>).MakeGenericType(new Type[] { transferMsg.GetType() });
+                var mqForTransferMessage = IocManager.Resolve(distType);
 
-                var obj = IocManager.Resolve(generic);
-                m_MqDistributions.Add((IDistributionFacility<ITransferMessage>)obj);
+                m_MqDistributions.Add((IDistributionFacility<ITransferMessage>)mqForTransferMessage);
 
-                LoggerPool.Log(Name, new LogContentEntity()
-                {
-                    Level = "Debug",
-                    Message = obj.GetType().ToString()
-                });
+                var callback = resTransferMessageCallbacks.FirstOrDefault(zw => zw.TranferMessageType == transferMsg.GetType());
+                m_TransferMessageCallbacks.Add(callback);
             }
         }
 
@@ -69,61 +68,22 @@ namespace ImcFramework.Core.MqModuleExtension
                 {
                     System.Threading.Thread.Sleep(1);
 
-                    //foreach (var dis in m_MqDistributions)
-                    //{
-                    //    foreach (var msg in dis.ReadMessages())
-                    //    {
-                    //        if (msg is MessageEntity)
-                    //        {
-                    //            Observers.BroadCastMessage(msg as MessageEntity);
-                    //        }
-                    //        else
-                    //        {
-
-                    //        }
-                    //    }
-                    //}
-
-                    //return;
-                    var msgs = first.ReadMessages() as IEnumerable<MessageEntity>;
-                    foreach (var msg in msgs.OrderBy(zw => zw.Timestamp))
+                    for (int i = 0; i < m_MqDistributions.Count; i++)
                     {
-                        Observers.BroadCastMessage(msg);
-                    }
-
-                    var msgs2 = last.ReadMessages() as IEnumerable<ProgressInfoMessage>;
-                    foreach (var msg in msgs2)
-                    {
-                        try
+                        foreach (var msg in m_MqDistributions[i].ReadMessages())
                         {
-                            switch (msg.CallbackMethodName)
+                            try
                             {
-                                case "SendTaskProgressTotal":
-                                    Observers.SendTaskProgressTotal(msg.ServiceType, msg.Total, msg.TotalType);
-                                    break;
-                                case "SendTaskProgressItemTotal":
-                                    Observers.SendTaskProgressItemTotal(msg.ServiceType, msg.User, msg.Total);
-                                    break;
-                                case "SendTaskProgressIncrease":
-                                    Observers.SendTaskProgressIncrease(msg.ServiceType, msg.User, msg.Value);
-                                    break;
-                                case "ForceFinish":
-                                    Observers.SendTaskProgressForceFinish(msg.ServiceType, msg.User);
-                                    break;
-                                case "FinishAll":
-                                    Observers.SendTaskProgressFinishAll(msg.ServiceType);
-                                    break;
-                                default:
-                                    break;
+                                m_TransferMessageCallbacks[i]?.Call(msg);
                             }
-                        }
-                        catch (Exception ex)
-                        {
-                            LoggerPool.Log(Name, new LogContentEntity()
+                            catch (Exception ex)
                             {
-                                Level = "Error",
-                                Message = "Oh,No!:" + ex.Message + ex.StackTrace
-                            });
+                                LoggerPool.Log(Name, new LogContentEntity()
+                                {
+                                    Level = "Error",
+                                    Message = ex.Message + ex.StackTrace
+                                });
+                            }
                         }
                     }
                 }//while
