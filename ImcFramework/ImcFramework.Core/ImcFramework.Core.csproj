@@ -75,7 +75,6 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BuildInBusinessService\ImcTFSampleService.cs" />
     <Compile Include="Defaults.cs" />
     <Compile Include="Distribution\DistributionFacilityFactory.cs" />
     <Compile Include="IGlobalRegister.cs" />
