@@ -34,6 +34,10 @@
             this.labServiceStatus = new System.Windows.Forms.Label();
             this.txtScheduleInfo = new System.Windows.Forms.TextBox();
             this.grpServiceName = new System.Windows.Forms.GroupBox();
+            this.labNextFiredTime = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.labPrevFiredTime = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             this.labRefreshTip = new System.Windows.Forms.Label();
             this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.chkAutoRefresh = new System.Windows.Forms.CheckBox();
@@ -53,15 +57,13 @@
             this.taskProgressBar = new System.Windows.Forms.ToolStripProgressBar();
             this.taskProgressRate = new System.Windows.Forms.ToolStripStatusLabel();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.ucLog1 = new ImcFramework.Winform.ucLog();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.rtxContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.clearToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.label1 = new System.Windows.Forms.Label();
-            this.labPrevFiredTime = new System.Windows.Forms.Label();
-            this.labNextFiredTime = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
+            this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
+            this.label4 = new System.Windows.Forms.Label();
+            this.ucLog1 = new ImcFramework.Winform.ucLog();
             this.grpServiceName.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.groupBox2.SuspendLayout();
@@ -71,6 +73,7 @@
             this.tabPage2.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
             this.rtxContextMenuStrip.SuspendLayout();
+            this.flowLayoutPanel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // label2
@@ -133,6 +136,42 @@
             this.grpServiceName.TabIndex = 7;
             this.grpServiceName.TabStop = false;
             this.grpServiceName.Text = "服务名";
+            // 
+            // labNextFiredTime
+            // 
+            this.labNextFiredTime.AutoSize = true;
+            this.labNextFiredTime.Location = new System.Drawing.Point(629, 113);
+            this.labNextFiredTime.Name = "labNextFiredTime";
+            this.labNextFiredTime.Size = new System.Drawing.Size(113, 15);
+            this.labNextFiredTime.TabIndex = 14;
+            this.labNextFiredTime.Text = "{下次执行时间}";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(504, 113);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(112, 15);
+            this.label6.TabIndex = 13;
+            this.label6.Text = "下次执行时间：";
+            // 
+            // labPrevFiredTime
+            // 
+            this.labPrevFiredTime.AutoSize = true;
+            this.labPrevFiredTime.Location = new System.Drawing.Point(165, 113);
+            this.labPrevFiredTime.Name = "labPrevFiredTime";
+            this.labPrevFiredTime.Size = new System.Drawing.Size(113, 15);
+            this.labPrevFiredTime.TabIndex = 12;
+            this.labPrevFiredTime.Text = "{上次执行时间}";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(40, 113);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(112, 15);
+            this.label1.TabIndex = 11;
+            this.label1.Text = "上次执行时间：";
             // 
             // labRefreshTip
             // 
@@ -211,7 +250,7 @@
             this.groupBox2.Controls.Add(this.btnContinue);
             this.groupBox2.Controls.Add(this.btnPause);
             this.groupBox2.Dock = System.Windows.Forms.DockStyle.Top;
-            this.groupBox2.Location = new System.Drawing.Point(0, 149);
+            this.groupBox2.Location = new System.Drawing.Point(0, 164);
             this.groupBox2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
@@ -280,11 +319,11 @@
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabControl1.Location = new System.Drawing.Point(0, 223);
+            this.tabControl1.Location = new System.Drawing.Point(0, 238);
             this.tabControl1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(885, 366);
+            this.tabControl1.Size = new System.Drawing.Size(885, 351);
             this.tabControl1.TabIndex = 9;
             // 
             // tabPage1
@@ -295,7 +334,7 @@
             this.tabPage1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.tabPage1.Size = new System.Drawing.Size(877, 337);
+            this.tabPage1.Size = new System.Drawing.Size(877, 322);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "当前日志";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -306,7 +345,7 @@
             this.rtxRealTimeLog.Location = new System.Drawing.Point(3, 2);
             this.rtxRealTimeLog.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.rtxRealTimeLog.Name = "rtxRealTimeLog";
-            this.rtxRealTimeLog.Size = new System.Drawing.Size(871, 303);
+            this.rtxRealTimeLog.Size = new System.Drawing.Size(871, 288);
             this.rtxRealTimeLog.TabIndex = 1;
             this.rtxRealTimeLog.Text = "";
             this.rtxRealTimeLog.ZoomFactor = 1.101F;
@@ -318,7 +357,7 @@
             this.toolStripStatusLabel1,
             this.taskProgressBar,
             this.taskProgressRate});
-            this.statusStrip1.Location = new System.Drawing.Point(3, 305);
+            this.statusStrip1.Location = new System.Drawing.Point(3, 290);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Padding = new System.Windows.Forms.Padding(1, 0, 13, 0);
             this.statusStrip1.Size = new System.Drawing.Size(871, 30);
@@ -349,26 +388,17 @@
             this.tabPage2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.tabPage2.Size = new System.Drawing.Size(877, 366);
+            this.tabPage2.Size = new System.Drawing.Size(877, 322);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "历史日志";
             this.tabPage2.UseVisualStyleBackColor = true;
-            // 
-            // ucLog1
-            // 
-            this.ucLog1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ucLog1.Location = new System.Drawing.Point(3, 2);
-            this.ucLog1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.ucLog1.Name = "ucLog1";
-            this.ucLog1.Size = new System.Drawing.Size(871, 362);
-            this.ucLog1.TabIndex = 4;
             // 
             // flowLayoutPanel1
             // 
             this.flowLayoutPanel1.AutoSize = true;
             this.flowLayoutPanel1.Controls.Add(this.checkBox1);
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 200);
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 215);
             this.flowLayoutPanel1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             this.flowLayoutPanel1.Size = new System.Drawing.Size(885, 23);
@@ -400,41 +430,34 @@
             this.clearToolStripMenuItem.Text = "Clear";
             this.clearToolStripMenuItem.Click += new System.EventHandler(this.clearToolStripMenuItem_Click);
             // 
-            // label1
+            // flowLayoutPanel2
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(40, 113);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(112, 15);
-            this.label1.TabIndex = 11;
-            this.label1.Text = "上次执行时间：";
+            this.flowLayoutPanel2.AutoSize = true;
+            this.flowLayoutPanel2.BackColor = System.Drawing.SystemColors.ActiveBorder;
+            this.flowLayoutPanel2.Controls.Add(this.label4);
+            this.flowLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Top;
+            this.flowLayoutPanel2.Location = new System.Drawing.Point(0, 149);
+            this.flowLayoutPanel2.Name = "flowLayoutPanel2";
+            this.flowLayoutPanel2.Size = new System.Drawing.Size(885, 15);
+            this.flowLayoutPanel2.TabIndex = 11;
             // 
-            // labPrevFiredTime
+            // label4
             // 
-            this.labPrevFiredTime.AutoSize = true;
-            this.labPrevFiredTime.Location = new System.Drawing.Point(165, 113);
-            this.labPrevFiredTime.Name = "labPrevFiredTime";
-            this.labPrevFiredTime.Size = new System.Drawing.Size(113, 15);
-            this.labPrevFiredTime.TabIndex = 12;
-            this.labPrevFiredTime.Text = "{上次执行时间}";
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(3, 0);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(87, 15);
+            this.label4.TabIndex = 2;
+            this.label4.Text = "Parameters";
             // 
-            // labNextFiredTime
+            // ucLog1
             // 
-            this.labNextFiredTime.AutoSize = true;
-            this.labNextFiredTime.Location = new System.Drawing.Point(629, 113);
-            this.labNextFiredTime.Name = "labNextFiredTime";
-            this.labNextFiredTime.Size = new System.Drawing.Size(113, 15);
-            this.labNextFiredTime.TabIndex = 14;
-            this.labNextFiredTime.Text = "{下次执行时间}";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(504, 113);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(112, 15);
-            this.label6.TabIndex = 13;
-            this.label6.Text = "下次执行时间：";
+            this.ucLog1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ucLog1.Location = new System.Drawing.Point(3, 2);
+            this.ucLog1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.ucLog1.Name = "ucLog1";
+            this.ucLog1.Size = new System.Drawing.Size(871, 318);
+            this.ucLog1.TabIndex = 4;
             // 
             // ucServiceConfig
             // 
@@ -444,6 +467,7 @@
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.flowLayoutPanel1);
             this.Controls.Add(this.groupBox2);
+            this.Controls.Add(this.flowLayoutPanel2);
             this.Controls.Add(this.grpServiceName);
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "ucServiceConfig";
@@ -462,6 +486,8 @@
             this.flowLayoutPanel1.ResumeLayout(false);
             this.flowLayoutPanel1.PerformLayout();
             this.rtxContextMenuStrip.ResumeLayout(false);
+            this.flowLayoutPanel2.ResumeLayout(false);
+            this.flowLayoutPanel2.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -502,5 +528,7 @@
         private System.Windows.Forms.Label labPrevFiredTime;
         private System.Windows.Forms.Label labNextFiredTime;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel2;
+        private System.Windows.Forms.Label label4;
     }
 }
