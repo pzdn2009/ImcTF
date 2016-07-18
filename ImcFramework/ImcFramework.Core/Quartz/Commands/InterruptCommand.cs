@@ -24,13 +24,13 @@ namespace ImcFramework.Core.Quartz.Commands
                 if (GetStatus(input.ServiceType) != EServiceStatus.Running)
                     return;
 
-                var job = Scheduler.GetCurrentlyExecutingJobs().FirstOrDefault(zw => zw.JobDetail.Key == input.ServiceType.ToJobKey());
+                var job = Scheduler.GetCurrentlyExecutingJobs().FirstOrDefault(zw => zw.JobDetail.Key.Equals(input.ServiceType.ToJobKey()));
                 if (job == null)
                 {
                     return;
                 }
 
-                if(Defaults.IsIsolatedJob)
+                if (Defaults.IsIsolatedJob)
                 {
                     var interrupt = job.JobInstance as IsolatedJob;
                     interrupt?.Interrupt();
