@@ -68,28 +68,6 @@ namespace ImcFramework.Core
             }
         }
 
-        public static void BroadCastMessage(MessageEntity messageEntity)
-        {
-            #region 记录日志
-
-            var logger = LoggerPoolFactory.GetLoggerPool(messageEntity.ServiceType.ServiceType);
-
-            logger.Log(messageEntity.User, new LogContentEntity()
-            {
-                Class = messageEntity.ClassName,
-                Method = messageEntity.MethodName,
-                Message = messageEntity.MsgContent,
-                Level = messageEntity.LogLevel
-            });
-
-            #endregion
-
-            CommonCallbackAction(messageEntity.ServiceType, (clientCallback) =>
-            {
-                clientCallback.Notify(messageEntity);
-            });
-        }
-
         #region 销售账号任务通知
 
         public static void SendTaskProgressTotal(EServiceType serviceType, int total, TotalType totalType)
@@ -167,7 +145,7 @@ namespace ImcFramework.Core
         /// </summary>
         /// <param name="serviceType"></param>
         /// <param name="action"></param>
-        private static void CommonCallbackAction(EServiceType serviceType, Action<IMessageCallback> action)
+        public static void CommonCallbackAction(EServiceType serviceType, Action<IMessageCallback> action)
         {
             CheckCallbackChannels();
 
