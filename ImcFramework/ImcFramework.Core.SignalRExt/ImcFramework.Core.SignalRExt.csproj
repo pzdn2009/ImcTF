@@ -57,6 +57,7 @@
     <Compile Include="ISignalRClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SignalRClientBase.cs" />
+    <Compile Include="SignalRClientConfigurationExtensions.cs" />
     <Compile Include="SignalRClientModule.cs" />
   </ItemGroup>
   <ItemGroup>
