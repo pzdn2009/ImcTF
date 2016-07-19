@@ -4,18 +4,18 @@ namespace ImcFramework.Core.MutilUserProgress
 {
     public interface IProgressInfoManager
     {
-        void SetTotal(string serviceType, int total, TotalType totalType);
+        void SetTotal(EServiceType serviceType, int total, TotalType totalType);
 
-        void Clear(string serviceType);
+        void Clear(EServiceType serviceType);
 
-        ProgressItem GetSellerAccountProgressInfo(EServiceType serviceType, string user);
+        ProgressItem GetUserProgressInfo(EServiceType serviceType, string user);
 
         ProgressSummary GetTotal(EServiceType serviceType);
 
-        void SetItemTotal(string serviceType, string user, int total);
+        void SetItemTotal(EServiceType serviceType, string user, int total);
 
-        void SetItemValue(string serviceType, string user, int value, bool accumulate = true);
+        void SetItemValue(EServiceType serviceType, string user, int value, bool accumulate = true);
 
-        void SetItemValueFinish(string serviceType, string user);
+        void SetItemValueFinish(EServiceType serviceType, string user);
     }
 }

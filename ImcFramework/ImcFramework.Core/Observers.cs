@@ -75,7 +75,7 @@ namespace ImcFramework.Core
             lock (lockObject)
             {
                 ////设置总数
-                ProgressInfoManager.Instance.SetTotal(serviceType.ServiceType, total, totalType);
+                ProgressInfoManager.Instance.SetTotal(serviceType, total, totalType);
 
                 CommonCallbackAction(serviceType, (clientCallback) =>
                 {
@@ -88,7 +88,7 @@ namespace ImcFramework.Core
         {
             lock (lockObject)
             {
-                ProgressInfoManager.Instance.SetItemTotal(serviceType.ServiceType, sellerAccount, total);
+                ProgressInfoManager.Instance.SetItemTotal(serviceType, sellerAccount, total);
 
                 CommonCallbackAction(serviceType, (clientCallback) =>
                 {
@@ -101,9 +101,9 @@ namespace ImcFramework.Core
         {
             lock (lockObject)
             {
-                ProgressInfoManager.Instance.SetItemValue(serviceType.ServiceType, sellerAccount, value);
+                ProgressInfoManager.Instance.SetItemValue(serviceType, sellerAccount, value);
 
-                var progressInfoItem = ProgressInfoManager.Instance.GetSellerAccountProgressInfo(serviceType, sellerAccount);
+                var progressInfoItem = ProgressInfoManager.Instance.GetUserProgressInfo(serviceType, sellerAccount);
 
                 CommonCallbackAction(serviceType, (clientCallback) =>
                 {
@@ -116,7 +116,7 @@ namespace ImcFramework.Core
         {
             lock (lockObject)
             {
-                ProgressInfoManager.Instance.SetItemValueFinish(serviceType.ServiceType, sellerAccount);
+                ProgressInfoManager.Instance.SetItemValueFinish(serviceType, sellerAccount);
 
                 CommonCallbackAction(serviceType, (clientCallback) =>
                 {
@@ -129,7 +129,7 @@ namespace ImcFramework.Core
         {
             lock (lockObject)
             {
-                ProgressInfoManager.Instance.Clear(serviceType.ServiceType);
+                ProgressInfoManager.Instance.Clear(serviceType);
 
                 CommonCallbackAction(serviceType, (clientCallback) =>
                 {
