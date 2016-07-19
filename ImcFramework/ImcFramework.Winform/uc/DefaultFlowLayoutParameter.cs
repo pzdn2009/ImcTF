@@ -1,5 +1,6 @@
 ﻿using ImcFramework.WcfInterface;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -37,6 +38,36 @@ namespace ImcFramework.Winform.uc
             }
 
             return null;
+        }
+
+        public RequestParameter GetRequestParameter(FlowLayoutPanel flp)
+        {
+            var requestParameter = new RequestParameter() { Name = flp.Name };
+
+            var list = new List<string>();
+            foreach (var chk in flp.Controls.OfType<CheckBox>())
+            {
+                if (chk.Checked && chk.Name != "All")
+                {
+                    list.Add(chk.Name);
+                }
+            }
+
+            requestParameter.CommaValue = string.Join(",", list);
+
+            return requestParameter;
+        }
+
+        public RequestParameterList GetRequestParameters(IEnumerable<FlowLayoutPanel> flps)
+        {
+            var list = new List<RequestParameter>();
+            foreach (var flp in flps)
+            {
+                list.Add(GetRequestParameter(flp));
+            }
+
+            var result = new RequestParameterList() { RequestParameters = list };
+            return result;
         }
 
         private void Chk_CheckedChanged(object sender, EventArgs e)

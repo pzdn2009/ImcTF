@@ -84,6 +84,7 @@
     <Compile Include="MutilUserProgress\IProgressInfoManager.cs" />
     <Compile Include="MutilUserProgress\ServiceTypeProgressInfo.cs" />
     <Compile Include="MutilUserProgress\UserProgressItem.cs" />
+    <Compile Include="Quartz\ResolveParameters.cs" />
     <Compile Include="WcfService\DefaultLogin.cs" />
     <Compile Include="WcfService\DefaultRequestParameterProvider.cs" />
     <Compile Include="WcfService\DefaultServiceTypeReader.cs" />

@@ -1,5 +1,6 @@
 ﻿using Common.Logging;
 using ImcFramework.Core;
+using ImcFramework.Core.Quartz;
 using ImcFramework.WcfInterface;
 using Quartz;
 using System.Threading;
@@ -20,7 +21,11 @@ namespace MyProjectCore
         {
             NotifyAndLog("开始！", LogLevel.Info);
 
-            Thread.Sleep(2000);
+            var p = context.GetParameter<string>("Site");
+            NotifyAndLog("Site：" + p, LogLevel.Info);
+
+            var p2 = context.GetParameters<string>("SellerAccount");
+            NotifyAndLog("SellerAccount：" + p, LogLevel.Info);
 
             NotifyAndLog("结束！", LogLevel.Info);
 

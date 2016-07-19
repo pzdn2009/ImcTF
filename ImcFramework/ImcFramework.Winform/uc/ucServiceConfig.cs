@@ -63,7 +63,7 @@ namespace ImcFramework.Winform
 
             this.ucLog1.GetLogDetailClick += ucLog1_GetLogDetailClick;
 
-            
+
 
             progressSynchronous = ProgressSynchronous.Create();
         }
@@ -290,20 +290,13 @@ namespace ImcFramework.Winform
             {
                 EnsureClient();
 
-                foreach (var item in flowLayoutPanel2.Controls.OfType<CheckBox>())
-                {
-                    if (item.Checked && item.Name != "All")
-                    {
-
-                    }
-                }
+                var requestParameterList = flowLayoutParameter.GetRequestParameters(flowLayoutPanel2.Controls.OfType<FlowLayoutPanel>());
 
                 client.RequestSwitch(new FunctionSwitch()
                 {
                     ServiceType = serviceType,
                     Command = ECommand.RunImmediately,
-                    ScheduleFormat = "",
-                    RequestParameterList = new RequestParameterList()
+                    RequestParameterList = requestParameterList
                 });
             }
             catch (FaultException fex)

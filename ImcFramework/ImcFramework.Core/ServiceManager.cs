@@ -52,7 +52,7 @@ namespace ImcFramework.Core
                     var types = asm.GetExportedTypes();
                     foreach (var type in types)
                     {
-                        if (type.Namespace.Contains(ImcFrameworkConstants.Imc))
+                        if (type.Namespace.StartsWith(ImcFrameworkConstants.ImcFramework))
                         {
                             iocManager.RegisterAssemblyAsInterfaces(asm);
                             registeredAssmeblies.Add(asm.FullName);
