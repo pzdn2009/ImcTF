@@ -1,19 +1,16 @@
-﻿using Common.Logging;
-using ImcFramework.Core.Distribution;
-using ImcFramework.Core.MutilUserProgress;
+﻿using ImcFramework.Core.MutilUserProgress;
 using ImcFramework.LogPool;
 using ImcFramework.WcfInterface;
 using ImcFramework.WcfInterface.TransferMessage;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.ServiceModel;
 
 namespace ImcFramework.Core
 {
     public class Client
     {
-        public string ServiceType { get; set; }
+        public EServiceType ServiceType { get; set; }
         public List<IMessageCallback> Callbacks { get; set; }
     }
 
@@ -34,7 +31,7 @@ namespace ImcFramework.Core
         {
             lock (lockObject)
             {
-                var client = clientList.Find(zw => zw.ServiceType == serviceType.ServiceType);
+                var client = clientList.Find(zw => zw.ServiceType.Equals(serviceType));
                 if (client != null)
                 {
                     return client.Callbacks.Contains(callback);
@@ -47,14 +44,14 @@ namespace ImcFramework.Core
         {
             lock (lockObject)
             {
-                var tmp = clientList.Find(zw => zw.ServiceType == serviceType.ServiceType);
+                var tmp = clientList.Find(zw => zw.ServiceType.Equals(serviceType));
                 if (tmp != null)
                 {
                     tmp.Callbacks.Add(callback);
                 }
                 else
                 {
-                    clientList.Add(new Client() { ServiceType = serviceType.ServiceType, Callbacks = new List<IMessageCallback>() { callback } });
+                    clientList.Add(new Client() { ServiceType = serviceType, Callbacks = new List<IMessageCallback>() { callback } });
                 }
             }
         }
@@ -65,7 +62,7 @@ namespace ImcFramework.Core
             {
                 lock (lockObject)
                 {
-                    var tmp = clientList.Find(zw => zw.ServiceType == serviceType.ServiceType);
+                    var tmp = clientList.Find(zw => zw.ServiceType.Equals(serviceType));
                     tmp.Callbacks.Remove(callback);
                 }
             }
@@ -174,7 +171,7 @@ namespace ImcFramework.Core
         {
             CheckCallbackChannels();
 
-            var client = clientList.Find(zw => zw.ServiceType == serviceType.ServiceType);
+            var client = clientList.Find(zw => zw.ServiceType.Equals(serviceType));
             if (client == null) return;
 
             for (int i = 0; i < client.Callbacks.Count; i++)
