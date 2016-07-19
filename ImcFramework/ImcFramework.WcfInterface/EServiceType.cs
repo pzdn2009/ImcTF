@@ -51,7 +51,28 @@ namespace ImcFramework.WcfInterface
 
         public string GetFullString()
         {
-            return ServiceType + "_" + GroupName + "_" + ServiceName;
+            return ServiceType + "_" + GroupName + "_";
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj == null)
+                return false;
+
+            if (GetType() != obj.GetType())
+                return false;
+
+            return Equals((EServiceType)obj);
+        }
+
+        private bool Equals(EServiceType serviceType)
+        {
+            return (ServiceType == serviceType.ServiceType) && (GroupName == serviceType.GroupName);
+        }
+
+        public override int GetHashCode()
+        {
+            return GetFullString().GetHashCode();
         }
     }
 }

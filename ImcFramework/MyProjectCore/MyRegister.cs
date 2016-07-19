@@ -18,12 +18,23 @@ namespace ImcFramework.Register
     {
         public RequestParameterList GetRequestParameter(EServiceType serviceType)
         {
+            if (serviceType.ServiceType == "ImcTFSample")
+            {
+                return new RequestParameterList()
+                {
+                    RequestParameters = new List<RequestParameter>()
+                {
+                    new RequestParameter() { Name = "Site", CommaValue = "MY,ID,SG" },
+                    new RequestParameter() { Name = "SellerAccount", CommaValue = "4,5,6" }
+                }
+                };
+            }
+
             return new RequestParameterList()
             {
                 RequestParameters = new List<RequestParameter>()
                 {
-                    new RequestParameter() { Name = "Site", CommaValue = "MY,ID,SG" },
-                    new RequestParameter() { Name = "SellerAccount", CommaValue = "4,5,6" }
+                    new RequestParameter() { Name = "SellerAccount", CommaValue = "1,2,3" }
                 }
             };
         }

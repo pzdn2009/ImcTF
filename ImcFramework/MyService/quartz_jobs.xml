@@ -25,5 +25,26 @@
       </cron>
     </trigger>
 
+    <!--示例服务2-->
+    <job>
+      <name>ImcTFSample2</name>
+      <group>MyGroup</group>
+      <description>示例服务2(Group)</description>
+      <job-type>MyProjectCore.ImcTFSample2Service, MyProjectCore</job-type>
+      <durable>false</durable>
+      <recover>true</recover>
+    </job>
+    <trigger>
+      <cron>
+        <name>ImcTFSample2Trigger</name>
+        <group>ImcTFSample2Trigger</group>
+        <description>每2分钟执行一次</description>
+        <job-name>ImcTFSample2</job-name>
+        <job-group>MyGroup</job-group>
+        <misfire-instruction>DoNothing</misfire-instruction>
+        <cron-expression>0 0/2 * * * ?</cron-expression>
+      </cron>
+    </trigger>
+
   </schedule>
 </job-scheduling-data>
