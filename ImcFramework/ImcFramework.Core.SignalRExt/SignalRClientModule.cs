@@ -1,23 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace ImcFramework.Core.SignalRExt
 {
     public class SignalRClientModule : ServiceModuleBase, IModuleExtension
     {
-        private const string NAME = "SIGNALR_MODULE_EXTENSION";
+        private IEnumerable<ISignalRClient> signalRClients;
+        public const string MODULE_NAME = "SignalR_Module";
 
         public SignalRClientModule()
         {
-
+            signalRClients = new List<ISignalRClient>();
         }
 
         public override string Name
         {
-            get { return NAME; }
+            get { return MODULE_NAME; }
         }
 
         public ServiceContext ServiceContext
@@ -25,19 +22,26 @@ namespace ImcFramework.Core.SignalRExt
             get; set;
         }
 
+        public override void Initialize()
+        {
+            base.Initialize();
+
+            signalRClients = IocManager.Resolve<IEnumerable<ISignalRClient>>();
+        }
+
         public override void Start()
         {
-            if (!string.IsNullOrEmpty(Define.SignalRUrl))
+            foreach (var signalRClient in signalRClients)
             {
-                SignalRClientManager.RegisterAll();
+                signalRClient.Connect();
             }
         }
 
         public override void Stop()
         {
-            if (!string.IsNullOrEmpty(Define.SignalRUrl))
+            foreach (var signalRClient in signalRClients)
             {
-                SignalRClientManager.UnRegisterAll();
+                signalRClient.Dispose();
             }
         }
     }

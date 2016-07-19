@@ -48,10 +48,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Client\AuthenticationType.cs" />
+    <Compile Include="Client\CookieAuthenticate.cs" />
+    <Compile Include="Client\SignalRClientConfig.cs" />
+    <Compile Include="Client\TokenData.cs" />
     <Compile Include="Define.cs" />
+    <Compile Include="ImcSignalR.cs" />
+    <Compile Include="ISignalRClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SignalRClient.cs" />
-    <Compile Include="SignalRClientManager.cs" />
+    <Compile Include="SignalRClientBase.cs" />
     <Compile Include="SignalRClientModule.cs" />
   </ItemGroup>
   <ItemGroup>
