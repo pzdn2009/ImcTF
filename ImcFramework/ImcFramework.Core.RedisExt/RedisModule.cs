@@ -26,7 +26,6 @@ namespace ImcFramework.Core.RedisExt
         public override void Initialize()
         {
             base.Initialize();
-            IocManager.RegisterAssemblyAsInterfaces(typeof(RedisModule).Assembly);
         }
 
         public override void Start()

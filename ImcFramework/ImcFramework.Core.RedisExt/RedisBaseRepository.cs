@@ -9,22 +9,7 @@ using StackExchange.Redis;
 
 namespace ImcFramework.Core.RedisExt
 {
-
-    public class RedisSetRepository<TEntity> : RedisBaseRepository<TEntity>, IRepository<TEntity, string>
-    {
-        public RedisSetRepository(IRedisDatabaseProvider databaseProvider)
-            : base(databaseProvider)
-        {
-
-        }
-
-        public override IEnumerable<TEntity> GetAll()
-        {
-            return null;
-        }
-    }
-
-    public class RedisBaseRepository<TEntity> : IDisposable, IRepository<TEntity, string>
+    public abstract class RedisBaseRepository<TEntity> : IDisposable, IRepository<TEntity, string>
     {
         private readonly IRedisDatabaseProvider _databaseProvider;
 
@@ -37,6 +22,8 @@ namespace ImcFramework.Core.RedisExt
         {
             get { return _databaseProvider.Database; }
         }
+
+        public abstract RedisType RedisType { get; }
 
         public virtual void Add(IEnumerable<TEntity> entities)
         {

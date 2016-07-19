@@ -51,6 +51,8 @@
     <Compile Include="RedisConfigInfo.cs" />
     <Compile Include="RedisModule.cs" />
     <Compile Include="RedisBaseRepository.cs" />
+    <Compile Include="RedisSetRepository.cs" />
+    <Compile Include="RedisType.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ImcFramework.Core\ImcFramework.Core.csproj">
