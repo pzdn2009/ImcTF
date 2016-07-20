@@ -1,4 +1,6 @@
 ﻿using ImcFramework.Core.SignalRExt.Client;
+using ImcFramework.Core.WcfService;
+using ImcFramework.Infrastructure;
 using ImcFramework.Ioc;
 using ImcFramework.LogPool;
 using Microsoft.AspNet.SignalR.Client;
@@ -8,7 +10,10 @@ namespace ImcFramework.Core.SignalRExt
 {
     public class ImcSignalR : SignalRClientBase
     {
-        public ImcSignalR(IIocManager iocManager) :
+        private string m_Mac;
+        private IServiceTypeReader serviceTypeReader;
+
+        public ImcSignalR(IIocManager iocManager, IServiceTypeReader serviceTypeReader) :
             base(iocManager)
         {
             this.SignalRClientConfig = new SignalRClientConfig()
@@ -16,11 +21,22 @@ namespace ImcFramework.Core.SignalRExt
                 HubName = "ImcServiceHub",
                 ServerUrl = "http://localhost:59894/signalr"
             };
+
+            this.serviceTypeReader = serviceTypeReader;
+            m_Mac = MachineManager.GetMac();
         }
 
         public override AuthenticationType AuthenticationType
         {
             get { return AuthenticationType.None; }
+        }
+
+        protected override void OnConnected()
+        {
+            foreach (var serviceType in serviceTypeReader.GetEServiceTypes())
+            {
+                //HubProxy.Invoke("WinServiceRegister", serviceType, m_Mac, Defaults.ProcessName);
+            }
         }
 
         public override void RegisterServerMethod()
@@ -36,7 +52,7 @@ namespace ImcFramework.Core.SignalRExt
             {
                 foreach (var exItem in ex.InnerExceptions)
                 {
-                    var msg =  exItem.Message + exItem.GetType().ToString() + exItem.StackTrace;
+                    var msg = exItem.Message + exItem.GetType().ToString() + exItem.StackTrace;
 
                     LoggerPool.Log(Name, new LogContentEntity()
                     {

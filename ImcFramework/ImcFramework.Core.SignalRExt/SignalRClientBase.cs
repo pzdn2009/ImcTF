@@ -33,6 +33,8 @@ namespace ImcFramework.Core.SignalRExt
 
         public abstract void RegisterServerMethod();
 
+        protected abstract void OnConnected();
+
         public SignalRClientBase(IIocManager iocManager)
         {
             IocManager = iocManager;
@@ -104,7 +106,7 @@ namespace ImcFramework.Core.SignalRExt
 
             connection.Closed += Connection_Closed;
             connection.Reconnected += Connection_Reconnected;
-
+            connection.ConnectionSlow += Connection_ConnectionSlow;
             HubProxy = connection.CreateHubProxy(SignalRClientConfig.HubName);
 
             RegisterServerMethod();
@@ -133,6 +135,8 @@ namespace ImcFramework.Core.SignalRExt
                             Level = "Info",
                             Message = "Connect success"
                         });
+
+                        OnConnected();
                     }
                 });
             }
@@ -156,7 +160,7 @@ namespace ImcFramework.Core.SignalRExt
         {
             string msg = "You have been disconnected.";
 
-            LoggerPool.Log(SignalRClientConfig.HubName, new LogContentEntity()
+            LoggerPool.Log(Name, new LogContentEntity()
             {
                 Level = "Info",
                 Message = msg
@@ -167,9 +171,20 @@ namespace ImcFramework.Core.SignalRExt
         {
             string msg = "You have been Reconnected.";
 
-            LoggerPool.Log(SignalRClientConfig.HubName, new LogContentEntity()
+            LoggerPool.Log(Name, new LogContentEntity()
             {
                 Level = "Info",
+                Message = msg
+            });
+        }
+
+        public virtual void Connection_ConnectionSlow()
+        {
+            string msg = "You have been connectionslow.";
+
+            LoggerPool.Log(Name, new LogContentEntity()
+            {
+                Level = "Warn",
                 Message = msg
             });
         }

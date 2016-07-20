@@ -16,6 +16,8 @@ namespace ImcFramework.Core.RedisExt
         public RedisBaseRepository(IRedisDatabaseProvider databaseProvider)
         {
             _databaseProvider = databaseProvider;
+
+            RedisKey = typeof(TEntity).FullName;
         }
 
         protected IDatabase Database
@@ -24,6 +26,8 @@ namespace ImcFramework.Core.RedisExt
         }
 
         public abstract RedisType RedisType { get; }
+
+        public RedisKey RedisKey { get; set; }
 
         public virtual void Add(IEnumerable<TEntity> entities)
         {
