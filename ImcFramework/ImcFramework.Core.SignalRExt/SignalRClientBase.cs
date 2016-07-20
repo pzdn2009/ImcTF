@@ -22,6 +22,15 @@ namespace ImcFramework.Core.SignalRExt
         public ILoggerPool LoggerPool { get; set; }
 
         public abstract AuthenticationType AuthenticationType { get; }
+
+        public string Name
+        {
+            get
+            {
+                return SignalRClientConfig.HubName;
+            }
+        }
+
         public abstract void RegisterServerMethod();
 
         public SignalRClientBase(IIocManager iocManager)
@@ -38,9 +47,20 @@ namespace ImcFramework.Core.SignalRExt
             {
                 ConnectAsync();
             }
+            catch (AggregateException ex)
+            {
+                foreach (var exItem in ex.InnerExceptions)
+                {
+                    LoggerPool.Log(Name, new LogContentEntity()
+                    {
+                        Level = "Error",
+                        Message = exItem.Message + exItem.StackTrace
+                    });
+                }
+            }
             catch (Exception ex)
             {
-                LoggerPool.Log(SignalRClientConfig.HubName, new LogContentEntity()
+                LoggerPool.Log(Name, new LogContentEntity()
                 {
                     Level = "Error",
                     Message = ex.Message + ex.StackTrace
@@ -85,7 +105,7 @@ namespace ImcFramework.Core.SignalRExt
             connection.Closed += Connection_Closed;
             connection.Reconnected += Connection_Reconnected;
 
-            var hubProxy = connection.CreateHubProxy(SignalRClientConfig.HubName);
+            HubProxy = connection.CreateHubProxy(SignalRClientConfig.HubName);
 
             RegisterServerMethod();
 
@@ -95,11 +115,16 @@ namespace ImcFramework.Core.SignalRExt
                 {
                     if (t.IsFaulted)
                     {
-                        LoggerPool.Log(SignalRClientConfig.HubName, new LogContentEntity()
+                        foreach (var exItem in t.Exception.InnerExceptions)
                         {
-                            Level = "Error",
-                            Message = t.Exception.Message + t.Exception.StackTrace
-                        });
+                            var msg = exItem.Message + exItem.GetType().ToString() + exItem.StackTrace;
+
+                            LoggerPool.Log(Name, new LogContentEntity()
+                            {
+                                Level = "Error",
+                                Message = msg
+                            });
+                        }
                     }
                     else
                     {

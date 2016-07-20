@@ -6,6 +6,8 @@ namespace ImcFramework.Core.SignalRExt
 {
     public interface ISignalRClient : IDisposable
     {
+        string Name { get; }
+
         AuthenticationType AuthenticationType { get; }
 
         IHubProxy HubProxy { get; set; }

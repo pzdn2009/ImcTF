@@ -15,7 +15,7 @@ namespace ImcFramework.LogPool
 
         public LogContentEntity(string message)
         {
-            var sf = new StackFrame(1);
+            var sf = new StackFrame(2);
             var method = sf.GetMethod();
 
             Class = method.DeclaringType.Name;

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace ImcFramework.Core.SignalRExt
 {
@@ -26,7 +27,18 @@ namespace ImcFramework.Core.SignalRExt
         {
             base.Initialize();
 
-            signalRClients = IocManager.Resolve<IEnumerable<ISignalRClient>>();
+            try
+            {
+                signalRClients = IocManager.Resolve<IEnumerable<ISignalRClient>>();
+            }
+            catch (System.Exception ex)
+            {
+                LoggerPool.Log("", new LogPool.LogContentEntity()
+                {
+                    Level = "Error",
+                    Message = ex.Message + ex.StackTrace
+                });
+            }
         }
 
         public override void Start()
@@ -34,6 +46,12 @@ namespace ImcFramework.Core.SignalRExt
             foreach (var signalRClient in signalRClients)
             {
                 signalRClient.Connect();
+
+                LoggerPool.Log("", new LogPool.LogContentEntity()
+                {
+                    Level = "Info",
+                    Message = signalRClient.Name + " call Connect();"
+                });
             }
         }
 
