@@ -3,14 +3,14 @@ using System.Collections.Generic;
 
 namespace ImcFramework.Core.MutilUserProgress
 {
-    public class ServiceTypeProgressInfo : Dictionary<string, UserProgressItem>
+    public class ServiceTypeProgressInfo : Dictionary<EServiceType, UserProgressItem>
     {
 
         public ProgressSummary GetTotal(EServiceType serviceType)
         {
-            if (ContainsKey(serviceType.ServiceType))
+            if (ContainsKey(serviceType))
             {
-                var info = this[serviceType.ServiceType];
+                var info = this[serviceType];
                 if (info.ProgressSummarySpecific)
                 {
                     return info.ProgressSummary;
@@ -22,9 +22,9 @@ namespace ImcFramework.Core.MutilUserProgress
 
         public ProgressItem GetUserProgressInfo(EServiceType serviceType, string user)
         {
-            if (ContainsKey(serviceType.ServiceType))
+            if (ContainsKey(serviceType))
             {
-                var info = this[serviceType.ServiceType];
+                var info = this[serviceType];
                 if (info.ContainsKey(user))
                 {
                     var progress = new ProgressItem();
@@ -37,7 +37,7 @@ namespace ImcFramework.Core.MutilUserProgress
             return null;
         }
 
-        public void SetTotal(string serviceType, int total, TotalType totalType)
+        public void SetTotal(EServiceType serviceType, int total, TotalType totalType)
         {
             if (!ContainsKey(serviceType))
             {
@@ -47,7 +47,7 @@ namespace ImcFramework.Core.MutilUserProgress
             this[serviceType].ProgressSummary = new ProgressSummary(0, total, totalType);
         }
 
-        public void SetItemValue(string serviceType, string user, int value, bool accumulate = true)
+        public void SetItemValue(EServiceType serviceType, string user, int value, bool accumulate = true)
         {
             if (ContainsKey(serviceType))
             {

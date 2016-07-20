@@ -41,7 +41,7 @@ namespace ImcFramework.Core.MutilUserProgress
             }
         }
 
-        public ProgressItem GetSellerAccountProgressInfo(EServiceType serviceType, string user)
+        public ProgressItem GetUserProgressInfo(EServiceType serviceType, string user)
         {
             lock (lockObject)
             {
@@ -53,7 +53,7 @@ namespace ImcFramework.Core.MutilUserProgress
 
         #region Set
 
-        public void SetTotal(string serviceType, int total, TotalType totalType)
+        public void SetTotal(EServiceType serviceType, int total, TotalType totalType)
         {
             lock (lockObject)
             {
@@ -61,7 +61,7 @@ namespace ImcFramework.Core.MutilUserProgress
             }
         }
 
-        public void SetItemTotal(string serviceType, string user, int total)
+        public void SetItemTotal(EServiceType serviceType, string user, int total)
         {
             lock (lockObject)
             {
@@ -69,7 +69,7 @@ namespace ImcFramework.Core.MutilUserProgress
             }
         }
 
-        public void SetItemValue(string serviceType, string user, int value, bool accumulate = true)
+        public void SetItemValue(EServiceType serviceType, string user, int value, bool accumulate = true)
         {
             lock (lockObject)
             {
@@ -77,7 +77,7 @@ namespace ImcFramework.Core.MutilUserProgress
             }
         }
 
-        public void SetItemValueFinish(string serviceType, string user)
+        public void SetItemValueFinish(EServiceType serviceType, string user)
         {
             lock (lockObject)
             {
@@ -85,7 +85,7 @@ namespace ImcFramework.Core.MutilUserProgress
             }
         }
 
-        public void Clear(string serviceType)
+        public void Clear(EServiceType serviceType)
         {
             lock (lockObject)
             {

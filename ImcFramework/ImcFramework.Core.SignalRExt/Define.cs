@@ -1,9 +1,4 @@
 ﻿using ImcFramework.Infrastructure;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ImcFramework.Core.SignalRExt
 {
@@ -24,7 +19,7 @@ namespace ImcFramework.Core.SignalRExt
                         _signalRUrl = ConfigReader.GetAppSetting<string>("SignalRUrl");
                     }
                 }
-                catch (Exception ex)
+                catch
                 {
                     _signalRUrl = string.Empty;
                 }
@@ -48,7 +43,7 @@ namespace ImcFramework.Core.SignalRExt
                         _hubName = ConfigReader.GetAppSetting<string>("HubName");
                     }
                 }
-                catch (Exception ex)
+                catch
                 {
                     _hubName = string.Empty;
                 }

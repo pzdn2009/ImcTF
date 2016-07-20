@@ -27,7 +27,9 @@ namespace ImcFramework.Winform.Common
                 if (this.ContainsKey(serviceType))
                 {
                     if (this[serviceType].Factory.State != System.ServiceModel.CommunicationState.Faulted)
+                    {
                         this[serviceType].ClientConnector.UnRegister(serviceType);
+                    }
                     return true;
                 }
             }

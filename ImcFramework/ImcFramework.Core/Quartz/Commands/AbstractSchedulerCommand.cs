@@ -38,7 +38,7 @@ namespace ImcFramework.Core.Quartz.Commands
 
             foreach (var item in Scheduler.GetCurrentlyExecutingJobs())
             {
-                if (item.JobDetail.Key == serviceType.ToJobKey())
+                if (item.JobDetail.Key.Equals(serviceType.ToJobKey()))
                     return EServiceStatus.Running;
             }
 

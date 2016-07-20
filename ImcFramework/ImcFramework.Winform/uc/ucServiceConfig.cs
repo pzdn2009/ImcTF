@@ -2,6 +2,7 @@
 using ImcFramework.WcfInterface;
 using ImcFramework.WcfInterface.TransferMessage;
 using ImcFramework.Winform.Common;
+using ImcFramework.Winform.uc;
 using System;
 using System.Drawing;
 using System.Linq;
@@ -28,11 +29,15 @@ namespace ImcFramework.Winform
 
         private ProgressSynchronous progressSynchronous;
 
+        private IFlowLayoutParameter flowLayoutParameter;
+
         public ucServiceConfig(EServiceType serviceType)
         {
             InitializeComponent();
             this.serviceType = serviceType;
             this.SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.DoubleBuffer, true);
+
+            flowLayoutParameter = new DefaultFlowLayoutParameter();
         }
 
         private void ucServiceConfig_Load(object sender, EventArgs e)
@@ -58,7 +63,28 @@ namespace ImcFramework.Winform
 
             this.ucLog1.GetLogDetailClick += ucLog1_GetLogDetailClick;
 
+
+
             progressSynchronous = ProgressSynchronous.Create();
+        }
+
+        public void SetRequestParameters(RequestParameterList requestParameterList)
+        {
+            if (requestParameterList.RequestParameters == null) return;
+
+            foreach (var requestParameter in requestParameterList.RequestParameters)
+            {
+                if (string.IsNullOrEmpty(requestParameter.Name) || string.IsNullOrEmpty(requestParameter.CommaValue))
+                {
+                    continue;
+                }
+
+                var flp = flowLayoutParameter.GetFlowLayoutPanel(requestParameter);
+                if (flp != null)
+                {
+                    flowLayoutPanel2.Controls.Add(flp);
+                }
+            }
         }
 
         private void ucLog1_GetLogDetailClick(object sender, RequestLogArgs e)
@@ -92,6 +118,8 @@ namespace ImcFramework.Winform
                     client.Register(serviceType);
 
                     Initialize();
+
+                    SetRequestParameters(client.GetRequestParameter(ServiceType));
 
                 }, TimeSpan.FromSeconds(2), 1);
                 InitialSuccess = true;
@@ -261,7 +289,15 @@ namespace ImcFramework.Winform
             try
             {
                 EnsureClient();
-                client.RequestSwitch(new FunctionSwitch() { ServiceType = serviceType, Command = ECommand.RunImmediately, ScheduleFormat = "" });
+
+                var requestParameterList = flowLayoutParameter.GetRequestParameters(flowLayoutPanel2.Controls.OfType<FlowLayoutPanel>());
+
+                client.RequestSwitch(new FunctionSwitch()
+                {
+                    ServiceType = serviceType,
+                    Command = ECommand.RunImmediately,
+                    RequestParameterList = requestParameterList
+                });
             }
             catch (FaultException fex)
             {

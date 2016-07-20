@@ -75,6 +75,10 @@
     <Compile Include="Cache\Memory\MemoryCacheManager.cs" />
     <Compile Include="Commands\AbstractCommand.cs" />
     <Compile Include="Commands\ICommand.cs" />
+    <Compile Include="Configuration\IImcStartupConfiguration.cs" />
+    <Compile Include="Configuration\ImcStartupConfiguration.cs" />
+    <Compile Include="Configuration\IModuleConfigurations.cs" />
+    <Compile Include="Configuration\ModuleConfigurations.cs" />
     <Compile Include="Data\ExecuteResult.cs" />
     <Compile Include="ImcFrameworkConstants.cs" />
     <Compile Include="Infrastructure\ConfigReader.cs" />

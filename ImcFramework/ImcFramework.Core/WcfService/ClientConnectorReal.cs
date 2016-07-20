@@ -207,7 +207,7 @@ namespace ImcFramework.Core
 
         public ProgressItem GetProgressSellerAccountTotal(EServiceType serviceType, string sellerAccount)
         {
-            return ProgressInfoManager.Instance.GetSellerAccountProgressInfo(serviceType, sellerAccount);
+            return ProgressInfoManager.Instance.GetUserProgressInfo(serviceType, sellerAccount);
         }
 
         public List<EServiceType> GetServiceList()

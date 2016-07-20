@@ -1,19 +1,16 @@
-﻿using Common.Logging;
-using ImcFramework.Core.Distribution;
-using ImcFramework.Core.MutilUserProgress;
+﻿using ImcFramework.Core.MutilUserProgress;
 using ImcFramework.LogPool;
 using ImcFramework.WcfInterface;
 using ImcFramework.WcfInterface.TransferMessage;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.ServiceModel;
 
 namespace ImcFramework.Core
 {
     public class Client
     {
-        public string ServiceType { get; set; }
+        public EServiceType ServiceType { get; set; }
         public List<IMessageCallback> Callbacks { get; set; }
     }
 
@@ -34,7 +31,7 @@ namespace ImcFramework.Core
         {
             lock (lockObject)
             {
-                var client = clientList.Find(zw => zw.ServiceType == serviceType.ServiceType);
+                var client = clientList.Find(zw => zw.ServiceType.Equals(serviceType));
                 if (client != null)
                 {
                     return client.Callbacks.Contains(callback);
@@ -47,14 +44,14 @@ namespace ImcFramework.Core
         {
             lock (lockObject)
             {
-                var tmp = clientList.Find(zw => zw.ServiceType == serviceType.ServiceType);
+                var tmp = clientList.Find(zw => zw.ServiceType.Equals(serviceType));
                 if (tmp != null)
                 {
                     tmp.Callbacks.Add(callback);
                 }
                 else
                 {
-                    clientList.Add(new Client() { ServiceType = serviceType.ServiceType, Callbacks = new List<IMessageCallback>() { callback } });
+                    clientList.Add(new Client() { ServiceType = serviceType, Callbacks = new List<IMessageCallback>() { callback } });
                 }
             }
         }
@@ -65,32 +62,10 @@ namespace ImcFramework.Core
             {
                 lock (lockObject)
                 {
-                    var tmp = clientList.Find(zw => zw.ServiceType == serviceType.ServiceType);
+                    var tmp = clientList.Find(zw => zw.ServiceType.Equals(serviceType));
                     tmp.Callbacks.Remove(callback);
                 }
             }
-        }
-
-        public static void BroadCastMessage(MessageEntity messageEntity)
-        {
-            #region 记录日志
-
-            var logger = LoggerPoolFactory.GetLoggerPool(messageEntity.ServiceType.ServiceType);
-
-            logger.Log(messageEntity.User, new LogContentEntity()
-            {
-                Class = messageEntity.ClassName,
-                Method = messageEntity.MethodName,
-                Message = messageEntity.MsgContent,
-                Level = messageEntity.LogLevel
-            });
-
-            #endregion
-
-            CommonCallbackAction(messageEntity.ServiceType, (clientCallback) =>
-            {
-                clientCallback.Notify(messageEntity);
-            });
         }
 
         #region 销售账号任务通知
@@ -100,7 +75,7 @@ namespace ImcFramework.Core
             lock (lockObject)
             {
                 ////设置总数
-                ProgressInfoManager.Instance.SetTotal(serviceType.ServiceType, total, totalType);
+                ProgressInfoManager.Instance.SetTotal(serviceType, total, totalType);
 
                 CommonCallbackAction(serviceType, (clientCallback) =>
                 {
@@ -113,7 +88,7 @@ namespace ImcFramework.Core
         {
             lock (lockObject)
             {
-                ProgressInfoManager.Instance.SetItemTotal(serviceType.ServiceType, sellerAccount, total);
+                ProgressInfoManager.Instance.SetItemTotal(serviceType, sellerAccount, total);
 
                 CommonCallbackAction(serviceType, (clientCallback) =>
                 {
@@ -126,9 +101,9 @@ namespace ImcFramework.Core
         {
             lock (lockObject)
             {
-                ProgressInfoManager.Instance.SetItemValue(serviceType.ServiceType, sellerAccount, value);
+                ProgressInfoManager.Instance.SetItemValue(serviceType, sellerAccount, value);
 
-                var progressInfoItem = ProgressInfoManager.Instance.GetSellerAccountProgressInfo(serviceType, sellerAccount);
+                var progressInfoItem = ProgressInfoManager.Instance.GetUserProgressInfo(serviceType, sellerAccount);
 
                 CommonCallbackAction(serviceType, (clientCallback) =>
                 {
@@ -141,7 +116,7 @@ namespace ImcFramework.Core
         {
             lock (lockObject)
             {
-                ProgressInfoManager.Instance.SetItemValueFinish(serviceType.ServiceType, sellerAccount);
+                ProgressInfoManager.Instance.SetItemValueFinish(serviceType, sellerAccount);
 
                 CommonCallbackAction(serviceType, (clientCallback) =>
                 {
@@ -154,7 +129,7 @@ namespace ImcFramework.Core
         {
             lock (lockObject)
             {
-                ProgressInfoManager.Instance.Clear(serviceType.ServiceType);
+                ProgressInfoManager.Instance.Clear(serviceType);
 
                 CommonCallbackAction(serviceType, (clientCallback) =>
                 {
@@ -170,11 +145,11 @@ namespace ImcFramework.Core
         /// </summary>
         /// <param name="serviceType"></param>
         /// <param name="action"></param>
-        private static void CommonCallbackAction(EServiceType serviceType, Action<IMessageCallback> action)
+        public static void CommonCallbackAction(EServiceType serviceType, Action<IMessageCallback> action)
         {
             CheckCallbackChannels();
 
-            var client = clientList.Find(zw => zw.ServiceType == serviceType.ServiceType);
+            var client = clientList.Find(zw => zw.ServiceType.Equals(serviceType));
             if (client == null) return;
 
             for (int i = 0; i < client.Callbacks.Count; i++)

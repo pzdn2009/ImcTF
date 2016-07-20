@@ -187,7 +187,7 @@ namespace ImcFramework.Winform
 
         protected override void OnFormClosing(FormClosingEventArgs e)
         {
-            MyClients.CloseTabPage(null);
+            MyClients.CloseTabPages(null);
             base.OnFormClosing(e);
         }
 
