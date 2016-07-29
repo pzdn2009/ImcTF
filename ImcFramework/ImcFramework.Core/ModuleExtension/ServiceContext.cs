@@ -22,6 +22,6 @@ namespace ImcFramework.Core
         /// <summary>
         /// 进度管理
         /// </summary>
-        public ProgressInfoManager ProgressInfoManager { get; set; }
+        public IProgressInfoManager ProgressInfoManager { get; set; }
     }
 }
