@@ -3,27 +3,28 @@
 namespace ImcFramework.LogPool
 {
     /// <summary>
-    /// 业务日志池
+    /// Define a pool for loggers
     /// </summary>
     public interface ILoggerPool
     {
         /// <summary>
-        /// 名称
+        /// Name of the logger pool.
         /// </summary>
         string LoggerPoolName { get; }
 
         /// <summary>
-        /// 根据账号返回当前服务的日志
+        /// Get the ILog interface for the user and loglevel.
         /// </summary>
-        /// <param name="user">账号</param>
-        /// <param name="logLevel">级别</param>
-        /// <returns></returns>
+        /// <param name="user">Indicates the user of the log</param>
+        /// <param name="logLevel">log level</param>
+        /// <returns>the ILog object</returns>
         ILog GetLogger(string user, LogLevel logLevel = LogLevel.Info);
 
         /// <summary>
-        /// 直接记录日志
+        /// Log the  object info for special user.
         /// </summary>
-        /// <param name="logContentEntity">日志实体</param>
+        /// <param name="user">Indicates the user of the logContentEntity</param>
+        /// <param name="logContentEntity">Log info obejct, <see cref="LogContentEntity"></param>
         void Log(string user, LogContentEntity logContentEntity);
     }
 }

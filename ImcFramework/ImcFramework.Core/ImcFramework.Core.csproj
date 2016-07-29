@@ -92,7 +92,6 @@
     <Compile Include="WcfService\IRequestParameterProvider.cs" />
     <Compile Include="WcfService\IServiceTypeReader.cs" />
     <Compile Include="ModuleExtension\IModuleExtension.cs" />
-    <Compile Include="ModuleExtension\ModuleConfiguration.cs" />
     <Compile Include="MutilUserProgress\ProgressInfoModule.cs" />
     <Compile Include="Quartz\Commands\AbstractSchedulerCommand.cs" />
     <Compile Include="Quartz\Commands\CancelCommand.cs" />
@@ -106,7 +105,6 @@
     <Compile Include="Quartz\Commands\GetServiceInfoOutput.cs" />
     <Compile Include="Quartz\DefaultScheduleProvider.cs" />
     <Compile Include="Quartz\GlobalJobListener.cs" />
-    <Compile Include="Exceptions\ImcFrameworkException.cs" />
     <Compile Include="Distribution\IDistributionFacility.cs" />
     <Compile Include="IsolatedAd\IsolatedJob.cs" />
     <Compile Include="IsolatedAd\IsolatedJobFactory.cs" />

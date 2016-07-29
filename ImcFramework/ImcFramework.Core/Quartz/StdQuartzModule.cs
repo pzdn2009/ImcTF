@@ -31,7 +31,7 @@ namespace ImcFramework.Core.Quartz
         {
             base.Initialize();
 
-            IocManager.Register<ISchedulerFactory, StdSchedulerFactory>(DependencyLifeStyle.Singleton);
+            IocManager.Register<IScheduler>(new StdSchedulerFactory().GetScheduler());
         }
 
         public override void Start()
@@ -40,16 +40,13 @@ namespace ImcFramework.Core.Quartz
 
             var isolatedJob = Defaults.IsIsolatedJob;
 
-            var schedulerFactory = IocManager.Resolve<ISchedulerFactory>();
-            scheduler = schedulerFactory.GetScheduler();
+            scheduler = IocManager.Resolve<IScheduler>();
             if (isolatedJob)
             {
                 scheduler.JobFactory = new IsolatedJobFactory();
             }
 
             scheduler.Start();
-
-            IocManager.Register<IScheduler>(scheduler);
 
             var jobListeners = IocManager.Resolve<IEnumerable<IJobListener>>();
             foreach (var jobListener in jobListeners)

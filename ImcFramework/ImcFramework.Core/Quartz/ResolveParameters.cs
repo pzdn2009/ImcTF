@@ -34,7 +34,7 @@ namespace ImcFramework.Core.Quartz
                 }
             }
 
-            return default(List<T>);
+            return new List<T>();
         }
     }
 }

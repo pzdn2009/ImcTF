@@ -80,6 +80,7 @@
     <Compile Include="Configuration\IModuleConfigurations.cs" />
     <Compile Include="Configuration\ModuleConfigurations.cs" />
     <Compile Include="Data\ExecuteResult.cs" />
+    <Compile Include="Exceptions\ImcFrameworkException.cs" />
     <Compile Include="ImcFrameworkConstants.cs" />
     <Compile Include="Infrastructure\ConfigReader.cs" />
     <Compile Include="Infrastructure\DateTimeExtension.cs" />
