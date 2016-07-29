@@ -63,6 +63,8 @@ namespace ImcFramework.Core
                 catch { }
             }
 
+            iocManager.Register<IProgressInfoManager>(ProgressInfoManager.Instance);
+
             //load the Global Register & call the register method
             var gl = iocManager.Resolve<IEnumerable<IGlobalRegister>>();
             gl.ToList().ForEach(zw => { zw.Register(iocManager); });
