@@ -1,17 +1,13 @@
 ﻿using System.Collections.Generic;
 using ImcFramework.Ioc;
 using System.Linq;
-using ImcFramework.Core.MutilUserProgress;
 using ImcFramework.LogPool;
 using ImcFramework.Reflection;
-using System;
-using System.Reflection;
-using System.IO;
 
 namespace ImcFramework.Core
 {
     /// <summary>
-    /// 服务启动
+    /// Service manager for the framework.
     /// </summary>
     public static class ServiceManager
     {
@@ -22,17 +18,10 @@ namespace ImcFramework.Core
 
         static ServiceManager()
         {
-            ServiceContext = new ServiceContext();
-            ServiceContext.Scheduler = null;
-            ServiceContext.WcfHost = null;
-            ServiceContext.ProgressInfoManager = ProgressInfoManager.Instance;
-
             iocManager = IocManager.Instance;
 
             Initialize();
         }
-
-        public static ServiceContext ServiceContext { get; set; }
 
         internal static void Initialize()
         {
@@ -72,8 +61,12 @@ namespace ImcFramework.Core
             extensionModules = iocManager.Resolve<IEnumerable<IModuleExtension>>();
         }
 
+        /// <summary>
+        /// Start all modules which associated with the framework.
+        /// </summary>
         public static void StartAll()
         {
+            //start the build-in modules
             var loggerPoolFactory = iocManager.Resolve<ILoggerPoolFactory>();
             foreach (var buidIn in buildInModules)
             {
@@ -86,9 +79,15 @@ namespace ImcFramework.Core
                 buidIn.Start();
             }
 
+            //buildInModules.ToList().ForEach(zw => zw.Start());
+
+            //get the sevice context.
+            var seviceContext = new ServiceContext();
+
+            //start the extented modules
             foreach (var item in extensionModules)
             {
-                item.ServiceContext = ServiceContext;
+                item.ServiceContext = seviceContext;
                 var svc = (item as IServiceModule);
                 svc.IocManager = iocManager;
                 svc.LoggerPool = loggerPoolFactory.GetLoggerPool(svc.Name);
@@ -97,8 +96,13 @@ namespace ImcFramework.Core
                 svc.Initialize();
                 svc.Start();
             }
+
+            //extensionModules.ToList().ForEach(zw => (zw as IServiceModule).Start());
         }
 
+        /// <summary>
+        /// Stop all modules which associated with the framework.
+        /// </summary>
         public static void StopAll()
         {
             if (extensionModules != null)

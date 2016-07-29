@@ -19,7 +19,7 @@ namespace ImcFramework.Core.Quartz
             this.serviceTypeReader = serviceTypeReader;
         }
 
-        public string Name
+        public virtual string Name
         {
             get { return "GlobalTrigger"; }
         }
