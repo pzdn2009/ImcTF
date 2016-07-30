@@ -3,6 +3,7 @@ using ImcFramework.WcfInterface;
 using System;
 using System.Collections.Generic;
 using System.ServiceModel;
+using System.Threading.Tasks;
 
 namespace ImcFramework.Winform.Common
 {
@@ -47,6 +48,14 @@ namespace ImcFramework.Winform.Common
         public List<EServiceType> GetServiceList()
         {
             return Factory.CreateChannel().GetServiceList();
+        }
+
+        public async Task<List<EServiceType>> GetServiceListAsync()
+        {
+            return await Task.Factory.StartNew(() =>
+            {
+                return GetServiceList();
+            });
         }
 
         public void RequestSwitch(FunctionSwitch singleSwitch)
