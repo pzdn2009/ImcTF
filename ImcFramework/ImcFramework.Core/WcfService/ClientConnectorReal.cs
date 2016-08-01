@@ -29,8 +29,11 @@ namespace ImcFramework.Core
         private IServiceTypeReader serviceTypeReader;
         private ILogin login;
         private IRequestParameterProvider requestParameterProvider;
+        private IProgressInfoManager progressInfoManager;
 
-        public ClientConnectorReal(ICommandInvoker commandInvoker, IServiceTypeReader serviceTypeReader, IIocManager iocManager,ILogin login, IRequestParameterProvider requestParameterProvider)
+        public ClientConnectorReal(ICommandInvoker commandInvoker, IServiceTypeReader serviceTypeReader,
+            IIocManager iocManager, ILogin login, IRequestParameterProvider requestParameterProvider,
+            IProgressInfoManager progressInfoManager)
         {
             OperationContext.Current.Channel.Closing += Channel_Closing;
             OperationContext.Current.Channel.Faulted += Channel_Faulted;
@@ -39,7 +42,8 @@ namespace ImcFramework.Core
             this.serviceTypeReader = serviceTypeReader;
             this.login = login;
             this.requestParameterProvider = requestParameterProvider;
-            this.loggerPool = iocManager.Resolve<ILoggerPool>(WcfService.WcfServiceModule.MODUEL_NAME);
+            this.progressInfoManager = progressInfoManager;
+            this.loggerPool = iocManager.Resolve<ILoggerPool>(WcfServiceModule.MODUEL_NAME);
         }
 
         #region Events
@@ -202,12 +206,12 @@ namespace ImcFramework.Core
 
         public ProgressSummary GetProgressTotal(EServiceType serviceType)
         {
-            return ProgressInfoManager.Instance.GetTotal(serviceType);
+            return progressInfoManager.GetTotal(serviceType);
         }
 
         public ProgressItem GetProgressSellerAccountTotal(EServiceType serviceType, string sellerAccount)
         {
-            return ProgressInfoManager.Instance.GetUserProgressInfo(serviceType, sellerAccount);
+            return progressInfoManager.GetUserProgressInfo(serviceType, sellerAccount);
         }
 
         public List<EServiceType> GetServiceList()

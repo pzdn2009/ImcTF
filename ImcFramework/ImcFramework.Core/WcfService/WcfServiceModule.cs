@@ -74,6 +74,8 @@ namespace ImcFramework.Core.WcfService
 
                 Thread th = new Thread(ServiceHost.Open);
                 th.Start();
+
+                IocManager.Register<IServiceHostProvider>(new DefaultServiceHostProvider(ServiceHost));
             }
             catch (Exception ex)
             {

@@ -150,7 +150,7 @@ namespace ImcFramework.Core.Tests
         public void register_asm_can_resolve_IIDistributionFacility_T()
         {
             List<IDistributionFacility<ITransferMessage>> m_MqDistributions = new List<IDistributionFacility<ITransferMessage>>();
-        ioc.RegisterAssemblyAsInterfaces(typeof(ITransferMessage).Assembly);
+            ioc.RegisterAssemblyAsInterfaces(typeof(ITransferMessage).Assembly);
             ioc.RegisterAssemblyAsInterfaces(asm);
 
             ioc.RegisterGeneric(typeof(MsmqDistribution<>), typeof(IDistributionFacility<>));
@@ -168,6 +168,27 @@ namespace ImcFramework.Core.Tests
             }
 
             Assert.AreEqual(2, m_MqDistributions.Count());
+        }
+
+        [TestMethod]
+        public void register_asm_can_resolve_IProgressInfoManager()
+        {
+            ioc.Register<MutilUserProgress.IProgressInfoManager>(MutilUserProgress.ProgressInfoManager.Instance);
+
+            var mgr = ioc.Resolve<MutilUserProgress.IProgressInfoManager>();
+
+            Assert.IsNotNull(mgr);
+        }
+
+        [TestMethod]
+        public void register_asm_can_resolve_IProgressInfoManager_is_singleton()
+        {
+            ioc.Register<MutilUserProgress.IProgressInfoManager>(MutilUserProgress.ProgressInfoManager.Instance);
+
+            var mgr = ioc.Resolve<MutilUserProgress.IProgressInfoManager>();
+            var mgr2 = ioc.Resolve<MutilUserProgress.IProgressInfoManager>();
+
+            Assert.AreSame(mgr, mgr2);
         }
     }
 }

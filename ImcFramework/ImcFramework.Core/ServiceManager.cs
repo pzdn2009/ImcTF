@@ -1,13 +1,16 @@
-﻿using System.Collections.Generic;
+﻿using ImcFramework.Core.MutilUserProgress;
+using ImcFramework.Core.Quartz;
+using ImcFramework.Core.WcfService;
 using ImcFramework.Ioc;
-using System.Linq;
 using ImcFramework.LogPool;
 using ImcFramework.Reflection;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace ImcFramework.Core
 {
     /// <summary>
-    /// Service manager for the framework.
+    /// Service manager for the famework , which manages assmeblies registration and all modules's start / stop.
     /// </summary>
     public static class ServiceManager
     {
@@ -23,6 +26,9 @@ namespace ImcFramework.Core
             Initialize();
         }
 
+        /// <summary>
+        /// Initialize assmeblies registration in order to register into the ioc container.
+        /// </summary>
         internal static void Initialize()
         {
             var registeredAssmeblies = new HashSet<string>();
@@ -52,6 +58,9 @@ namespace ImcFramework.Core
                 catch { }
             }
 
+            //register the progressInfoManager as singleton
+            iocManager.Register<IProgressInfoManager>(ProgressInfoManager.Instance);
+
             //load the Global Register & call the register method
             var gl = iocManager.Resolve<IEnumerable<IGlobalRegister>>();
             gl.ToList().ForEach(zw => { zw.Register(iocManager); });
@@ -62,11 +71,10 @@ namespace ImcFramework.Core
         }
 
         /// <summary>
-        /// Start all modules which associated with the framework.
+        /// Start all modules of the framework , includes build-in modules and extended modules.
         /// </summary>
         public static void StartAll()
         {
-            //start the build-in modules
             var loggerPoolFactory = iocManager.Resolve<ILoggerPoolFactory>();
             foreach (var buidIn in buildInModules)
             {
@@ -79,15 +87,16 @@ namespace ImcFramework.Core
                 buidIn.Start();
             }
 
-            //buildInModules.ToList().ForEach(zw => zw.Start());
+            var serviceContext = new ServiceContext()
+            {
+                WcfHost = iocManager.Resolve<IServiceHostProvider>().ServiceHost,
+                Scheduler = iocManager.Resolve<IScheduleProvider>().Schedule,
+                ProgressInfoManager = iocManager.Resolve<IProgressInfoManager>()
+            };
 
-            //get the sevice context.
-            var seviceContext = new ServiceContext();
-
-            //start the extented modules
             foreach (var item in extensionModules)
             {
-                item.ServiceContext = seviceContext;
+                item.ServiceContext = serviceContext;
                 var svc = (item as IServiceModule);
                 svc.IocManager = iocManager;
                 svc.LoggerPool = loggerPoolFactory.GetLoggerPool(svc.Name);
@@ -96,12 +105,10 @@ namespace ImcFramework.Core
                 svc.Initialize();
                 svc.Start();
             }
-
-            //extensionModules.ToList().ForEach(zw => (zw as IServiceModule).Start());
         }
 
         /// <summary>
-        /// Stop all modules which associated with the framework.
+        /// Stop all modules of the framework , includes build-in modules and extended modules.
         /// </summary>
         public static void StopAll()
         {

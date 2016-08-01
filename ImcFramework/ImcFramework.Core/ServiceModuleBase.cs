@@ -1,12 +1,20 @@
-﻿using System.Collections.Generic;
+﻿using Common.Logging;
 using ImcFramework.Ioc;
 using ImcFramework.LogPool;
-using Common.Logging;
+using System.Collections.Generic;
 
 namespace ImcFramework.Core
 {
+    /// <summary>
+    /// Service module base
+    /// </summary>
     public abstract class ServiceModuleBase : IServiceModule
     {
+        public ServiceModuleBase()
+        {
+            Enable = true;
+        }
+
         public virtual IEnumerable<IServiceModule> DependencyModules
         {
             get; set;
