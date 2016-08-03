@@ -1,5 +1,7 @@
 ﻿using ImcFramework.Infrastructure;
 using ImcFramework.WcfInterface;
+using ImcFramework.WcfInterface.LogInfos;
+using ImcFramework.WcfInterface.ProgressInfos;
 using System;
 using System.Collections.Generic;
 using System.ServiceModel;
@@ -88,9 +90,9 @@ namespace ImcFramework.Winform.Common
             return ClientConnector.GetProgressTotal(serviceType);
         }
 
-        public ProgressItem GetProgressSellerAccountTotal(EServiceType serviceType, string sellerAccount)
+        public ProgressItem GetProgressUserTotal(EServiceType serviceType, string sellerAccount)
         {
-            return ClientConnector.GetProgressSellerAccountTotal(serviceType, sellerAccount);
+            return ClientConnector.GetProgressUserTotal(serviceType, sellerAccount);
         }
 
         public bool Login(string userName, string password)

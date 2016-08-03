@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using ImcFramework.WcfInterface;
 using ImcFramework.Infrastructure;
+using ImcFramework.WcfInterface.LogInfos;
 
 namespace ImcFramework.Winform
 {
@@ -31,7 +32,7 @@ namespace ImcFramework.Winform
                 rootNode.ImageIndex = 0;
                 rootNode.SelectedImageIndex = 0;
 
-                var groupByList = logInfo.SellerAccountLogLevels.GroupBy(zw => zw.SellerAccount);
+                var groupByList = logInfo.UserLogLevels.GroupBy(zw => zw.User);
                 foreach (var sellerAccountItem in groupByList)
                 {
                     var secondNode = new TreeNode(sellerAccountItem.Key);

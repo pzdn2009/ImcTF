@@ -1,17 +1,15 @@
-﻿using ImcFramework.Commands;
-using ImcFramework.Data;
-using ImcFramework.Ioc;
-using ImcFramework.Reflection;
+﻿using ImcFramework.Reflection;
 using ImcFramework.WcfInterface;
-using Quartz;
+using ImcFramework.WcfInterface.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ImcFramework.Core.Quartz
 {
+    /// <summary>
+    /// Command invoker for the clients.
+    /// </summary>
     public class CommandInvoker: ICommandInvoker
     {
         private IScheduleProvider scheduleProvider;
@@ -22,6 +20,12 @@ namespace ImcFramework.Core.Quartz
 
         private static Dictionary<ECommand, dynamic> dict = new Dictionary<ECommand, dynamic>();
 
+        /// <summary>
+        /// Execute the invoke.
+        /// </summary>
+        /// <typeparam name="TOutput">The execute result.</typeparam>
+        /// <param name="functionSwitch">The command.</param>
+        /// <returns>return the execute result.</returns>
         public TOutput Invoke<TOutput>(FunctionSwitch functionSwitch)
         {
             if (!dict.ContainsKey(functionSwitch.Command))
@@ -36,6 +40,11 @@ namespace ImcFramework.Core.Quartz
             return (TOutput)ret;
         }
 
+        /// <summary>
+        /// Get the command class.
+        /// </summary>
+        /// <param name="command">Command enum.<see cref="ECommand"/>.</param>
+        /// <returns>return the type.</returns>
         public static Type GetCommandClass(ECommand command)
         {
             ITypeFinder typeFinder = new TypeFinder();

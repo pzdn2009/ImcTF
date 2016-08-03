@@ -5,6 +5,9 @@ using System.Collections.Generic;
 
 namespace ImcFramework.Core.Distribution
 {
+    /// <summary>
+    /// Create an <see cref="IDistributionFacility<T>"/> object for deal messages.
+    /// </summary>
     public static class DistributionFacilityFactory
     {
         private static object lockObject = new object();

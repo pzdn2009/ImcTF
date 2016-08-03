@@ -1,21 +1,24 @@
-﻿using ImcFramework.WcfInterface;
+﻿using ImcFramework.Core.MutilUserProgress;
+using ImcFramework.Core.Quartz;
+using ImcFramework.Core.Quartz.Commands;
+using ImcFramework.Core.WcfService;
+using ImcFramework.Data;
+using ImcFramework.Ioc;
+using ImcFramework.LogPool;
+using ImcFramework.WcfInterface;
+using ImcFramework.WcfInterface.Enums;
+using ImcFramework.WcfInterface.LogInfos;
+using ImcFramework.WcfInterface.ProgressInfos;
+using ImcFramework.WcfInterface.TransferMessage;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.ServiceModel;
 using System.Text;
-using System.Threading;
-using System.IO;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
-using ImcFramework.WcfInterface.TransferMessage;
-using ImcFramework.Core.Quartz.Commands;
-using ImcFramework.Data;
-using ImcFramework.Core.Quartz;
-using ImcFramework.Ioc;
-using ImcFramework.Core.MutilUserProgress;
-using ImcFramework.LogPool;
-using ImcFramework.Core.WcfService;
 
 namespace ImcFramework.Core
 {
@@ -58,6 +61,10 @@ namespace ImcFramework.Core
 
         #endregion
 
+        /// <summary>
+        /// Register a servicetype.
+        /// </summary>
+        /// <param name="serviceType">The given servicetype.</param>
         public void Register(EServiceType serviceType)
         {
             callback = OperationContext.Current.GetCallbackChannel<IMessageCallback>();
@@ -68,6 +75,10 @@ namespace ImcFramework.Core
             Observers.Add(serviceType, callback);
         }
 
+        /// <summary>
+        /// UnRegister a servicetype.
+        /// </summary>
+        /// <param name="serviceType">The given servicetype.</param>
         public void UnRegister(EServiceType serviceType)
         {
             callback = OperationContext.Current.GetCallbackChannel<IMessageCallback>();
@@ -78,6 +89,10 @@ namespace ImcFramework.Core
             Observers.Remove(serviceType, callback);
         }
 
+        /// <summary>
+        /// Request switchs.
+        /// </summary>
+        /// <param name="switchs">Commands.</param>
         public void RequestSwitchs(IEnumerable<FunctionSwitch> switchs)
         {
             foreach (var sw in switchs)
@@ -86,6 +101,10 @@ namespace ImcFramework.Core
             }
         }
 
+        /// <summary>
+        /// Request switch.
+        /// </summary>
+        /// <param name="singleSwitch">Command.</param>
         public void RequestSwitch(FunctionSwitch singleSwitch)
         {
             try
@@ -106,6 +125,11 @@ namespace ImcFramework.Core
             }
         }
 
+        /// <summary>
+        /// Get servicetype info
+        /// </summary>
+        /// <param name="serviceType">The given servicetype.</param>
+        /// <returns>return the serviceinfo of the job.</returns>
         public ServiceInfo GetServiceInfo(EServiceType serviceType)
         {
             try
@@ -126,6 +150,11 @@ namespace ImcFramework.Core
             }
         }
 
+        /// <summary>
+        /// Get loginfo dates.
+        /// </summary>
+        /// <param name="serviceType">The given servicetype.</param>
+        /// <returns>return the loginfo list.</returns>
         public IEnumerable<LogInfo> GetLogInfoDates(EServiceType serviceType)
         {
             var list = new List<LogInfo>();
@@ -141,9 +170,9 @@ namespace ImcFramework.Core
                 var fileNameSpliteItems = item.Name.Split(new string[] { Defaults.BusinessLogFileSplitChar, ".txt" }, StringSplitOptions.RemoveEmptyEntries);
                 if (fileNameSpliteItems != null && fileNameSpliteItems.Length == 3)
                 {
-                    var sellerAccountLogLevel = new SellerAccountLogLevel()
+                    var sellerAccountLogLevel = new UserLogLevel()
                     {
-                        SellerAccount = fileNameSpliteItems[0],
+                        User = fileNameSpliteItems[0],
                         LogLevel = fileNameSpliteItems[1]
                     };
 
@@ -153,7 +182,7 @@ namespace ImcFramework.Core
                         list.Add(new LogInfo()
                         {
                             DateString = fileNameSpliteItems[2],
-                            SellerAccountLogLevels = new List<SellerAccountLogLevel>()
+                            UserLogLevels = new List<UserLogLevel>()
                         {
                             sellerAccountLogLevel
                         }
@@ -161,19 +190,26 @@ namespace ImcFramework.Core
                     }
                     else
                     {
-                        date.SellerAccountLogLevels.Add(sellerAccountLogLevel);
+                        date.UserLogLevels.Add(sellerAccountLogLevel);
                     }
                 }
             }
             return list.OrderByDescending(zw => zw.DateString).ToList();
         }
 
-        public void GetLogInfos(EServiceType serviceType, string date, string sellerAccount, string logLevel)
+        /// <summary>
+        /// Get log infos.
+        /// </summary>
+        /// <param name="serviceType">The given servicetype.</param>
+        /// <param name="date">The date.</param>
+        /// <param name="user">The user</param>
+        /// <param name="logLevel">The loglevel</param>
+        public void GetLogInfos(EServiceType serviceType, string date, string user, string logLevel)
         {
-            var name = sellerAccount + Defaults.BusinessLogFileSplitChar + logLevel + Defaults.BusinessLogFileSplitChar + date;
+            var name = user + Defaults.BusinessLogFileSplitChar + logLevel + Defaults.BusinessLogFileSplitChar + date;
             var directoryInfo = new DirectoryInfo(Defaults.RootDirectory + serviceType.ToString());
             var file = directoryInfo.GetFiles().FirstOrDefault(zw => zw.Name.StartsWith(name));
-
+            //for files.
             if (file != null)
             {
                 File.Copy(file.FullName, file.FullName + "copy");
@@ -204,16 +240,31 @@ namespace ImcFramework.Core
             }
         }
 
+        /// <summary>
+        /// Get progress total info.
+        /// </summary>
+        /// <param name="serviceType">The given servicetype.</param>
+        /// <returns>return the <see cref="ProgressSummary"/> object.</returns>
         public ProgressSummary GetProgressTotal(EServiceType serviceType)
         {
             return progressInfoManager.GetTotal(serviceType);
         }
 
-        public ProgressItem GetProgressSellerAccountTotal(EServiceType serviceType, string sellerAccount)
+        /// <summary>
+        /// Get progress sellerAccount total.
+        /// </summary>
+        /// <param name="serviceType">The given servicetype.</param>
+        /// <param name="user"></param>
+        /// <returns></returns>
+        public ProgressItem GetProgressUserTotal(EServiceType serviceType, string user)
         {
-            return progressInfoManager.GetUserProgressInfo(serviceType, sellerAccount);
+            return progressInfoManager.GetUserProgressInfo(serviceType, user);
         }
 
+        /// <summary>
+        /// Get service list.
+        /// </summary>
+        /// <returns>return the servicetype list.</returns>
         public List<EServiceType> GetServiceList()
         {
             try
@@ -228,11 +279,22 @@ namespace ImcFramework.Core
             }
         }
 
+        /// <summary>
+        /// Login
+        /// </summary>
+        /// <param name="userName">Username.</param>
+        /// <param name="password">Password</param>
+        /// <returns></returns>
         public bool Login(string userName, string password)
         {
             return login.Login(userName, password);
         }
 
+        /// <summary>
+        /// Get requeset paramter.
+        /// </summary>
+        /// <param name="serviceType">The given servicetype.</param>
+        /// <returns>return the parameter list.</returns>
         public RequestParameterList GetRequestParameter(EServiceType serviceType)
         {
             return requestParameterProvider.GetRequestParameter(serviceType);

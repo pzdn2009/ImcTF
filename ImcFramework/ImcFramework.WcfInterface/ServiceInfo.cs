@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using ImcFramework.WcfInterface.Enums;
+using System;
 using System.Runtime.Serialization;
-using System.Text;
 
 namespace ImcFramework.WcfInterface
 {

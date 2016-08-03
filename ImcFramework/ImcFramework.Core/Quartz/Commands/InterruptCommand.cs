@@ -1,15 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using ImcFramework.Data;
 using ImcFramework.WcfInterface;
 using ImcFramework.Core.IsolatedAd;
 using Quartz;
+using ImcFramework.WcfInterface.Enums;
 
 namespace ImcFramework.Core.Quartz.Commands
 {
+    /// <summary>
+    /// Interrupt command.
+    /// </summary>
     public class InterruptCommand : AbstractSchedulerCommand
     {
         public InterruptCommand(IScheduler schedule) : base(schedule)
@@ -17,6 +17,11 @@ namespace ImcFramework.Core.Quartz.Commands
 
         }
 
+        /// <summary>
+        /// Execute the <see cref="ECommand.Interrupt"/> command.
+        /// </summary>
+        /// <param name="input">The input parameter.</param>
+        /// <param name="output">The execute result.</param>
         protected override void ExecuteCore(FunctionSwitch input, ExecuteResult output)
         {
             if (input.Command == ECommand.Interrupt)

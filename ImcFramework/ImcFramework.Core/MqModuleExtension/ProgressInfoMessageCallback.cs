@@ -1,24 +1,35 @@
 ﻿using ImcFramework.Core.MutilUserProgress;
 using ImcFramework.WcfInterface;
+using ImcFramework.WcfInterface.ProgressInfos;
 using ImcFramework.WcfInterface.TransferMessage;
 using System;
 
 namespace ImcFramework.Core.MqModuleExtension
 {
+    /// <summary>
+    /// Callback for the ProgressInfoMessage.
+    /// </summary>
     public class ProgressInfoMessageCallback : ITransferMessageCallback
     {
         private IProgressInfoManager progressInfoManager;
         public ProgressInfoMessageCallback(IProgressInfoManager progressInfoManager)
         {
             this.progressInfoManager = progressInfoManager;
-            this.TranferMessageType = typeof(ProgressInfoMessage);
+            TranferMessageType = typeof(ProgressInfoMessage);
         }
 
+        /// <summary>
+        /// <code>typeof(ProgressInfoMessage)</code>
+        /// </summary>
         public Type TranferMessageType
         {
             get; set;
         }
 
+        /// <summary>
+        /// Transfer ProgressInfoMessage object.
+        /// </summary>
+        /// <param name="transferMsg">the ProgressInfoMessage.</param>
         public void Call(ITransferMessage transferMsg)
         {
             var msg = transferMsg as ProgressInfoMessage;

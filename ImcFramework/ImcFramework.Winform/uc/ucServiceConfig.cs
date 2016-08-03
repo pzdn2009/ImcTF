@@ -1,5 +1,7 @@
 ﻿using ImcFramework.Infrastructure;
 using ImcFramework.WcfInterface;
+using ImcFramework.WcfInterface.Enums;
+using ImcFramework.WcfInterface.ProgressInfos;
 using ImcFramework.WcfInterface.TransferMessage;
 using ImcFramework.Winform.Common;
 using ImcFramework.Winform.uc;

@@ -1,4 +1,5 @@
 ﻿using ImcFramework.WcfInterface;
+using ImcFramework.WcfInterface.Enums;
 using ImcFramework.Winform.Common;
 using System;
 using System.Data;

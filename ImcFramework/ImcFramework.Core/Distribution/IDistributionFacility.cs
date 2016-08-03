@@ -4,9 +4,9 @@ using System.Collections.Generic;
 namespace ImcFramework.Core.Distribution
 {
     /// <summary>
-    /// 分布式设施
+    /// Distribution facility for deal messages.
     /// </summary>
-    public interface IDistributionFacility<out T>  where T :ITransferMessage
+    public interface IDistributionFacility<out T> where T : ITransferMessage
     {
         /// <summary>
         /// store a message

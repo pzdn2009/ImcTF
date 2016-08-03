@@ -1,21 +1,28 @@
-﻿using ImcFramework.Core.MutilUserProgress;
-using ImcFramework.LogPool;
-using ImcFramework.WcfInterface;
-using ImcFramework.WcfInterface.TransferMessage;
+﻿using ImcFramework.WcfInterface;
 using System;
 using System.Collections.Generic;
 using System.ServiceModel;
 
 namespace ImcFramework.Core
 {
+    /// <summary>
+    /// Wcf client object.
+    /// </summary>
     public class Client
     {
+        /// <summary>
+        /// ServiceType.
+        /// </summary>
         public EServiceType ServiceType { get; set; }
+
+        /// <summary>
+        /// The Callback instances.
+        /// </summary>
         public List<IMessageCallback> Callbacks { get; set; }
     }
 
     /// <summary>
-    /// 存放客户端
+    /// Manage the <see cref="Client"/>s .
     /// </summary>
     public class Observers
     {
@@ -27,6 +34,12 @@ namespace ImcFramework.Core
             clientList = new List<Client>();
         }
 
+        /// <summary>
+        /// Check the given servicetype and callback exists whether or not.
+        /// </summary>
+        /// <param name="serviceType">The given servicetype.</param>
+        /// <param name="callback">The callback instance.</param>
+        /// <returns>return true if exists,otherwise return false.</returns>
         public static bool Exist(EServiceType serviceType, IMessageCallback callback)
         {
             lock (lockObject)
@@ -40,6 +53,11 @@ namespace ImcFramework.Core
             }
         }
 
+        /// <summary>
+        /// Add a servicetype & callback.
+        /// </summary>
+        /// <param name="serviceType">The given servicetype.</param>
+        /// <param name="callback">The callback instance.</param>
         public static void Add(EServiceType serviceType, IMessageCallback callback)
         {
             lock (lockObject)
@@ -56,6 +74,11 @@ namespace ImcFramework.Core
             }
         }
 
+        /// <summary>
+        /// Remove a servicetype & callback.
+        /// </summary>
+        /// <param name="serviceType">The given servicetype.</param>
+        /// <param name="callback">The callback instance.</param>
         public static void Remove(EServiceType serviceType, IMessageCallback callback)
         {
             if (Exist(serviceType, callback))
@@ -69,10 +92,10 @@ namespace ImcFramework.Core
         }
 
         /// <summary>
-        /// 客户端回调
+        /// Common callback for all clients.
         /// </summary>
-        /// <param name="serviceType"></param>
-        /// <param name="action"></param>
+        /// <param name="serviceType">The given servicetype.</param>
+        /// <param name="action">The action body.</param>
         public static void CommonCallbackAction(EServiceType serviceType, Action<IMessageCallback> action)
         {
             CheckCallbackChannels();
@@ -94,7 +117,10 @@ namespace ImcFramework.Core
             }
         }
 
-        public static void CheckCallbackChannels()
+        /// <summary>
+        /// Ensure the client is connecting.
+        /// </summary>
+        private static void CheckCallbackChannels()
         {
             lock (lockObject)
             {

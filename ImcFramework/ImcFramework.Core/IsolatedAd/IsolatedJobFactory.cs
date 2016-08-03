@@ -1,15 +1,11 @@
 ﻿using Quartz;
 using Quartz.Spi;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ImcFramework.Core.IsolatedAd
 {
     /// <summary>
-    /// 隔离的Job工厂
+    /// Isolated JobFactory,which creates the <see cref="IsolatedJob"/> object.
     /// </summary>
     public class IsolatedJobFactory : IJobFactory
     {
@@ -26,10 +22,7 @@ namespace ImcFramework.Core.IsolatedAd
         public void ReturnJob(IJob job)
         {
             IDisposable disposable = job as IDisposable;
-            if (disposable != null)
-            {
-                disposable.Dispose();
-            }
+            disposable?.Dispose();
         }
     }
 }

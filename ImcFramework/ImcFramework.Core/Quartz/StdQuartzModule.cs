@@ -1,6 +1,4 @@
 ﻿using ImcFramework.Core.IsolatedAd;
-using ImcFramework.Ioc;
-using ImcFramework.LogPool;
 using Quartz;
 using Quartz.Impl;
 using System.Collections.Generic;
@@ -19,6 +17,9 @@ namespace ImcFramework.Core.Quartz
         {
         }
 
+        /// <summary>
+        /// The module name.
+        /// </summary>
         public override string Name
         {
             get
@@ -27,6 +28,9 @@ namespace ImcFramework.Core.Quartz
             }
         }
 
+        /// <summary>
+        /// Initialize the module.
+        /// </summary>
         public override void Initialize()
         {
             base.Initialize();
@@ -34,6 +38,9 @@ namespace ImcFramework.Core.Quartz
             IocManager.Register<IScheduler>(new StdSchedulerFactory().GetScheduler());
         }
 
+        /// <summary>
+        /// Start the module.
+        /// </summary>
         public override void Start()
         {
             base.Start();
@@ -61,6 +68,9 @@ namespace ImcFramework.Core.Quartz
             }
         }
 
+        /// <summary>
+        /// Stop the module.
+        /// </summary>
         public override void Stop()
         {
             if (scheduler != null)

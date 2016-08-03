@@ -1,8 +1,8 @@
 ﻿using ImcFramework.WcfInterface;
 using System.ServiceModel;
 using System;
-using System.Windows.Forms;
 using ImcFramework.WcfInterface.TransferMessage;
+using ImcFramework.WcfInterface.ProgressInfos;
 
 namespace ImcFramework.Winform
 {
@@ -19,7 +19,7 @@ namespace ImcFramework.Winform
             Console.WriteLine();
         }
 
-        public void NotifyTaskProgressTotal(WcfInterface.ProgressSummary totalInfo)
+        public void NotifyTaskProgressTotal(ProgressSummary totalInfo)
         {
             Console.WriteLine();
         }
@@ -29,7 +29,7 @@ namespace ImcFramework.Winform
             Console.WriteLine();
         }
 
-        public void NotifyTaskProgressItemValueAndTotal(string sellerAccount, WcfInterface.ProgressItem sellerAccountProgress)
+        public void NotifyTaskProgressItemValueAndTotal(string sellerAccount, ProgressItem sellerAccountProgress)
         {
             Console.WriteLine();
         }

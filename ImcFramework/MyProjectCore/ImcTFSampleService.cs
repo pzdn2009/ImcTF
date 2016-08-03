@@ -2,6 +2,7 @@
 using ImcFramework.Core;
 using ImcFramework.Core.Quartz;
 using ImcFramework.WcfInterface;
+using ImcFramework.WcfInterface.ProgressInfos;
 using Quartz;
 using System.Threading;
 

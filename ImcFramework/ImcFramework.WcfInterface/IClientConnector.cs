@@ -1,83 +1,80 @@
-﻿using System;
+﻿using ImcFramework.WcfInterface.LogInfos;
+using ImcFramework.WcfInterface.ProgressInfos;
 using System.Collections.Generic;
-using System.Linq;
 using System.ServiceModel;
-using System.Text;
 
 namespace ImcFramework.WcfInterface
 {
     /// <summary>
-    /// 供客户端使用的服务契约
+    /// Wcf interface for the clients.
     /// </summary>
     [ServiceContract(CallbackContract = typeof(IMessageCallback))]
     public interface IClientConnector
     {
+        /// <summary>
+        /// Login.
+        /// </summary>
+        /// <param name="userName">Username.</param>
+        /// <param name="password">Password.</param>
+        /// <returns></returns>
         [OperationContract]
         bool Login(string userName, string password);
 
         /// <summary>
-        /// 注册（登陆）
+        /// Reigster to the framework.
         /// </summary>
-        /// <param name="serviceType">（业务）服务类型</param>
+        /// <param name="serviceType">The given servicetype.</param>
         [OperationContract]
         void Register(EServiceType serviceType);
 
         /// <summary>
-        /// 注销
+        /// UnResiter from the framework.
         /// </summary>
-        /// <param name="serviceType">（业务）服务类型</param>
+        /// <param name="serviceType">The given servicetype.</param>
         [OperationContract]
         void UnRegister(EServiceType serviceType);
 
         /// <summary>
-        /// 获取所有的服务列表
+        /// Get all servicetype list.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>return the servicetypes.</returns>
         [OperationContract]
         List<EServiceType> GetServiceList();
 
         /// <summary>
-        /// 请求指令（开关）
+        /// Request switch
         /// </summary>
-        /// <param name="singleSwitch">单个指令</param>
+        /// <param name="singleSwitch">singleSwitch</param>
         [OperationContract]
         void RequestSwitch(FunctionSwitch singleSwitch);
 
         /// <summary>
-        /// 请求指令
+        /// Request switchs
         /// </summary>
-        /// <param name="switchs">指令集合</param>
+        /// <param name="switchs">switchs</param>
         [OperationContract]
         void RequestSwitchs(IEnumerable<FunctionSwitch> switchs);
 
         /// <summary>
-        /// 查询服务状态
+        /// Get service info
         /// </summary>
-        /// <param name="serviceType">（业务）服务类型</param>
-        /// <returns>服务状态信息</returns>
+        /// <param name="serviceType">The given servicetype.</param>
+        /// <returns>return the serviceinfo instance.</returns>
         [OperationContract]
         ServiceInfo GetServiceInfo(EServiceType serviceType);
 
         /// <summary>
-        /// 查询所有的日期和所有账号
+        /// Get loginfo
         /// </summary>
         /// <returns></returns>
         [OperationContract]
         IEnumerable<LogInfo> GetLogInfoDates(EServiceType serviceType);
 
-        /// <summary>
-        /// 按照日期和服务类型查询
-        /// </summary>
-        /// <param name="date">保持yyyy-MM-dd的格式</param>
-        /// <param name="serviceType"></param>
-        /// <param name="sellerAccount"></param>
-        /// <param name="logLevel"></param>
-        /// <returns></returns>
         [OperationContract]
-        void GetLogInfos(EServiceType serviceType, string date, string sellerAccount, string logLevel);
+        void GetLogInfos(EServiceType serviceType, string date, string user, string logLevel);
 
         /// <summary>
-        /// 获取进度总数
+        /// Get ProgressTotal 
         /// </summary>
         /// <param name="serviceType"></param>
         /// <returns></returns>
@@ -85,17 +82,18 @@ namespace ImcFramework.WcfInterface
         ProgressSummary GetProgressTotal(EServiceType serviceType);
 
         /// <summary>
-        /// 获取单个账号的进度与总量
+        /// GetProgress user total
         /// </summary>
-        /// <param name="serviceType"></param>
-        /// <param name="sellerAccount"></param>
+        /// <param name="serviceType">The servicetype.</param>
+        /// <param name="user">The user.</param>
+        /// <returns></returns>
         [OperationContract]
-        ProgressItem GetProgressSellerAccountTotal(EServiceType serviceType, string sellerAccount);
+        ProgressItem GetProgressUserTotal(EServiceType serviceType, string user);
         
         /// <summary>
         /// Get the Job Parameters about the serviceType
         /// </summary>
-        /// <param name="serviceType"></param>
+        /// <param name="serviceType">The </param>
         /// <returns></returns>
         [OperationContract]
         RequestParameterList GetRequestParameter(EServiceType serviceType);

@@ -1,9 +1,5 @@
-﻿using ImcFramework.WcfInterface;
-using ImcFramework.WcfInterface.TransferMessage;
+﻿using ImcFramework.WcfInterface.Enums;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace ImcFramework.WcfInterface.TransferMessage
 {

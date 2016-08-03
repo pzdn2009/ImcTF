@@ -1,6 +1,7 @@
 ﻿using ImcFramework.Commands;
 using ImcFramework.Data;
 using ImcFramework.WcfInterface;
+using ImcFramework.WcfInterface.Enums;
 using Quartz;
 using System;
 

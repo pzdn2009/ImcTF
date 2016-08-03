@@ -8,6 +8,9 @@ using Autofac.Integration.Wcf;
 
 namespace ImcFramework.Core.WcfService
 {
+    /// <summary>
+    /// Wcf service module.
+    /// </summary>
     public class WcfServiceModule : ServiceModuleBase
     {
         public const string MODUEL_NAME = "WcfService_Module";
@@ -24,6 +27,9 @@ namespace ImcFramework.Core.WcfService
             base.Initialize();
         }
 
+        /// <summary>
+        /// The module name.
+        /// </summary>
         public override string Name
         {
             get
@@ -32,6 +38,9 @@ namespace ImcFramework.Core.WcfService
             }
         }
 
+        /// <summary>
+        /// Start the module.
+        /// </summary>
         public override void Start()
         {
             base.Start();
@@ -61,15 +70,15 @@ namespace ImcFramework.Core.WcfService
                 ServiceHost.Opened += delegate
                 {
                     var Logger = LoggerPool.GetLogger("");
-                    Logger.Info("Host-->终结点为：" + ServiceHost.Description.Endpoints.FirstOrDefault().Address);
-                    Logger.Info("Host-->服务启动，开始监听：" + ServiceHost.Description.ConfigurationName);
+                    Logger.Info("Host-->Endpoint：" + ServiceHost.Description.Endpoints.FirstOrDefault().Address);
+                    Logger.Info("Host-->Service started：" + ServiceHost.Description.ConfigurationName);
                 };
 
                 ServiceHost.Closed += delegate
                 {
                     var Logger = LoggerPool.GetLogger("");
-                    Logger.Info("Host-->终结点为：" + ServiceHost.Description.Endpoints.FirstOrDefault().Address);
-                    Logger.Info("Host-->服务关闭，Close：" + ServiceHost.Description.ConfigurationName);
+                    Logger.Info("Host-->Endpoint：" + ServiceHost.Description.Endpoints.FirstOrDefault().Address);
+                    Logger.Info("Host-->Service closed：" + ServiceHost.Description.ConfigurationName);
                 };
 
                 Thread th = new Thread(ServiceHost.Open);
@@ -84,6 +93,9 @@ namespace ImcFramework.Core.WcfService
             }
         }
 
+        /// <summary>
+        /// Stop the module.
+        /// </summary>
         public override void Stop()
         {
             if (ServiceHost != null)

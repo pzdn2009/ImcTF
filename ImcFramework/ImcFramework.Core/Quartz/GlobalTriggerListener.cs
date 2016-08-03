@@ -1,22 +1,18 @@
-﻿using ImcFramework.Core.WcfService;
-using ImcFramework.Data;
-using ImcFramework.LogPool;
+﻿using ImcFramework.LogPool;
 using Quartz;
-using System.Linq;
 
 namespace ImcFramework.Core.Quartz
 {
+    /// <summary>
+    /// Global trigger listener.
+    /// </summary>
     public class GlobalTriggerListener : ITriggerListener
     {
         private ILoggerPool loggerPool;
-        private ICommandInvoker commandInvoker;
-        private IServiceTypeReader serviceTypeReader;
 
-        public GlobalTriggerListener(ILoggerPool loggerPool, ICommandInvoker commandInvoker, IServiceTypeReader serviceTypeReader)
+        public GlobalTriggerListener(ILoggerPool loggerPool)
         {
             this.loggerPool = loggerPool;
-            this.commandInvoker = commandInvoker;
-            this.serviceTypeReader = serviceTypeReader;
         }
 
         public virtual string Name
@@ -49,12 +45,6 @@ namespace ImcFramework.Core.Quartz
             });
 
             return;
-
-            commandInvoker.Invoke<ExecuteResult>(new WcfInterface.FunctionSwitch()
-            {
-                Command = WcfInterface.ECommand.RunImmediately,
-                ServiceType = serviceTypeReader.GetEServiceTypes().FirstOrDefault(zw => zw.ServiceType == jobName)
-            });
         }
 
         public bool VetoJobExecution(ITrigger trigger, IJobExecutionContext context)

@@ -5,6 +5,9 @@
     /// </summary>
     public interface ICancel
     {
+        /// <summary>
+        /// Cancel a job.
+        /// </summary>
         void Cancel();
     }
 }

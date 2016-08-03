@@ -13,7 +13,7 @@ namespace ImcFramework.Core.WcfService
         {
             if (userName != "pzdn2009" && password != "pzdn2009")
             {
-                throw new SecurityTokenException("用户名和密码不正确");
+                throw new SecurityTokenException("wcf validate failure.");
             }
         }
     }

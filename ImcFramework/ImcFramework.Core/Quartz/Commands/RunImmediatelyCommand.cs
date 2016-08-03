@@ -1,10 +1,13 @@
 using Quartz;
-using System;
 using ImcFramework.Data;
 using ImcFramework.WcfInterface;
+using ImcFramework.WcfInterface.Enums;
 
 namespace ImcFramework.Core.Quartz.Commands
 {
+    /// <summary>
+    /// Run immediately command.
+    /// </summary>
     public class RunImmediatelyCommand : AbstractSchedulerCommand
     {
         public RunImmediatelyCommand(IScheduler scheduler) : base(scheduler)
@@ -12,6 +15,11 @@ namespace ImcFramework.Core.Quartz.Commands
 
         }
 
+        /// <summary>
+        /// Execute the <see cref="ECommand.RunImmediately"/> command.
+        /// </summary>
+        /// <param name="input">The input parameter.</param>
+        /// <param name="output">The execute result.</param>
         protected override void ExecuteCore(FunctionSwitch input, ExecuteResult output)
         {
             if (input.Command == ECommand.RunImmediately)

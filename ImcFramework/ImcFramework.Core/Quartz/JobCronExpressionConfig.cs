@@ -1,5 +1,4 @@
-﻿using ImcFramework.WcfInterface;
-using Quartz;
+﻿using Quartz;
 using System;
 using System.IO;
 using System.Linq;
@@ -7,6 +6,9 @@ using System.Xml.Linq;
 
 namespace ImcFramework.Core.Quartz
 {
+    /// <summary>
+    /// Job cron-expression config
+    /// </summary>
     public class JobCronExpressionConfig
     {
         private static readonly string fileName = AppDomain.CurrentDomain.BaseDirectory + "\\quartz_jobs.xml";
@@ -15,17 +17,17 @@ namespace ImcFramework.Core.Quartz
         private static object lockObject = new object();
 
         /// <summary>
-        /// 从指定的配置文件读取服务配置
+        /// Get cron-config from quartz-job file.
         /// </summary>
-        /// <param name="fileName">文件名</param>
-        /// <returns>列表集合</returns>
+        /// <param name="fileName">The quartz-job filename.</param>
+        /// <returns>return the cron-config.</returns>
         public static string GetCronExpression(ITrigger trigger)
         {
             lock (lockObject)
             {
                 if (!File.Exists(fileName))
                 {
-                    throw new FileNotFoundException("找不到服务配置文件quartz_jobs！");
+                    throw new FileNotFoundException("Can't find the quartz_jobs.xml file！");
                 }
 
                 XDocument doc = XDocument.Load(fileName);
@@ -42,13 +44,19 @@ namespace ImcFramework.Core.Quartz
             }
         }
 
+        /// <summary>
+        /// Set the cron-config to quartz-job file.
+        /// </summary>
+        /// <param name="trigger">Trigger info.</param>
+        /// <param name="cronExpr">cron-expression.</param>
+        /// <returns>return the setted value.</returns>
         public static string SetCronExpression(ITrigger trigger, string cronExpr)
         {
             lock (lockObject)
             {
                 if (!File.Exists(fileName))
                 {
-                    throw new FileNotFoundException("找不到服务配置文件quartz_jobs！");
+                    throw new FileNotFoundException("Can't find the quartz_jobs.xml file！");
                 }
 
                 XDocument doc = XDocument.Load(fileName);

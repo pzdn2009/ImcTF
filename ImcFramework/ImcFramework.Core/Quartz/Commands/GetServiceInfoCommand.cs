@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ImcFramework.Data;
-using ImcFramework.WcfInterface;
+﻿using ImcFramework.WcfInterface;
+using ImcFramework.WcfInterface.Enums;
 using Quartz;
-using ImcFramework.Commands;
 
 namespace ImcFramework.Core.Quartz.Commands
 {
+    /// <summary>
+    /// GetServiceInfo command.
+    /// </summary>
     public class GetServiceInfoCommand : AbstractSchedulerCommand<GetServiceInfoOutput>
     {
         public GetServiceInfoCommand(IScheduler schedule) : base(schedule)
@@ -17,6 +14,11 @@ namespace ImcFramework.Core.Quartz.Commands
 
         }
 
+        /// <summary>
+        /// Execute the <see cref="ECommand.GetServiceInfo"/> command.
+        /// </summary>
+        /// <param name="input">The input parameter.</param>
+        /// <param name="output">The execute result.</param>
         protected override void ExecuteCore(FunctionSwitch input, GetServiceInfoOutput output)
         {
             if (input.Command == ECommand.GetServiceInfo)

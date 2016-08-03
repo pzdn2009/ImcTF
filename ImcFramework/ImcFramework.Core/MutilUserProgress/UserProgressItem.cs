@@ -1,10 +1,10 @@
-﻿using ImcFramework.WcfInterface;
+﻿using ImcFramework.WcfInterface.ProgressInfos;
 using System.Collections.Generic;
 
 namespace ImcFramework.Core.MutilUserProgress
 {
     /// <summary>
-    /// one summary with many user progress item
+    /// The dictionary for the user as key,the <see cref="ProgressItem"/> as value.
     /// </summary>
     public class UserProgressItem : Dictionary<string, ProgressItem>
     {

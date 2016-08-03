@@ -8,7 +8,7 @@
         /// <summary>
         /// Current version of the ImcFramework
         /// </summary>
-        public const string CurrentVersion = "1.1.0.4";
+        public const string CurrentVersion = "1.1.0.5";
 
         /// <summary>
         /// The beginning of the framework's namespace, which used to register for ioc.

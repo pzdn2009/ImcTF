@@ -1,44 +1,44 @@
-﻿using ImcFramework.WcfInterface.TransferMessage;
+﻿using ImcFramework.WcfInterface.Enums;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.Serialization;
-using System.Text;
 
 namespace ImcFramework.WcfInterface.TransferMessage
 {
+    /// <summary>
+    /// MessageEntity.
+    /// </summary>
     [DataContract]
     public class MessageEntity : ITransferMessage
     {
         /// <summary>
-        /// 业务服务类型
+        /// The Servicetype.
         /// </summary>
         [DataMember]
         public EServiceType ServiceType { get; set; }
 
-        #region 客户端消息
+        #region Clients
 
         /// <summary>
-        /// 时间
+        /// Timestamp
         /// </summary>
         [DataMember]
         public DateTime Timestamp { get; set; }
 
         /// <summary>
-        /// 消息内容
+        /// The message .
         /// </summary>
         [DataMember]
         public string MsgContent { get; set; }
 
         /// <summary>
-        /// 消息类型
+        /// The message type.
         /// </summary>
         [DataMember]
         public EMessageType MessageType { get; set; }
 
         #endregion
 
-        #region　日志消息
+        #region　Logs
 
         public string User { get; set; }
 
@@ -50,9 +50,6 @@ namespace ImcFramework.WcfInterface.TransferMessage
 
         #endregion
 
-        /// <summary>
-        /// 回调方法名
-        /// </summary>
         public string CallbackMethodName { get; set; }
 
         public static MessageEntity NormalInfo(EServiceType serviceType, string msgContent = "")

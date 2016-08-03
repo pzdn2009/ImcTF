@@ -4,8 +4,18 @@ using System;
 
 namespace ImcFramework.Core.Quartz
 {
+    /// <summary>
+    /// Resolve the request parameters.
+    /// </summary>
     public static class ResolveParameters
     {
+        /// <summary>
+        /// Get parameter value from the jobcontext by the parameter name.
+        /// </summary>
+        /// <typeparam name="T">The generic type.</typeparam>
+        /// <param name="context">The job-context.</param>
+        /// <param name="paramName">The parameter name.</param>
+        /// <returns>return the parameter value.</returns>
         public static T GetParameter<T>(this IJobExecutionContext context, string paramName)
         {
             if (context.MergedJobDataMap != null)
@@ -16,6 +26,13 @@ namespace ImcFramework.Core.Quartz
             return default(T);
         }
 
+        /// <summary>
+        /// Get comma parameter value list from the jobcontext by the parameter name.
+        /// </summary>
+        /// <typeparam name="T">The generic type.</typeparam>
+        /// <param name="context">The job-context.</param>
+        /// <param name="paramName">The parameter name.</param>
+        /// <returns>return the parameter value list.</returns>
         public static IEnumerable<T> GetParameters<T>(this IJobExecutionContext context, string paramName)
         {
             if (context.MergedJobDataMap != null)

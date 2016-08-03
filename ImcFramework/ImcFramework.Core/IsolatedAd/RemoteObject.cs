@@ -1,72 +1,74 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
 using System.Runtime.Remoting.Lifetime;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ImcFramework.Core.IsolatedAd
 {
     /// <summary>
-    /// 隔离对象
+    /// Remote object for a new appdomain call.
     /// </summary>
     public class RemoteObject : MarshalByRefObject, IDisposable, ISponsor
     {
+        /// <summary>
+        /// The instance of the input type.
+        /// </summary>
+        private object m_Instance;
+
+        /// <summary>
+        /// The input type
+        /// </summary>
+        private Type m_Type;
+
+        /// <summary>
+        /// The assemly of the input type.
+        /// </summary>
         public Assembly CurrAssembly
         {
             get;
             private set;
         }
-
-        private object Instance
-        {
-            get;
-            set;
-        }
-
-        private Type Type
-        {
-            get;
-            set;
-        }
-
+        
         /// <summary>
-        /// 初始化对象信息
+        /// Initialize the assembly & instance & type.
         /// </summary>
-        /// <param name="assemblyFile">程序集文件</param>
-        /// <param name="typeName">类型</param>
+        /// <param name="assemblyFile">the asembly file</param>
+        /// <param name="typeName">the full type of the isolated job.</param>
         public void Init(string assemblyFile, string typeName)
         {
-            this.CurrAssembly = Assembly.LoadFrom(assemblyFile);
-            this.Type = this.CurrAssembly.GetType(typeName);
-            if (this.Type != null)
-                this.Instance = Activator.CreateInstance(this.Type);
+            CurrAssembly = Assembly.LoadFrom(assemblyFile);
+            m_Type = CurrAssembly.GetType(typeName);
+            if (m_Type != null)
+            {
+                m_Instance = Activator.CreateInstance(m_Type);
+            }
         }
 
-        #region 调用方法
+        #region executions.
 
         /// <summary>
-        /// 调用方法，并返回
+        /// Execute method in a appdomain with a return .
         /// </summary>
-        /// <typeparam name="T">返回值烈性</typeparam>
-        /// <param name="methodName">方法名称</param>
-        /// <param name="parameters">参数</param>
+        /// <typeparam name="T">the generic instance of the execution.</typeparam>
+        /// <param name="methodName">the invoking method name.</param>
+        /// <param name="parameters">the invoking parameters.</param>
         /// <returns></returns>
         public T ExecuteMethod<T>(string methodName, params object[] parameters)
         {
-            return (T)this.Type.GetMethod(methodName).Invoke(this.Instance, parameters);
+            return (T)m_Type.GetMethod(methodName).Invoke(this.m_Instance, parameters);
         }
 
         /// <summary>
-        /// 调用方法，无返回
+        /// Execute method in a appdomain without any return.
         /// </summary>
-        /// <param name="methodName">方法名称</param>
-        /// <param name="parameters">参数</param>
+        /// <typeparam name="T">the generic instance of the execution.</typeparam>
+        /// <param name="methodName">the invoking method name.</param>
+        /// <param name="parameters">the invoking parameters.</param>
+        /// <returns></returns>
         public void ExecuteMethod(string methodName, params object[] parameters)
         {
-            this.Type.GetMethod(methodName).Invoke(this.Instance, parameters);
+            m_Type.GetMethod(methodName).Invoke(this.m_Instance, parameters);
         }
+
         #endregion
 
         ~RemoteObject()
@@ -76,27 +78,27 @@ namespace ImcFramework.Core.IsolatedAd
 
         public void Dispose()
         {
-            this.Dispose(true);
+            Dispose(true);
             GC.SuppressFinalize(this);
         }
 
         protected virtual void Dispose(bool disposing)
         {
-            if (disposing && this.Instance != null)
+            if (disposing && m_Instance != null)
             {
-                var method = this.Type.GetMethod("Dispose");
+                var method = m_Type.GetMethod("Dispose");
                 if (method != null)
-                    method.Invoke(this.Instance, null);
+                    method.Invoke(m_Instance, null);
             }
         }
 
         /// <summary>
-        /// 远程对象续约
+        /// Renewal for the remote object in a appdomain.
         /// </summary>
         public TimeSpan Renewal(ILease lease)
         {
 #if DEBUG
-            Console.WriteLine("续约");
+            Console.WriteLine("Renewal");
 #endif
             return TimeSpan.FromMinutes(5);
         }

@@ -1,6 +1,10 @@
 ﻿using System.Runtime.Serialization;
 namespace ImcFramework.WcfInterface
 {
+    /// <summary>
+    /// The servicetype for a job which run in a isolated appdoamin.
+    /// At first, EServiceType is designed as a enum , but now, it's a class.
+    /// </summary>
     [DataContract]
     public class EServiceType
     {

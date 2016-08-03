@@ -3,6 +3,9 @@ using Quartz;
 
 namespace ImcFramework.Core.Quartz
 {
+    /// <summary>
+    /// Global job listener.
+    /// </summary>
     public class GlobalJobListener : IJobListener
     {
         private ILoggerPool loggerPool;
@@ -21,6 +24,11 @@ namespace ImcFramework.Core.Quartz
 
         }
 
+        /// <summary>
+        /// After job was Executed
+        /// </summary>
+        /// <param name="context">The context.</param>
+        /// <param name="jobException">The exception.</param>
         public void JobWasExecuted(IJobExecutionContext context, JobExecutionException jobException)
         {
             if (jobException != null)
