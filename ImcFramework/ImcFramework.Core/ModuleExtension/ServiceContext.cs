@@ -5,23 +5,23 @@ using System.ServiceModel;
 namespace ImcFramework.Core
 {
     /// <summary>
-    /// 服务上下文
+    /// Service context for the extension modules
     /// </summary>
     public class ServiceContext
     {
         /// <summary>
-        /// Wcf服务
+        /// Service host for the framework ,which providers communication with the wcf clients.
         /// </summary>
         public ServiceHost WcfHost { get; set; }
 
         /// <summary>
-        /// 定时器
+        /// Scheduler for the framework,whick schedules the jobs.
         /// </summary>
         public IScheduler Scheduler { get; set; }
 
         /// <summary>
-        /// 进度管理
+        /// Progress manager for the jobs.
         /// </summary>
-        public ProgressInfoManager ProgressInfoManager { get; set; }
+        public IProgressInfoManager ProgressInfoManager { get; set; }
     }
 }

@@ -1,10 +1,6 @@
-﻿using ImcFramework.WcfInterface.TransferMessage;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using ImcFramework.WcfInterface.ProgressInfos;
+using ImcFramework.WcfInterface.TransferMessage;
 using System.ServiceModel;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ImcFramework.WcfInterface
 {

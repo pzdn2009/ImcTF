@@ -1,21 +1,26 @@
 ﻿using Quartz;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using ImcFramework.Data;
 using ImcFramework.WcfInterface;
 using ImcFramework.Core.IsolatedAd;
+using ImcFramework.WcfInterface.Enums;
 
 namespace ImcFramework.Core.Quartz.Commands
 {
+    /// <summary>
+    /// Cancel command.
+    /// </summary>
     public class CancelCommand : AbstractSchedulerCommand
     {
         public CancelCommand(IScheduler schedule) : base(schedule)
         {
         }
 
+        /// <summary>
+        /// Execute the <see cref="ECommand.Cancel"/> command.
+        /// </summary>
+        /// <param name="input">The input parameter.</param>
+        /// <param name="output">The execute result.</param>
         protected override void ExecuteCore(FunctionSwitch input, ExecuteResult output)
         {
             if (input.Command == ECommand.Cancel)

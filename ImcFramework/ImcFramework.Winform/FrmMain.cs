@@ -1,4 +1,5 @@
 ﻿using ImcFramework.WcfInterface;
+using ImcFramework.WcfInterface.Enums;
 using ImcFramework.Winform.Common;
 using System;
 using System.Data;
@@ -30,10 +31,10 @@ namespace ImcFramework.Winform
             MyClients.OnBindingChanged += BindingChanged;
         }
 
-        public void BindingChanged(object sender,EventArgs e)
+        public async void BindingChanged(object sender,EventArgs e)
         {
             NeedRefresh = true;
-            GetServiceList();
+            await GetServiceListAsync();
         }
 
         private void FrmMain_Load(object sender, EventArgs e)
@@ -47,7 +48,7 @@ namespace ImcFramework.Winform
             Task.Factory.StartNew(LoopToReadServiceStatus);
         }
 
-        public void GetServiceList()
+        public async Task GetServiceListAsync()
         {
             this.splitContainer1.FixedPanel = FixedPanel.Panel1;
             this.splitContainer1.Panel1.Controls.Clear();
@@ -56,7 +57,7 @@ namespace ImcFramework.Winform
             {
                 EnsureClientConnector();
 
-                var serviceList = m_WsDualClient.GetServiceList();
+                var serviceList = await m_WsDualClient.GetServiceListAsync();
 
                 int cnt = 0;
                 foreach (var en in serviceList)
@@ -108,7 +109,7 @@ namespace ImcFramework.Winform
         {
             while (true)
             {
-                System.Threading.Thread.Sleep(3000);
+                Thread.Sleep(3000);
 
                 EnsureClientConnector();
 
@@ -293,7 +294,7 @@ namespace ImcFramework.Winform
         {
             EnsureClientConnector();
 
-            GetServiceList();
+            GetServiceListAsync();
         }
 
         private void window服务ToolStripMenuItem_Click(object sender, EventArgs e)

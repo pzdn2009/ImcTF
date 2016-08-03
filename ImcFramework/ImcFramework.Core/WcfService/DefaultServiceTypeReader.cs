@@ -6,6 +6,9 @@ using System.Collections.Generic;
 
 namespace ImcFramework.Core.WcfService
 {
+    /// <summary>
+    /// Default servicetype reader.
+    /// </summary>
     public class DefaultServiceTypeReader : IServiceTypeReader
     {
         private static List<EServiceType> serviceTypes;
@@ -18,6 +21,10 @@ namespace ImcFramework.Core.WcfService
             this.typeFinder = typeFinder;
         }
 
+        /// <summary>
+        /// Get all servicetypes.
+        /// </summary>
+        /// <returns></returns>
         public IEnumerable<EServiceType> GetEServiceTypes()
         {
             if (serviceTypes == null)
@@ -48,7 +55,12 @@ namespace ImcFramework.Core.WcfService
             return serviceTypes;
         }
 
-        public static bool IsJobType(Type type)
+        /// <summary>
+        /// Check if the type is IJob.
+        /// </summary>
+        /// <param name="type">the input type.</param>
+        /// <returns>return true if the type is IJob,otherwise,return false.</returns>
+        private static bool IsJobType(Type type)
         {
             return
                 type.IsClass &&

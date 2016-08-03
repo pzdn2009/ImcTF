@@ -1,15 +1,18 @@
 ﻿using ImcFramework.WcfInterface;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using ImcFramework.WcfInterface.ProgressInfos;
 
 namespace ImcFramework.Core.MutilUserProgress
 {
+    /// <summary>
+    /// The default progress info manager.
+    /// </summary>
     public class ProgressInfoManager : IProgressInfoManager
     {
+        private ServiceTypeProgressInfo serviceTypePrgressInfo = new ServiceTypeProgressInfo();
+
         private ProgressInfoManager() { }
+
+        #region single-ton
 
         private static ProgressInfoManager instance = new ProgressInfoManager();
         private static object lockObject = new object();
@@ -29,7 +32,7 @@ namespace ImcFramework.Core.MutilUserProgress
             }
         }
 
-        private ServiceTypeProgressInfo serviceTypePrgressInfo = new ServiceTypeProgressInfo();
+        #endregion  
 
         #region Query
 

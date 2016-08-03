@@ -1,16 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Reflection;
 using System.Runtime.Remoting.Lifetime;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ImcFramework.Core.IsolatedAd
 {
     /// <summary>
-    /// 隔离域加载器
+    /// Isolate Domain Loader
     /// </summary>
     public class IsolateDomainLoader : IDisposable
     {
@@ -20,13 +17,13 @@ namespace ImcFramework.Core.IsolatedAd
         /// <summary>
         /// 名称限定
         /// </summary>
-        /// <param name="appDomainName">类型名称用作Ad名</param>
-        /// <param name="adPath">路径</param>
-        /// <param name="parentPath">应用程序exe路径</param>
-        /// <param name="configFileName">配置文件名称</param>
+        /// <param name="appDomainName">the app domain name of for the isolated job.</param>
+        /// <param name="adPath">the shadow dll's path</param>
+        /// <param name="parentPath">the path of the process</param>
+        /// <param name="configFileName">the config file for the isolated job.</param>
         public IsolateDomainLoader(string appDomainName, string adPath, string parentPath, string configFileName)
         {
-            this.m_TypeFullName = appDomainName;
+            m_TypeFullName = appDomainName;
 
             var setup = new AppDomainSetup();
             setup.ApplicationName = "IsolateDomainLoader";
@@ -34,28 +31,23 @@ namespace ImcFramework.Core.IsolatedAd
             setup.PrivateBinPath = parentPath;
 
             setup.DynamicBase = adPath;
-            setup.CachePath = adPath; //setup.ApplicationBase;
+            setup.CachePath = adPath;
             setup.ShadowCopyFiles = "true";
-            setup.ShadowCopyDirectories = adPath; //setup.ApplicationBase;
+            setup.ShadowCopyDirectories = adPath;
 
-            setup.ConfigurationFile = Path.Combine(parentPath, System.Diagnostics.Process.GetCurrentProcess().ProcessName + ".exe.config");
+            setup.ConfigurationFile = Path.Combine(parentPath, Process.GetCurrentProcess().ProcessName + ".exe.config");
 
-            this.m_AppDomain = AppDomain.CreateDomain(appDomainName, null, setup);
+            m_AppDomain = AppDomain.CreateDomain(appDomainName, null, setup);
         }
 
         /// <summary>
-        /// 获取远程对象
+        /// Get a <see cref="RemoteObject"/> for remote invoke.
         /// </summary>
-        /// <param name="assemblyFile">程序集文件</param>
-        /// <param name="typeFullName"></param>
-        /// <returns></returns>
+        /// <param name="assemblyFile">the assembly file for the job,which in AdDlls directory.</param>
+        /// <returns>return a <see cref="RemoteObject"/>.</returns>
         public RemoteObject GetObject(string assemblyFile)
         {
-            String name = Assembly.GetExecutingAssembly().FullName;
-            //如果用 CreateInstanceAndUnwrap 只能把 ApplicationBas 设为主程充的 BaseDirectory, 这样子域就不能有自己的 ApplicationBase 了.
-            //var obj = (RemoteObject)this.Domain.CreateInstanceAndUnwrap(name, typeof(RemoteObject).FullName);
-
-            var obj = (RemoteObject)this.m_AppDomain.CreateInstanceFromAndUnwrap(Assembly.GetExecutingAssembly().Location, typeof(RemoteObject).FullName);
+            var obj = (RemoteObject)m_AppDomain.CreateInstanceFromAndUnwrap(Assembly.GetExecutingAssembly().Location, typeof(RemoteObject).FullName);
             obj.Init(assemblyFile, m_TypeFullName);
 
             ILease lease = (ILease)obj.GetLifetimeService();
@@ -64,15 +56,20 @@ namespace ImcFramework.Core.IsolatedAd
             return obj;
         }
 
+        /// <summary>
+        /// Unload the appdomain.
+        /// </summary>
         public void Unload()
         {
             if (m_AppDomain == null)
+            {
                 return;
+            }
 
             try
             {
-                AppDomain.Unload(this.m_AppDomain);
-                this.m_AppDomain = null;
+                AppDomain.Unload(m_AppDomain);
+                m_AppDomain = null;
             }
             catch
             {
@@ -86,7 +83,7 @@ namespace ImcFramework.Core.IsolatedAd
 
         public void Dispose()
         {
-            this.Dispose(true);
+            Dispose(true);
             GC.SuppressFinalize(this);
         }
 
@@ -94,7 +91,7 @@ namespace ImcFramework.Core.IsolatedAd
         {
             if (disposing)
             {
-                this.Unload();
+                Unload();
 #if DEBUG
                 Console.WriteLine("Domain Unloaded");
 #endif

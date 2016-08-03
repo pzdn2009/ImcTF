@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Quartz;
+﻿using Quartz;
 
 namespace ImcFramework.Core.Quartz
 {
+    /// <summary>
+    /// The default schedule provider.
+    /// </summary>
     public class DefaultScheduleProvider : IScheduleProvider
     {
         public DefaultScheduleProvider(IScheduler schedule)

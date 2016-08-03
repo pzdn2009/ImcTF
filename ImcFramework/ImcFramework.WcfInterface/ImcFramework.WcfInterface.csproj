@@ -41,17 +41,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="EMessageType.cs" />
-    <Compile Include="EServiceStatus.cs" />
+    <Compile Include="Enums\ECommand.cs" />
+    <Compile Include="Enums\EMessageType.cs" />
+    <Compile Include="Enums\EServiceStatus.cs" />
     <Compile Include="EServiceType.cs" />
     <Compile Include="FunctionSwitch.cs" />
     <Compile Include="IClientConnector.cs" />
     <Compile Include="IMessageCallback.cs" />
-    <Compile Include="LogInfo.cs" />
+    <Compile Include="LogInfos\LogInfo.cs" />
+    <Compile Include="LogInfos\UserLogLevel.cs" />
+    <Compile Include="ProgressInfos\ProgressInfo.cs" />
+    <Compile Include="ProgressInfos\ProgressSummary.cs" />
+    <Compile Include="ProgressInfos\TotalType.cs" />
     <Compile Include="RequestParameter.cs" />
     <Compile Include="TransferMessage\MessageEntityBuilder.cs" />
     <Compile Include="TransferMessage\MessageEntity.cs" />
-    <Compile Include="ProgressInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServiceInfo.cs" />
     <Compile Include="TransferMessage\ITransferMessage.cs" />
@@ -68,6 +72,7 @@
     <None Include="ImcFramework.WcfInterface.nuspec" />
     <None Include="Release note.md" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

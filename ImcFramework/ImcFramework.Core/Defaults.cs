@@ -1,22 +1,26 @@
 ﻿using ImcFramework.Infrastructure;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace ImcFramework.Core
 {
+    /// <summary>
+    /// Define values.
+    /// </summary>
     public class Defaults
     {
-        //日志存放目录
+        /// <summary>
+        /// The log path.
+        /// </summary>
         public static string RootDirectory = AppDomain.CurrentDomain.BaseDirectory + "\\Log\\";
 
-        //日志文件分隔符
+        /// <summary>
+        /// The underline char.
+        /// </summary>
         public const string BusinessLogFileSplitChar = "__";
 
         private static string _processName = string.Empty;
         /// <summary>
-        /// 当前进程名
+        /// The process name.
         /// </summary>
         public static string ProcessName
         {
@@ -32,7 +36,7 @@ namespace ImcFramework.Core
 
         private static bool? _isolatedJob = null;
         /// <summary>
-        /// 是否为隔离的Job
+        /// Is isolated job.
         /// </summary>
         public static bool IsIsolatedJob
         {
@@ -45,7 +49,7 @@ namespace ImcFramework.Core
                         _isolatedJob = ConfigReader.GetAppSetting<bool>("IsIsolatedJob");
                     }
                 }
-                catch (Exception ex)
+                catch
                 {
                     _isolatedJob = false;
                 }
@@ -53,7 +57,5 @@ namespace ImcFramework.Core
                 return _isolatedJob.Value;
             }
         }
-         
-        
     }
 }

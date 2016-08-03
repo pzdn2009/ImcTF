@@ -1,40 +1,41 @@
 ﻿using ImcFramework.WcfInterface;
+using ImcFramework.WcfInterface.ProgressInfos;
 
 namespace ImcFramework.Core.MutilUserProgress
 {
     /// <summary>
-    /// 多用户进度管理
+    /// Indicates mutil-user progress.
     /// </summary>
     public interface IMutilUserProgress
     {
         /// <summary>
-        /// 发送总数
+        /// Send the progress's total info.
         /// </summary>
-        /// <param name="count">总数</param>
-        /// <param name="totalType">SellerAccountCount:为销售账号总数，RecordCount:全部记录数</param>
+        /// <param name="count">The total number</param>
+        /// <param name="totalType">The totalType of the progress ,<see cref="TotalType"/> .</param>
         void SendTaskProgressTotal(int count, TotalType totalType);
 
         /// <summary>
-        /// 发送账号总数
+        /// Send the user's total info.
         /// </summary>
-        /// <param name="user">用户</param>
-        /// <param name="total">总数</param>
+        /// <param name="user">The user</param>
+        /// <param name="total">The total</param>
         void SendTaskProgressItemTotal(string user, int total);
 
         /// <summary>
-        /// 递增1
+        /// Increase one for the user progress 
         /// </summary>
-        /// <param name="user">用户</param>
+        /// <param name="user">The user</param>
         void SendTaskProgressIncrease(string user);
 
         /// <summary>
-        /// 强制完成
+        /// Force finish the progress of the user.
         /// </summary>
-        /// <param name="user">用户</param>
+        /// <param name="user">The user.</param>
         void ForceFinish(string user);
 
         /// <summary>
-        /// 全部完成
+        /// Finish all the (user's) progress info.
         /// </summary>
         void FinishAll();
     }

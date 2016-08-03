@@ -1,14 +1,17 @@
 ﻿using ImcFramework.WcfInterface;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ImcFramework.Core.WcfService
 {
+    /// <summary>
+    /// ServiceType filter.
+    /// </summary>
     public interface IServiceTypeFilter
     {
+        /// <summary>
+        /// Filter the servicetype
+        /// </summary>
+        /// <param name="serviceType">The given servicetype.</param>
+        /// <returns>return true if the given servicetype is allowed, otherwise, return false.</returns>
         bool Filter(EServiceType serviceType);
     }
 

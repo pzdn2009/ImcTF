@@ -1,10 +1,14 @@
 ﻿using ImcFramework.Core.Distribution;
 using ImcFramework.WcfInterface;
+using ImcFramework.WcfInterface.ProgressInfos;
 using ImcFramework.WcfInterface.TransferMessage;
 using System.Diagnostics;
 
 namespace ImcFramework.Core.MutilUserProgress
 {
+    /// <summary>
+    /// The default mutil-user progress info sender.
+    /// </summary>
     public class DefaultMutilUserProgress : IMutilUserProgress
     {
         private EServiceType serviceType;
@@ -16,7 +20,6 @@ namespace ImcFramework.Core.MutilUserProgress
             distributionFacility = DistributionFacilityFactory.GetDistributionFacility<ProgressInfoMessage>();
         }
 
-        //设置总数
         public void SendTaskProgressTotal(int count, TotalType totalType)
         {
             var sf = new StackFrame();
@@ -32,7 +35,6 @@ namespace ImcFramework.Core.MutilUserProgress
             distributionFacility.Push(msgEntity);
         }
 
-        //设置单个账号的总数
         public void SendTaskProgressItemTotal(string user, int total)
         {
             var sf = new StackFrame();
@@ -48,7 +50,6 @@ namespace ImcFramework.Core.MutilUserProgress
             distributionFacility.Push(msgEntity);
         }
 
-        //设置单个账号+1
         public void SendTaskProgressIncrease(string user)
         {
             var sf = new StackFrame();
@@ -64,7 +65,6 @@ namespace ImcFramework.Core.MutilUserProgress
             distributionFacility.Push(msgEntity);
         }
 
-        //设置单个账号强制完成
         public void ForceFinish(string user)
         {
             var sf = new StackFrame();
@@ -78,7 +78,6 @@ namespace ImcFramework.Core.MutilUserProgress
             distributionFacility.Push(msgEntity);
         }
 
-        //结束
         public void FinishAll()
         {
             var sf = new StackFrame();

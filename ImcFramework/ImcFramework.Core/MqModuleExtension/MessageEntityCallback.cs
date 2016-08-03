@@ -4,6 +4,9 @@ using System;
 
 namespace ImcFramework.Core.MqModuleExtension
 {
+    /// <summary>
+    /// Callback for the MessageEntity.
+    /// </summary>
     public class MessageEntityCallback : ITransferMessageCallback
     {
         private ILoggerPoolFactory loggerPoolFactory;
@@ -13,17 +16,24 @@ namespace ImcFramework.Core.MqModuleExtension
             this.loggerPoolFactory = loggerPoolFactory;
         }
 
+        /// <summary>
+        /// <code>typeof(MessageEntity)</code>
+        /// </summary>
         public Type TranferMessageType
         {
             get;
             set;
         }
 
+        /// <summary>
+        /// Transfer MessageEntity object.
+        /// </summary>
+        /// <param name="transferMsg">the MessageEntity.</param>
         public void Call(ITransferMessage transferMsg)
         {
             var messageEntity = transferMsg as MessageEntity;
 
-            #region 记录日志
+            #region records the logcontent entity
 
             var logger = loggerPoolFactory.GetLoggerPool(messageEntity.ServiceType.ServiceType);
 
@@ -37,6 +47,7 @@ namespace ImcFramework.Core.MqModuleExtension
 
             #endregion
 
+            //notify the clients 
             Observers. CommonCallbackAction(messageEntity.ServiceType, (clientCallback) =>
             {
                 clientCallback.Notify(messageEntity);

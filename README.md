@@ -6,7 +6,7 @@
 
 　　**TF** , the Timer Framework.
 
-　　ImcTF基于Quartz.net，Log4net，Common.Logging的一个Window Service定时框架。
+　　ImcTF基于Quartz.net，Log4net，Common.Logging，MQ,Autofac等的一个Window Service定时框架。
 
 ## 2.ImcTF能做什么？
 
@@ -68,7 +68,6 @@ ImcTFSample文件夹：
  Install-Package ImcFramework.Core
  ```
  
-　　开始文档正在制作当中，请等待......
 
 ## 4.其他
 

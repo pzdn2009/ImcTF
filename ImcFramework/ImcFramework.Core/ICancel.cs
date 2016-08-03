@@ -1,16 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ImcFramework.Core
+﻿namespace ImcFramework.Core
 {
     /// <summary>
-    /// 取消任务
+    /// The cancel a job interface.
     /// </summary>
     public interface ICancel
     {
+        /// <summary>
+        /// Cancel a job.
+        /// </summary>
         void Cancel();
     }
 }

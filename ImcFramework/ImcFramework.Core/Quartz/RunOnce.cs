@@ -2,6 +2,9 @@
 
 namespace ImcFramework.Core.Quartz
 {
+    /// <summary>
+    /// Run once.
+    /// </summary>
     public class RunOnce
     {
         private static object lockObject = new object();

@@ -6,7 +6,7 @@ using System.Collections.Generic;
 namespace ImcFramework.Core.MqModuleExtension
 {
     /// <summary>
-    /// Msmq实现消息交换
+    /// Transfer messages based microsoft message queue
     /// </summary>
     public class MsmqDistribution<T> : MqDistributionBase<T> where T : class, ITransferMessage
     {
@@ -14,7 +14,6 @@ namespace ImcFramework.Core.MqModuleExtension
 
         private string m_TypeName;
         private MsmqHelper m_MsmqHelper;
-
 
         public MsmqDistribution(string typeName = null)
         {

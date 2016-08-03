@@ -1,6 +1,4 @@
 ﻿using ImcFramework.Core.IsolatedAd;
-using ImcFramework.Ioc;
-using ImcFramework.LogPool;
 using Quartz;
 using Quartz.Impl;
 using System.Collections.Generic;
@@ -19,6 +17,9 @@ namespace ImcFramework.Core.Quartz
         {
         }
 
+        /// <summary>
+        /// The module name.
+        /// </summary>
         public override string Name
         {
             get
@@ -27,29 +28,32 @@ namespace ImcFramework.Core.Quartz
             }
         }
 
+        /// <summary>
+        /// Initialize the module.
+        /// </summary>
         public override void Initialize()
         {
             base.Initialize();
 
-            IocManager.Register<ISchedulerFactory, StdSchedulerFactory>(DependencyLifeStyle.Singleton);
+            IocManager.Register<IScheduler>(new StdSchedulerFactory().GetScheduler());
         }
 
+        /// <summary>
+        /// Start the module.
+        /// </summary>
         public override void Start()
         {
             base.Start();
 
             var isolatedJob = Defaults.IsIsolatedJob;
 
-            var schedulerFactory = IocManager.Resolve<ISchedulerFactory>();
-            scheduler = schedulerFactory.GetScheduler();
+            scheduler = IocManager.Resolve<IScheduler>();
             if (isolatedJob)
             {
                 scheduler.JobFactory = new IsolatedJobFactory();
             }
 
             scheduler.Start();
-
-            IocManager.Register<IScheduler>(scheduler);
 
             var jobListeners = IocManager.Resolve<IEnumerable<IJobListener>>();
             foreach (var jobListener in jobListeners)
@@ -64,6 +68,9 @@ namespace ImcFramework.Core.Quartz
             }
         }
 
+        /// <summary>
+        /// Stop the module.
+        /// </summary>
         public override void Stop()
         {
             if (scheduler != null)

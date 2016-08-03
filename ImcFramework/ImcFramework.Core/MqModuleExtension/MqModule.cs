@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace ImcFramework.Core.MqModuleExtension
 {
+    /// <summary>
+    /// The message queue module for message transfer between appdomans.
+    /// </summary>
     public class MqModule : ServiceModuleBase, IModuleExtension
     {
         public const string MODUEL_NAME = "MQ_MODULE";
@@ -21,6 +24,9 @@ namespace ImcFramework.Core.MqModuleExtension
             m_TransferMessageCallbacks = new List<ITransferMessageCallback>();
         }
 
+        /// <summary>
+        /// The modue name
+        /// </summary>
         public override string Name
         {
             get
@@ -29,15 +35,22 @@ namespace ImcFramework.Core.MqModuleExtension
             }
         }
 
+        /// <summary>
+        /// service context for extension
+        /// </summary>
         public ServiceContext ServiceContext
         {
             get; set;
         }
 
+        /// <summary>
+        /// Initialize the module.
+        /// </summary>
         public override void Initialize()
         {
             base.Initialize();
 
+            //Register the Msmq as base fuoundation of the module.
             IocManager.RegisterGeneric(typeof(MsmqDistribution<>), typeof(IDistributionFacility<>));
 
             var transferMsgs = IocManager.Resolve<IEnumerable<ITransferMessage>>();
@@ -55,6 +68,9 @@ namespace ImcFramework.Core.MqModuleExtension
             }
         }
 
+        /// <summary>
+        /// Start the module.
+        /// </summary>
         public override void Start()
         {
             base.Start();
@@ -90,6 +106,9 @@ namespace ImcFramework.Core.MqModuleExtension
             });
         }
 
+        /// <summary>
+        /// Stop the module.
+        /// </summary>
         public override void Stop()
         {
             base.Stop();

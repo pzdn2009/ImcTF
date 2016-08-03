@@ -1,70 +1,36 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel;
+﻿using ImcFramework.WcfInterface.Enums;
 using System.Runtime.Serialization;
 
 namespace ImcFramework.WcfInterface
 {
     /// <summary>
-    /// 功能开关
+    /// Function switch for control servicetype.
     /// </summary>
     [DataContract]
     public class FunctionSwitch
     {
         /// <summary>
-        /// 服务类型
+        /// The servicetype.
         /// </summary>
         [DataMember]
         public EServiceType ServiceType { get; set; }
 
         /// <summary>
-        /// 计划格式
+        /// The cron-expression
         /// </summary>
         [DataMember]
         public string ScheduleFormat { get; set; }
 
         /// <summary>
-        /// 命令类型
+        /// The command.
         /// </summary>
         [DataMember]
         public ECommand Command { get; set; }
         
         /// <summary>
-        /// 参数
+        /// The request parameter list.
         /// </summary>
         [DataMember]
         public RequestParameterList RequestParameterList { get; set; }
-    }
-
-    [DataContract]
-    [Description("命令")]
-    public enum ECommand
-    {
-        [EnumMember]
-        [Description("暂停")]
-        Pause,
-
-        [EnumMember]
-        [Description("立即执行")]
-        RunImmediately,
-
-        [EnumMember]
-        [Description("继续")]
-        Continue,
-
-        [EnumMember]
-        [Description("更改计划")]
-        ModifySchedule,
-
-        [EnumMember]
-        [Description("取消")]
-        Cancel,
-
-        [EnumMember]
-        [Description("中断")]
-        Interrupt,
-
-        [EnumMember]
-        [Description("获取服务信息")]
-        GetServiceInfo
     }
 }

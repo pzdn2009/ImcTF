@@ -1,13 +1,11 @@
 ﻿using ImcFramework.Data;
 using ImcFramework.WcfInterface;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ImcFramework.Core.Quartz.Commands
 {
+    /// <summary>
+    /// The GetServiceInfo output
+    /// </summary>
     public class GetServiceInfoOutput : ExecuteResult
     {
         public ServiceInfo ServiceInfo { get; set; }

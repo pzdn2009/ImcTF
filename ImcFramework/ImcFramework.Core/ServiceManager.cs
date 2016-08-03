@@ -1,17 +1,16 @@
-﻿using System.Collections.Generic;
+﻿using ImcFramework.Core.MutilUserProgress;
+using ImcFramework.Core.Quartz;
+using ImcFramework.Core.WcfService;
 using ImcFramework.Ioc;
-using System.Linq;
-using ImcFramework.Core.MutilUserProgress;
 using ImcFramework.LogPool;
 using ImcFramework.Reflection;
-using System;
-using System.Reflection;
-using System.IO;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace ImcFramework.Core
 {
     /// <summary>
-    /// 服务启动
+    /// Service manager for the famework , which manages assmeblies registration and all modules's start / stop.
     /// </summary>
     public static class ServiceManager
     {
@@ -22,18 +21,14 @@ namespace ImcFramework.Core
 
         static ServiceManager()
         {
-            ServiceContext = new ServiceContext();
-            ServiceContext.Scheduler = null;
-            ServiceContext.WcfHost = null;
-            ServiceContext.ProgressInfoManager = ProgressInfoManager.Instance;
-
             iocManager = IocManager.Instance;
 
             Initialize();
         }
 
-        public static ServiceContext ServiceContext { get; set; }
-
+        /// <summary>
+        /// Initialize assmeblies registration in order to register into the ioc container.
+        /// </summary>
         internal static void Initialize()
         {
             var registeredAssmeblies = new HashSet<string>();
@@ -63,6 +58,9 @@ namespace ImcFramework.Core
                 catch { }
             }
 
+            //register the progressInfoManager as singleton
+            iocManager.Register<IProgressInfoManager>(ProgressInfoManager.Instance);
+
             //load the Global Register & call the register method
             var gl = iocManager.Resolve<IEnumerable<IGlobalRegister>>();
             gl.ToList().ForEach(zw => { zw.Register(iocManager); });
@@ -72,6 +70,9 @@ namespace ImcFramework.Core
             extensionModules = iocManager.Resolve<IEnumerable<IModuleExtension>>();
         }
 
+        /// <summary>
+        /// Start all modules of the framework , includes build-in modules and extended modules.
+        /// </summary>
         public static void StartAll()
         {
             var loggerPoolFactory = iocManager.Resolve<ILoggerPoolFactory>();
@@ -86,9 +87,16 @@ namespace ImcFramework.Core
                 buidIn.Start();
             }
 
+            var serviceContext = new ServiceContext()
+            {
+                WcfHost = iocManager.Resolve<IServiceHostProvider>().ServiceHost,
+                Scheduler = iocManager.Resolve<IScheduleProvider>().Schedule,
+                ProgressInfoManager = iocManager.Resolve<IProgressInfoManager>()
+            };
+
             foreach (var item in extensionModules)
             {
-                item.ServiceContext = ServiceContext;
+                item.ServiceContext = serviceContext;
                 var svc = (item as IServiceModule);
                 svc.IocManager = iocManager;
                 svc.LoggerPool = loggerPoolFactory.GetLoggerPool(svc.Name);
@@ -99,6 +107,9 @@ namespace ImcFramework.Core
             }
         }
 
+        /// <summary>
+        /// Stop all modules of the framework , includes build-in modules and extended modules.
+        /// </summary>
         public static void StopAll()
         {
             if (extensionModules != null)

@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
+﻿using System.ComponentModel;
 using System.Runtime.Serialization;
-using System.Text;
 
-namespace ImcFramework.WcfInterface
+namespace ImcFramework.WcfInterface.Enums
 {
+    /// <summary>
+    /// Servicetype status.
+    /// </summary>
     [Description("服务状态")]
     [DataContract]
     public enum EServiceStatus
